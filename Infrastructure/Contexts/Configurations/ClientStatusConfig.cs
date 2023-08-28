@@ -14,10 +14,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
       
       entity.HasKey(e => e.Id);
 
-      entity.Property(e => e.Id)
-              .ValueGeneratedNever()
-              .HasColumnName("id");
-
       entity.HasIndex(e => e.Description)
             .HasName("client_statuses_index_11")
             .IsUnique();
@@ -25,7 +21,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
       entity.Property(e => e.Description)
                 .HasMaxLength(100)
                 .IsUnicode(false)
-                .HasColumnName("description")
                 .IsRequired();
 
       entity.HasMany<Client>()

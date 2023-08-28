@@ -12,16 +12,11 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
 
       entity.HasKey(e => e.Id);
 
-      entity.Property(e => e.Id)
-              .ValueGeneratedNever()
-              .HasColumnName("id");
-
       entity.HasIndex(e => e.Description, "transaction_types_index_21");
 
       entity.Property(e => e.Description)
-              .HasMaxLength(1)
-              .IsUnicode(false)
-              .HasColumnName("description");
+              .HasMaxLength(100)
+              .IsUnicode(false);
 
       entity.HasMany<Transaction>()
         .WithOne(transaction => transaction.TransactionType)

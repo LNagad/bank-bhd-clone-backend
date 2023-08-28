@@ -10,6 +10,5 @@ namespace BhdBankClone.Infrastructure.Identity.Entities
     public bool IsActive { get; set; }
 
     public int? ClientId { get; set; }
-    public Client? Client { get; set; }
   }
 }

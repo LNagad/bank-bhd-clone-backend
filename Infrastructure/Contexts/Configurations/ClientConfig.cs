@@ -12,27 +12,13 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
 
       entity.HasKey(e => e.Id);
 
-      entity.Property(e => e.Id)
-            .ValueGeneratedNever()
-            .HasColumnName("id");
-
-      entity.Property(e => e.ClientsTypeId)
-        .HasColumnName("clients_type_id")
-        .IsRequired();
-
       entity.Property(e => e.IdentityCard)
-            .HasMaxLength(1)
+            .HasMaxLength(11)
             .IsUnicode(false)
-            .HasColumnName("identity_card")
             .IsRequired();
 
       entity.Property(e => e.IsActive)
-            .HasColumnName("isActive")
             .HasDefaultValue(true);
-
-      entity.Property(e => e.StatusId).HasColumnName("status_id");
-
-      entity.Property(e => e.UserId).HasColumnName("user_id");
 
       entity.HasIndex(e => e.IdentityCard, "UQ__clients__4943C3B41C2804E7").IsUnique();
 

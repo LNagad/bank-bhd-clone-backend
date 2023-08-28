@@ -13,27 +13,11 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
 
       entity.HasKey(e => e.Id);
 
-      entity.Property(e => e.Id)
-              .ValueGeneratedNever()
-              .HasColumnName("id");
-
       entity.Property(e => e.Amount)
-              .HasColumnType("money")
-              .HasColumnName("amount");
+              .HasColumnType("money");
 
-      entity.Property(e => e.ClientId).HasColumnName("client_id");
-      entity.Property(e => e.DestinationAccountId).HasColumnName("destination_account_id");
-      entity.Property(e => e.DestinationCreditCardId).HasColumnName("destination_credit_card_id");
-      entity.Property(e => e.DestinationLoanId).HasColumnName("destination_loan_id");
-      entity.Property(e => e.SourceAccountId).HasColumnName("source_account_id");
-      entity.Property(e => e.SourceCreditCardId).HasColumnName("source_credit_card_id");
-      entity.Property(e => e.SourceDebitCardId).HasColumnName("source_debit_card_id");
-      
       entity.Property(e => e.TransactionTime)
-              .HasColumnType("datetime")
-              .HasColumnName("transaction_time");
-
-      entity.Property(e => e.TransactionTypeId).HasColumnName("transaction_type_id");
+              .HasColumnType("datetime");
 
       entity.HasIndex(e => e.TransactionTime, "transactions_index_14");
 
@@ -48,10 +32,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
       entity.HasIndex(e => e.DestinationCreditCardId, "transactions_index_19");
 
       entity.HasIndex(e => e.DestinationLoanId, "transactions_index_20");
-
-
-
-      
     }
   }
 }

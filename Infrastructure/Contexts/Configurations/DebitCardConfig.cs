@@ -12,31 +12,20 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
 
       entity.HasKey(e => e.Id);
 
-      entity.Property(e => e.Id)
-              .ValueGeneratedNever()
-              .HasColumnName("id");
-
       entity.Property(e => e.CardCvv)
               .HasMaxLength(3)
               .IsUnicode(false)
               .HasColumnName("card_cvv");
 
       entity.Property(e => e.CardExpiryDate)
-              .HasColumnType("date")
-              .HasColumnName("card_expiry_date");
+              .HasColumnType("date");
 
       entity.Property(e => e.CardNumber)
               .HasMaxLength(16)
-              .IsUnicode(false)
-              .HasColumnName("card_number");
-
-      entity.Property(e => e.ClientId).HasColumnName("client_id");
+              .IsUnicode(false);
 
       entity.Property(e => e.IsActive)
-              .HasDefaultValue(true)
-              .HasColumnName("isActive");
-
-      entity.Property(e => e.ProductId).HasColumnName("product_id");
+              .HasDefaultValue(true);
 
       entity.HasOne<Account>()
         .WithOne(account => account.DebitCard)
@@ -45,10 +34,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
       entity.HasMany<Transaction>()
         .WithOne(transaction => transaction.SourceDebitCard)
         .HasForeignKey(transaction => transaction.SourceDebitCardId);
-
-      entity.Property(e => e.IsPrimary).HasColumnName("isPrimary");
-
-      entity.Property(e => e.ProductId).HasColumnName("product_id");
 
       entity.HasIndex(e => e.CardNumber, "debit_cards_index_7");
 

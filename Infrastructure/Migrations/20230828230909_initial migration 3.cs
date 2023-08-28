@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BhdBankClone.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class initialmigration : Migration
+    public partial class initialmigration3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,8 +15,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 name: "account_types",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false),
-                    description = table.Column<string>(type: "varchar(1)", unicode: false, maxLength: 1, nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -24,15 +25,16 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_account_types", x => x.id);
+                    table.PrimaryKey("PK_account_types", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "client_statuses",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false),
-                    description = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -40,15 +42,16 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_client_statuses", x => x.id);
+                    table.PrimaryKey("PK_client_statuses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "clients_types",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false),
-                    description = table.Column<string>(type: "varchar(1)", unicode: false, maxLength: 1, nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -56,15 +59,16 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_clients_types", x => x.id);
+                    table.PrimaryKey("PK_clients_types", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "product_types",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false),
-                    description = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -72,15 +76,16 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_product_types", x => x.id);
+                    table.PrimaryKey("PK_product_types", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "transaction_types",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false),
-                    description = table.Column<string>(type: "varchar(1)", unicode: false, maxLength: 1, nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -88,19 +93,20 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_transaction_types", x => x.id);
+                    table.PrimaryKey("PK_transaction_types", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "clients",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false),
-                    user_id = table.Column<int>(type: "int", nullable: true),
-                    clients_type_id = table.Column<int>(type: "int", nullable: false),
-                    identity_card = table.Column<string>(type: "varchar(1)", unicode: false, maxLength: 1, nullable: false),
-                    isActive = table.Column<bool>(type: "bit", nullable: true, defaultValue: true),
-                    status_id = table.Column<int>(type: "int", nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    ClientsTypeId = table.Column<int>(type: "int", nullable: true),
+                    IdentityCard = table.Column<string>(type: "varchar(11)", unicode: false, maxLength: 11, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true, defaultValue: true),
+                    StatusId = table.Column<int>(type: "int", nullable: true),
                     ClientTypeId = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -109,35 +115,35 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_clients", x => x.id);
+                    table.PrimaryKey("PK_clients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_clients_client_statuses_status_id",
-                        column: x => x.status_id,
+                        name: "FK_clients_client_statuses_StatusId",
+                        column: x => x.StatusId,
                         principalTable: "client_statuses",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_clients_clients_types_ClientTypeId",
                         column: x => x.ClientTypeId,
                         principalTable: "clients_types",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_clients_clients_types_clients_type_id",
-                        column: x => x.clients_type_id,
+                        name: "FK_clients_clients_types_ClientsTypeId",
+                        column: x => x.ClientsTypeId,
                         principalTable: "clients_types",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "accounts",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false),
-                    account_number = table.Column<string>(type: "varchar(9)", unicode: false, maxLength: 9, nullable: true),
-                    isActive = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "((1))"),
-                    isPrimary = table.Column<bool>(type: "bit", nullable: true),
-                    account_type_id = table.Column<int>(type: "int", nullable: true),
-                    client_id = table.Column<int>(type: "int", nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AccountNumber = table.Column<string>(type: "varchar(16)", unicode: false, maxLength: 16, nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true, defaultValue: true),
+                    IsPrimary = table.Column<bool>(type: "bit", nullable: true),
+                    AccountTypeId = table.Column<int>(type: "int", nullable: true),
+                    ClientId = table.Column<int>(type: "int", nullable: true),
                     ProductId = table.Column<int>(type: "int", nullable: true),
                     DebitCardId = table.Column<int>(type: "int", nullable: true),
                     current_balance = table.Column<decimal>(type: "money", nullable: true),
@@ -151,44 +157,45 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_accounts", x => x.id);
+                    table.PrimaryKey("PK_accounts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_accounts_account_types_AccountTypeId",
+                        column: x => x.AccountTypeId,
+                        principalTable: "account_types",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_accounts_account_types_AccountTypeId1",
                         column: x => x.AccountTypeId1,
                         principalTable: "account_types",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_accounts_account_types_account_type_id",
-                        column: x => x.account_type_id,
-                        principalTable: "account_types",
-                        principalColumn: "id");
+                        name: "FK_accounts_clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "clients",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_accounts_clients_ClientId1",
                         column: x => x.ClientId1,
                         principalTable: "clients",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_accounts_clients_client_id",
-                        column: x => x.client_id,
-                        principalTable: "clients",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "credit_cards",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false),
-                    credit_limit = table.Column<decimal>(type: "money", nullable: true),
-                    current_balance = table.Column<decimal>(type: "money", nullable: true),
-                    credit_card_debt = table.Column<decimal>(type: "money", nullable: true),
-                    card_number = table.Column<string>(type: "varchar(16)", unicode: false, maxLength: 16, nullable: true),
-                    card_expiry_date = table.Column<DateTime>(type: "date", nullable: true),
-                    card_cvv = table.Column<string>(type: "varchar(3)", unicode: false, maxLength: 3, nullable: true),
-                    isActive = table.Column<bool>(type: "bit", nullable: true, defaultValue: true),
-                    isPrimary = table.Column<bool>(type: "bit", nullable: true),
-                    product_id = table.Column<int>(type: "int", nullable: true),
-                    client_id = table.Column<int>(type: "int", nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreditLimit = table.Column<decimal>(type: "money", nullable: true),
+                    CurrentBalance = table.Column<decimal>(type: "money", nullable: true),
+                    CreditCardDebt = table.Column<decimal>(type: "money", nullable: true),
+                    CardNumber = table.Column<string>(type: "varchar(16)", unicode: false, maxLength: 16, nullable: true),
+                    CardExpiryDate = table.Column<DateTime>(type: "date", nullable: true),
+                    CardCvv = table.Column<string>(type: "varchar(3)", unicode: false, maxLength: 3, nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true, defaultValue: true),
+                    IsPrimary = table.Column<bool>(type: "bit", nullable: true),
+                    ProductId = table.Column<int>(type: "int", nullable: true),
+                    ClientId = table.Column<int>(type: "int", nullable: true),
                     ClientId1 = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -197,31 +204,32 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_credit_cards", x => x.id);
+                    table.PrimaryKey("PK_credit_cards", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_credit_cards_clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "clients",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_credit_cards_clients_ClientId1",
                         column: x => x.ClientId1,
                         principalTable: "clients",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_credit_cards_clients_client_id",
-                        column: x => x.client_id,
-                        principalTable: "clients",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "debit_cards",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false),
-                    card_number = table.Column<string>(type: "varchar(16)", unicode: false, maxLength: 16, nullable: true),
-                    card_expiry_date = table.Column<DateTime>(type: "date", nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CardNumber = table.Column<string>(type: "varchar(16)", unicode: false, maxLength: 16, nullable: true),
+                    CardExpiryDate = table.Column<DateTime>(type: "date", nullable: true),
                     card_cvv = table.Column<string>(type: "varchar(3)", unicode: false, maxLength: 3, nullable: true),
-                    isActive = table.Column<bool>(type: "bit", nullable: true, defaultValue: true),
-                    isPrimary = table.Column<bool>(type: "bit", nullable: true),
-                    product_id = table.Column<int>(type: "int", nullable: true),
-                    client_id = table.Column<int>(type: "int", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true, defaultValue: true),
+                    IsPrimary = table.Column<bool>(type: "bit", nullable: true),
+                    ProductId = table.Column<int>(type: "int", nullable: true),
+                    ClientId = table.Column<int>(type: "int", nullable: true),
                     ClientId1 = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -230,28 +238,29 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_debit_cards", x => x.id);
+                    table.PrimaryKey("PK_debit_cards", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_debit_cards_clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "clients",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_debit_cards_clients_ClientId1",
                         column: x => x.ClientId1,
                         principalTable: "clients",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_debit_cards_clients_client_id",
-                        column: x => x.client_id,
-                        principalTable: "clients",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "loans",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false),
-                    loan_amount = table.Column<decimal>(type: "money", nullable: true),
-                    isActive = table.Column<bool>(type: "bit", nullable: true, defaultValue: true),
-                    product_id = table.Column<int>(type: "int", nullable: true),
-                    client_id = table.Column<int>(type: "int", nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LoanAmount = table.Column<decimal>(type: "money", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true, defaultValue: true),
+                    ProductId = table.Column<int>(type: "int", nullable: true),
+                    ClientId = table.Column<int>(type: "int", nullable: true),
                     ClientId1 = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -260,34 +269,35 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_loans", x => x.id);
+                    table.PrimaryKey("PK_loans", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_loans_clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "clients",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_loans_clients_ClientId1",
                         column: x => x.ClientId1,
                         principalTable: "clients",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_loans_clients_client_id",
-                        column: x => x.client_id,
-                        principalTable: "clients",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "products",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false),
-                    product_type_id = table.Column<int>(type: "int", nullable: true),
-                    client_id = table.Column<int>(type: "int", nullable: true),
-                    isAccount = table.Column<bool>(type: "bit", nullable: true),
-                    isLoan = table.Column<bool>(type: "bit", nullable: true),
-                    isCreditCard = table.Column<bool>(type: "bit", nullable: true),
-                    isDebitCard = table.Column<bool>(type: "bit", nullable: true),
-                    account_id = table.Column<int>(type: "int", nullable: true),
-                    loan_id = table.Column<int>(type: "int", nullable: true),
-                    credit_card_id = table.Column<int>(type: "int", nullable: true),
-                    debit_card_id = table.Column<int>(type: "int", nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductTypeId = table.Column<int>(type: "int", nullable: true),
+                    ClientId = table.Column<int>(type: "int", nullable: true),
+                    IsAccount = table.Column<bool>(type: "bit", nullable: true),
+                    IsLoan = table.Column<bool>(type: "bit", nullable: true),
+                    IsCreditCard = table.Column<bool>(type: "bit", nullable: true),
+                    IsDebitCard = table.Column<bool>(type: "bit", nullable: true),
+                    AccountId = table.Column<int>(type: "int", nullable: true),
+                    LoanId = table.Column<int>(type: "int", nullable: true),
+                    CreditCardId = table.Column<int>(type: "int", nullable: true),
+                    DebitCardId = table.Column<int>(type: "int", nullable: true),
                     AccountId1 = table.Column<int>(type: "int", nullable: true),
                     LoanId1 = table.Column<int>(type: "int", nullable: true),
                     CreditCardId1 = table.Column<int>(type: "int", nullable: true),
@@ -300,59 +310,60 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_products", x => x.id);
+                    table.PrimaryKey("PK_products", x => x.Id);
                     table.ForeignKey(
                         name: "FK_products_accounts_AccountId1",
                         column: x => x.AccountId1,
                         principalTable: "accounts",
-                        principalColumn: "id");
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_products_clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "clients",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_products_clients_ClientId1",
                         column: x => x.ClientId1,
                         principalTable: "clients",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_products_clients_client_id",
-                        column: x => x.client_id,
-                        principalTable: "clients",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_products_credit_cards_CreditCardId1",
                         column: x => x.CreditCardId1,
                         principalTable: "credit_cards",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_products_debit_cards_DebitCardId1",
                         column: x => x.DebitCardId1,
                         principalTable: "debit_cards",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_products_loans_LoanId1",
                         column: x => x.LoanId1,
                         principalTable: "loans",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_products_product_types_product_type_id",
-                        column: x => x.product_type_id,
+                        name: "FK_products_product_types_ProductTypeId",
+                        column: x => x.ProductTypeId,
                         principalTable: "product_types",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "transactions",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false),
-                    transaction_type_id = table.Column<int>(type: "int", nullable: true),
-                    client_id = table.Column<int>(type: "int", nullable: true),
-                    transaction_time = table.Column<DateTime>(type: "datetime", nullable: true),
-                    amount = table.Column<decimal>(type: "money", nullable: true),
-                    source_account_id = table.Column<int>(type: "int", nullable: true),
-                    source_credit_card_id = table.Column<int>(type: "int", nullable: true),
-                    source_debit_card_id = table.Column<int>(type: "int", nullable: true),
-                    destination_credit_card_id = table.Column<int>(type: "int", nullable: true),
-                    destination_account_id = table.Column<int>(type: "int", nullable: true),
-                    destination_loan_id = table.Column<int>(type: "int", nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TransactionTypeId = table.Column<int>(type: "int", nullable: true),
+                    ClientId = table.Column<int>(type: "int", nullable: true),
+                    TransactionTime = table.Column<DateTime>(type: "datetime", nullable: true),
+                    Amount = table.Column<decimal>(type: "money", nullable: true),
+                    SourceAccountId = table.Column<int>(type: "int", nullable: true),
+                    SourceCreditCardId = table.Column<int>(type: "int", nullable: true),
+                    SourceDebitCardId = table.Column<int>(type: "int", nullable: true),
+                    DestinationCreditCardId = table.Column<int>(type: "int", nullable: true),
+                    DestinationAccountId = table.Column<int>(type: "int", nullable: true),
+                    DestinationLoanId = table.Column<int>(type: "int", nullable: true),
                     AccountId = table.Column<int>(type: "int", nullable: true),
                     CreditCardId = table.Column<int>(type: "int", nullable: true),
                     DebitCardId = table.Column<int>(type: "int", nullable: true),
@@ -365,100 +376,100 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_transactions", x => x.id);
+                    table.PrimaryKey("PK_transactions", x => x.Id);
                     table.ForeignKey(
                         name: "FK_transactions_accounts_AccountId",
                         column: x => x.AccountId,
                         principalTable: "accounts",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_transactions_accounts_destination_account_id",
-                        column: x => x.destination_account_id,
+                        name: "FK_transactions_accounts_DestinationAccountId",
+                        column: x => x.DestinationAccountId,
                         principalTable: "accounts",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_transactions_accounts_source_account_id",
-                        column: x => x.source_account_id,
+                        name: "FK_transactions_accounts_SourceAccountId",
+                        column: x => x.SourceAccountId,
                         principalTable: "accounts",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_transactions_clients_client_id",
-                        column: x => x.client_id,
+                        name: "FK_transactions_clients_ClientId",
+                        column: x => x.ClientId,
                         principalTable: "clients",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_transactions_credit_cards_CreditCardId",
                         column: x => x.CreditCardId,
                         principalTable: "credit_cards",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_transactions_credit_cards_destination_credit_card_id",
-                        column: x => x.destination_credit_card_id,
+                        name: "FK_transactions_credit_cards_DestinationCreditCardId",
+                        column: x => x.DestinationCreditCardId,
                         principalTable: "credit_cards",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_transactions_credit_cards_source_credit_card_id",
-                        column: x => x.source_credit_card_id,
+                        name: "FK_transactions_credit_cards_SourceCreditCardId",
+                        column: x => x.SourceCreditCardId,
                         principalTable: "credit_cards",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_transactions_debit_cards_DebitCardId",
                         column: x => x.DebitCardId,
                         principalTable: "debit_cards",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_transactions_debit_cards_source_debit_card_id",
-                        column: x => x.source_debit_card_id,
+                        name: "FK_transactions_debit_cards_SourceDebitCardId",
+                        column: x => x.SourceDebitCardId,
                         principalTable: "debit_cards",
-                        principalColumn: "id");
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_transactions_loans_DestinationLoanId",
+                        column: x => x.DestinationLoanId,
+                        principalTable: "loans",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_transactions_loans_LoanId",
                         column: x => x.LoanId,
                         principalTable: "loans",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_transactions_loans_destination_loan_id",
-                        column: x => x.destination_loan_id,
-                        principalTable: "loans",
-                        principalColumn: "id");
+                        name: "FK_transactions_transaction_types_TransactionTypeId",
+                        column: x => x.TransactionTypeId,
+                        principalTable: "transaction_types",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_transactions_transaction_types_TransactionTypeId1",
                         column: x => x.TransactionTypeId1,
                         principalTable: "transaction_types",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_transactions_transaction_types_transaction_type_id",
-                        column: x => x.transaction_type_id,
-                        principalTable: "transaction_types",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
                 name: "account_types_index_12",
                 table: "account_types",
-                column: "description");
+                column: "Description");
 
             migrationBuilder.CreateIndex(
                 name: "UQ__account___489B0D977287E385",
                 table: "account_types",
-                column: "description",
+                column: "Description",
                 unique: true,
-                filter: "[description] IS NOT NULL");
+                filter: "[Description] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "accounts_index_2",
                 table: "accounts",
-                column: "account_number");
+                column: "AccountNumber");
 
             migrationBuilder.CreateIndex(
                 name: "accounts_index_3",
                 table: "accounts",
-                column: "isPrimary");
+                column: "IsPrimary");
 
             migrationBuilder.CreateIndex(
-                name: "IX_accounts_account_type_id",
+                name: "IX_accounts_AccountTypeId",
                 table: "accounts",
-                column: "account_type_id");
+                column: "AccountTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_accounts_AccountTypeId1",
@@ -466,9 +477,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 column: "AccountTypeId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_accounts_client_id",
+                name: "IX_accounts_ClientId",
                 table: "accounts",
-                column: "client_id");
+                column: "ClientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_accounts_ClientId1",
@@ -499,23 +510,23 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
             migrationBuilder.CreateIndex(
                 name: "client_statuses_index_11",
                 table: "client_statuses",
-                column: "description",
+                column: "Description",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "clients_index_0",
                 table: "clients",
-                column: "identity_card");
+                column: "IdentityCard");
 
             migrationBuilder.CreateIndex(
                 name: "clients_index_1",
                 table: "clients",
-                column: "isActive");
+                column: "IsActive");
 
             migrationBuilder.CreateIndex(
-                name: "IX_clients_clients_type_id",
+                name: "IX_clients_ClientsTypeId",
                 table: "clients",
-                column: "clients_type_id");
+                column: "ClientsTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_clients_ClientTypeId",
@@ -523,46 +534,46 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 column: "ClientTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_clients_status_id",
+                name: "IX_clients_StatusId",
                 table: "clients",
-                column: "status_id");
+                column: "StatusId");
 
             migrationBuilder.CreateIndex(
                 name: "UQ__clients__4943C3B41C2804E7",
                 table: "clients",
-                column: "identity_card",
+                column: "IdentityCard",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "clients_types_index_13",
                 table: "clients_types",
-                column: "description");
+                column: "Description");
 
             migrationBuilder.CreateIndex(
                 name: "UQ__clients___489B0D974E8DBA8C",
                 table: "clients_types",
-                column: "description",
+                column: "Description",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "credit_cards_index_4",
                 table: "credit_cards",
-                column: "card_number");
+                column: "CardNumber");
 
             migrationBuilder.CreateIndex(
                 name: "credit_cards_index_5",
                 table: "credit_cards",
-                column: "isPrimary");
+                column: "IsPrimary");
 
             migrationBuilder.CreateIndex(
                 name: "credit_cards_index_6",
                 table: "credit_cards",
-                column: "isActive");
+                column: "IsActive");
 
             migrationBuilder.CreateIndex(
-                name: "IX_credit_cards_client_id",
+                name: "IX_credit_cards_ClientId",
                 table: "credit_cards",
-                column: "client_id");
+                column: "ClientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_credit_cards_ClientId1",
@@ -570,31 +581,31 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 column: "ClientId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_credit_cards_product_id",
+                name: "IX_credit_cards_ProductId",
                 table: "credit_cards",
-                column: "product_id",
+                column: "ProductId",
                 unique: true,
-                filter: "[product_id] IS NOT NULL");
+                filter: "[ProductId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "debit_cards_index_7",
                 table: "debit_cards",
-                column: "card_number");
+                column: "CardNumber");
 
             migrationBuilder.CreateIndex(
                 name: "debit_cards_index_8",
                 table: "debit_cards",
-                column: "isPrimary");
+                column: "IsPrimary");
 
             migrationBuilder.CreateIndex(
                 name: "debit_cards_index_9",
                 table: "debit_cards",
-                column: "isActive");
+                column: "IsActive");
 
             migrationBuilder.CreateIndex(
-                name: "IX_debit_cards_client_id",
+                name: "IX_debit_cards_ClientId",
                 table: "debit_cards",
-                column: "client_id");
+                column: "ClientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_debit_cards_ClientId1",
@@ -602,16 +613,16 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 column: "ClientId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_debit_cards_product_id",
+                name: "IX_debit_cards_ProductId",
                 table: "debit_cards",
-                column: "product_id",
+                column: "ProductId",
                 unique: true,
-                filter: "[product_id] IS NOT NULL");
+                filter: "[ProductId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_loans_client_id",
+                name: "IX_loans_ClientId",
                 table: "loans",
-                column: "client_id");
+                column: "ClientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_loans_ClientId1",
@@ -619,16 +630,16 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 column: "ClientId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_loans_product_id",
+                name: "IX_loans_ProductId",
                 table: "loans",
-                column: "product_id",
+                column: "ProductId",
                 unique: true,
-                filter: "[product_id] IS NOT NULL");
+                filter: "[ProductId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "loans_index_10",
                 table: "loans",
-                column: "isActive");
+                column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_products_AccountId1",
@@ -636,9 +647,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 column: "AccountId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_products_client_id",
+                name: "IX_products_ClientId",
                 table: "products",
-                column: "client_id");
+                column: "ClientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_products_ClientId1",
@@ -661,14 +672,14 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 column: "LoanId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_products_product_type_id",
+                name: "IX_products_ProductTypeId",
                 table: "products",
-                column: "product_type_id");
+                column: "ProductTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "transaction_types_index_21",
                 table: "transaction_types",
-                column: "description");
+                column: "Description");
 
             migrationBuilder.CreateIndex(
                 name: "IX_transactions_AccountId",
@@ -676,9 +687,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_transactions_client_id",
+                name: "IX_transactions_ClientId",
                 table: "transactions",
-                column: "client_id");
+                column: "ClientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_transactions_CreditCardId",
@@ -696,9 +707,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 column: "LoanId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_transactions_transaction_type_id",
+                name: "IX_transactions_TransactionTypeId",
                 table: "transactions",
-                column: "transaction_type_id");
+                column: "TransactionTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_transactions_TransactionTypeId1",
@@ -708,90 +719,94 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
             migrationBuilder.CreateIndex(
                 name: "transactions_index_14",
                 table: "transactions",
-                column: "transaction_time");
+                column: "TransactionTime");
 
             migrationBuilder.CreateIndex(
                 name: "transactions_index_15",
                 table: "transactions",
-                column: "source_account_id");
+                column: "SourceAccountId");
 
             migrationBuilder.CreateIndex(
                 name: "transactions_index_16",
                 table: "transactions",
-                column: "source_credit_card_id");
+                column: "SourceCreditCardId");
 
             migrationBuilder.CreateIndex(
                 name: "transactions_index_17",
                 table: "transactions",
-                column: "source_debit_card_id");
+                column: "SourceDebitCardId");
 
             migrationBuilder.CreateIndex(
                 name: "transactions_index_18",
                 table: "transactions",
-                column: "destination_account_id");
+                column: "DestinationAccountId");
 
             migrationBuilder.CreateIndex(
                 name: "transactions_index_19",
                 table: "transactions",
-                column: "destination_credit_card_id");
+                column: "DestinationCreditCardId");
 
             migrationBuilder.CreateIndex(
                 name: "transactions_index_20",
                 table: "transactions",
-                column: "destination_loan_id");
+                column: "DestinationLoanId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_accounts_debit_cards_DebitCardId",
                 table: "accounts",
                 column: "DebitCardId",
                 principalTable: "debit_cards",
-                principalColumn: "id");
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_accounts_debit_cards_DebitCardId1",
                 table: "accounts",
                 column: "DebitCardId1",
                 principalTable: "debit_cards",
-                principalColumn: "id");
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_accounts_products_ProductId",
                 table: "accounts",
                 column: "ProductId",
                 principalTable: "products",
-                principalColumn: "id");
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_credit_cards_products_product_id",
+                name: "FK_credit_cards_products_ProductId",
                 table: "credit_cards",
-                column: "product_id",
+                column: "ProductId",
                 principalTable: "products",
-                principalColumn: "id");
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_debit_cards_products_product_id",
+                name: "FK_debit_cards_products_ProductId",
                 table: "debit_cards",
-                column: "product_id",
+                column: "ProductId",
                 principalTable: "products",
-                principalColumn: "id");
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_loans_products_product_id",
+                name: "FK_loans_products_ProductId",
                 table: "loans",
-                column: "product_id",
+                column: "ProductId",
                 principalTable: "products",
-                principalColumn: "id");
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
+                name: "FK_accounts_account_types_AccountTypeId",
+                table: "accounts");
+
+            migrationBuilder.DropForeignKey(
                 name: "FK_accounts_account_types_AccountTypeId1",
                 table: "accounts");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_accounts_account_types_account_type_id",
+                name: "FK_accounts_clients_ClientId",
                 table: "accounts");
 
             migrationBuilder.DropForeignKey(
@@ -799,39 +814,35 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 table: "accounts");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_accounts_clients_client_id",
-                table: "accounts");
+                name: "FK_credit_cards_clients_ClientId",
+                table: "credit_cards");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_credit_cards_clients_ClientId1",
                 table: "credit_cards");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_credit_cards_clients_client_id",
-                table: "credit_cards");
+                name: "FK_debit_cards_clients_ClientId",
+                table: "debit_cards");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_debit_cards_clients_ClientId1",
                 table: "debit_cards");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_debit_cards_clients_client_id",
-                table: "debit_cards");
+                name: "FK_loans_clients_ClientId",
+                table: "loans");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_loans_clients_ClientId1",
                 table: "loans");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_loans_clients_client_id",
-                table: "loans");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_products_clients_ClientId1",
+                name: "FK_products_clients_ClientId",
                 table: "products");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_products_clients_client_id",
+                name: "FK_products_clients_ClientId1",
                 table: "products");
 
             migrationBuilder.DropForeignKey(
@@ -851,11 +862,11 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 table: "accounts");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_credit_cards_products_product_id",
+                name: "FK_credit_cards_products_ProductId",
                 table: "credit_cards");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_loans_products_product_id",
+                name: "FK_loans_products_ProductId",
                 table: "loans");
 
             migrationBuilder.DropTable(

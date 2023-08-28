@@ -12,21 +12,11 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
 
       entity.HasKey(e => e.Id);
 
-      entity.Property(e => e.Id)
-              .ValueGeneratedNever()
-              .HasColumnName("id");
-
-      entity.Property(e => e.ClientId).HasColumnName("client_id");
-
       entity.Property(e => e.IsActive)
-              .HasDefaultValue(true)
-              .HasColumnName("isActive");
+              .HasDefaultValue(true);
 
       entity.Property(e => e.LoanAmount)
-              .HasColumnType("money")
-              .HasColumnName("loan_amount");
-
-      entity.Property(e => e.ProductId).HasColumnName("product_id");
+              .HasColumnType("money");
 
       entity.HasMany<Transaction>()
             .WithOne(transaction => transaction.DestinationLoan)

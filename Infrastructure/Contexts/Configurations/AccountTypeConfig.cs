@@ -16,14 +16,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
 
       entity.HasIndex(e => e.Description, "account_types_index_12");
 
-      entity.Property(e => e.Id)
-          .ValueGeneratedNever()
-          .HasColumnName("id");
-
       entity.Property(e => e.Description)
-          .HasMaxLength(1)
-          .IsUnicode(false)
-          .HasColumnName("description");
+          .HasMaxLength(100)
+          .IsUnicode(false);
 
       entity.HasMany<Account>()
         .WithOne(account => account.AccountType)

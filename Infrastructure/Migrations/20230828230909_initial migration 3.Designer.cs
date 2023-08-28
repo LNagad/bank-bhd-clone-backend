@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BhdBankClone.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(BhdContext))]
-    [Migration("20230828223925_initial migration")]
-    partial class initialmigration
+    [Migration("20230828230909_initial migration 3")]
+    partial class initialmigration3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,25 +28,25 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("BhdBankClone.Core.Domain.Account", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AccountNumber")
-                        .HasMaxLength(9)
+                        .HasMaxLength(16)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(9)")
-                        .HasColumnName("account_number");
+                        .HasColumnType("varchar(16)");
 
                     b.Property<int?>("AccountTypeId")
-                        .HasColumnType("int")
-                        .HasColumnName("account_type_id");
+                        .HasColumnType("int");
 
                     b.Property<int?>("AccountTypeId1")
                         .HasColumnType("int");
 
                     b.Property<int?>("ClientId")
                         .HasColumnType("int")
-                        .HasColumnName("client_id");
+                        .HasColumnName("ClientId");
 
                     b.Property<int?>("ClientId1")
                         .HasColumnType("int");
@@ -70,12 +70,10 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     b.Property<bool?>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasColumnName("isActive")
-                        .HasDefaultValueSql("((1))");
+                        .HasDefaultValue(true);
 
                     b.Property<bool?>("IsPrimary")
-                        .HasColumnType("bit")
-                        .HasColumnName("isPrimary");
+                        .HasColumnType("bit");
 
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
@@ -118,8 +116,10 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("BhdBankClone.Core.Domain.AccountType", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -128,10 +128,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(1)
+                        .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1)")
-                        .HasColumnName("description");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -143,7 +142,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasIndex(new[] { "Description" }, "UQ__account___489B0D977287E385")
                         .IsUnique()
-                        .HasFilter("[description] IS NOT NULL");
+                        .HasFilter("[Description] IS NOT NULL");
 
                     b.HasIndex(new[] { "Description" }, "account_types_index_12");
 
@@ -153,16 +152,16 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("BhdBankClone.Core.Domain.Client", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ClientTypeId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ClientsTypeId")
-                        .IsRequired()
-                        .HasColumnType("int")
-                        .HasColumnName("clients_type_id");
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -172,20 +171,17 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("IdentityCard")
                         .IsRequired()
-                        .HasMaxLength(1)
+                        .HasMaxLength(11)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1)")
-                        .HasColumnName("identity_card");
+                        .HasColumnType("varchar(11)");
 
                     b.Property<bool?>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(true)
-                        .HasColumnName("isActive");
+                        .HasDefaultValue(true);
 
                     b.Property<int?>("StatusId")
-                        .HasColumnType("int")
-                        .HasColumnName("status_id");
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -194,8 +190,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnName("user_id");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -218,8 +213,10 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("BhdBankClone.Core.Domain.ClientStatus", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -231,8 +228,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("description");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -252,8 +248,10 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("BhdBankClone.Core.Domain.ClientType", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -263,10 +261,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(1)
+                        .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1)")
-                        .HasColumnName("description");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -287,28 +284,26 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("BhdBankClone.Core.Domain.CreditCard", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CardCvv")
                         .HasMaxLength(3)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(3)")
-                        .HasColumnName("card_cvv");
+                        .HasColumnType("varchar(3)");
 
                     b.Property<DateTime?>("CardExpiryDate")
-                        .HasColumnType("date")
-                        .HasColumnName("card_expiry_date");
+                        .HasColumnType("date");
 
                     b.Property<string>("CardNumber")
                         .HasMaxLength(16)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(16)")
-                        .HasColumnName("card_number");
+                        .HasColumnType("varchar(16)");
 
                     b.Property<int?>("ClientId")
-                        .HasColumnType("int")
-                        .HasColumnName("client_id");
+                        .HasColumnType("int");
 
                     b.Property<int?>("ClientId1")
                         .HasColumnType("int");
@@ -320,30 +315,24 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("CreditCardDebt")
-                        .HasColumnType("money")
-                        .HasColumnName("credit_card_debt");
+                        .HasColumnType("money");
 
                     b.Property<decimal?>("CreditLimit")
-                        .HasColumnType("money")
-                        .HasColumnName("credit_limit");
+                        .HasColumnType("money");
 
                     b.Property<decimal?>("CurrentBalance")
-                        .HasColumnType("money")
-                        .HasColumnName("current_balance");
+                        .HasColumnType("money");
 
                     b.Property<bool?>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(true)
-                        .HasColumnName("isActive");
+                        .HasDefaultValue(true);
 
                     b.Property<bool?>("IsPrimary")
-                        .HasColumnType("bit")
-                        .HasColumnName("isPrimary");
+                        .HasColumnType("bit");
 
                     b.Property<int?>("ProductId")
-                        .HasColumnType("int")
-                        .HasColumnName("product_id");
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -359,7 +348,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ProductId")
                         .IsUnique()
-                        .HasFilter("[product_id] IS NOT NULL");
+                        .HasFilter("[ProductId] IS NOT NULL");
 
                     b.HasIndex(new[] { "CardNumber" }, "credit_cards_index_4");
 
@@ -373,8 +362,10 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("BhdBankClone.Core.Domain.DebitCard", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CardCvv")
                         .HasMaxLength(3)
@@ -383,18 +374,15 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .HasColumnName("card_cvv");
 
                     b.Property<DateTime?>("CardExpiryDate")
-                        .HasColumnType("date")
-                        .HasColumnName("card_expiry_date");
+                        .HasColumnType("date");
 
                     b.Property<string>("CardNumber")
                         .HasMaxLength(16)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(16)")
-                        .HasColumnName("card_number");
+                        .HasColumnType("varchar(16)");
 
                     b.Property<int?>("ClientId")
-                        .HasColumnType("int")
-                        .HasColumnName("client_id");
+                        .HasColumnType("int");
 
                     b.Property<int?>("ClientId1")
                         .HasColumnType("int");
@@ -408,16 +396,13 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     b.Property<bool?>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(true)
-                        .HasColumnName("isActive");
+                        .HasDefaultValue(true);
 
                     b.Property<bool?>("IsPrimary")
-                        .HasColumnType("bit")
-                        .HasColumnName("isPrimary");
+                        .HasColumnType("bit");
 
                     b.Property<int?>("ProductId")
-                        .HasColumnType("int")
-                        .HasColumnName("product_id");
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -433,7 +418,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ProductId")
                         .IsUnique()
-                        .HasFilter("[product_id] IS NOT NULL");
+                        .HasFilter("[ProductId] IS NOT NULL");
 
                     b.HasIndex(new[] { "CardNumber" }, "debit_cards_index_7");
 
@@ -447,12 +432,13 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("BhdBankClone.Core.Domain.Loan", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ClientId")
-                        .HasColumnType("int")
-                        .HasColumnName("client_id");
+                        .HasColumnType("int");
 
                     b.Property<int?>("ClientId1")
                         .HasColumnType("int");
@@ -466,16 +452,13 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     b.Property<bool?>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(true)
-                        .HasColumnName("isActive");
+                        .HasDefaultValue(true);
 
                     b.Property<decimal?>("LoanAmount")
-                        .HasColumnType("money")
-                        .HasColumnName("loan_amount");
+                        .HasColumnType("money");
 
                     b.Property<int?>("ProductId")
-                        .HasColumnType("int")
-                        .HasColumnName("product_id");
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -491,7 +474,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ProductId")
                         .IsUnique()
-                        .HasFilter("[product_id] IS NOT NULL");
+                        .HasFilter("[ProductId] IS NOT NULL");
 
                     b.HasIndex(new[] { "IsActive" }, "loans_index_10");
 
@@ -501,19 +484,19 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("BhdBankClone.Core.Domain.Product", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("AccountId")
-                        .HasColumnType("int")
-                        .HasColumnName("account_id");
+                        .HasColumnType("int");
 
                     b.Property<int?>("AccountId1")
                         .HasColumnType("int");
 
                     b.Property<int?>("ClientId")
-                        .HasColumnType("int")
-                        .HasColumnName("client_id");
+                        .HasColumnType("int");
 
                     b.Property<int?>("ClientId1")
                         .HasColumnType("int");
@@ -525,45 +508,37 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CreditCardId")
-                        .HasColumnType("int")
-                        .HasColumnName("credit_card_id");
+                        .HasColumnType("int");
 
                     b.Property<int?>("CreditCardId1")
                         .HasColumnType("int");
 
                     b.Property<int?>("DebitCardId")
-                        .HasColumnType("int")
-                        .HasColumnName("debit_card_id");
+                        .HasColumnType("int");
 
                     b.Property<int?>("DebitCardId1")
                         .HasColumnType("int");
 
                     b.Property<bool?>("IsAccount")
-                        .HasColumnType("bit")
-                        .HasColumnName("isAccount");
+                        .HasColumnType("bit");
 
                     b.Property<bool?>("IsCreditCard")
-                        .HasColumnType("bit")
-                        .HasColumnName("isCreditCard");
+                        .HasColumnType("bit");
 
                     b.Property<bool?>("IsDebitCard")
-                        .HasColumnType("bit")
-                        .HasColumnName("isDebitCard");
+                        .HasColumnType("bit");
 
                     b.Property<bool?>("IsLoan")
-                        .HasColumnType("bit")
-                        .HasColumnName("isLoan");
+                        .HasColumnType("bit");
 
                     b.Property<int?>("LoanId")
-                        .HasColumnType("int")
-                        .HasColumnName("loan_id");
+                        .HasColumnType("int");
 
                     b.Property<int?>("LoanId1")
                         .HasColumnType("int");
 
                     b.Property<int?>("ProductTypeId")
-                        .HasColumnType("int")
-                        .HasColumnName("product_type_id");
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -593,8 +568,10 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("BhdBankClone.Core.Domain.ProductType", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -605,8 +582,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("description");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -622,19 +598,19 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("BhdBankClone.Core.Domain.Transaction", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("AccountId")
                         .HasColumnType("int");
 
                     b.Property<decimal?>("Amount")
-                        .HasColumnType("money")
-                        .HasColumnName("amount");
+                        .HasColumnType("money");
 
                     b.Property<int?>("ClientId")
-                        .HasColumnType("int")
-                        .HasColumnName("client_id");
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -649,39 +625,31 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("DestinationAccountId")
-                        .HasColumnType("int")
-                        .HasColumnName("destination_account_id");
+                        .HasColumnType("int");
 
                     b.Property<int?>("DestinationCreditCardId")
-                        .HasColumnType("int")
-                        .HasColumnName("destination_credit_card_id");
+                        .HasColumnType("int");
 
                     b.Property<int?>("DestinationLoanId")
-                        .HasColumnType("int")
-                        .HasColumnName("destination_loan_id");
+                        .HasColumnType("int");
 
                     b.Property<int?>("LoanId")
                         .HasColumnType("int");
 
                     b.Property<int?>("SourceAccountId")
-                        .HasColumnType("int")
-                        .HasColumnName("source_account_id");
+                        .HasColumnType("int");
 
                     b.Property<int?>("SourceCreditCardId")
-                        .HasColumnType("int")
-                        .HasColumnName("source_credit_card_id");
+                        .HasColumnType("int");
 
                     b.Property<int?>("SourceDebitCardId")
-                        .HasColumnType("int")
-                        .HasColumnName("source_debit_card_id");
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("TransactionTime")
-                        .HasColumnType("datetime")
-                        .HasColumnName("transaction_time");
+                        .HasColumnType("datetime");
 
                     b.Property<int?>("TransactionTypeId")
-                        .HasColumnType("int")
-                        .HasColumnName("transaction_type_id");
+                        .HasColumnType("int");
 
                     b.Property<int?>("TransactionTypeId1")
                         .HasColumnType("int");
@@ -728,8 +696,10 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("BhdBankClone.Core.Domain.TransactionType", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -738,10 +708,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(1)
+                        .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1)")
-                        .HasColumnName("description");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -803,9 +772,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasOne("BhdBankClone.Core.Domain.ClientType", "ClientType")
                         .WithMany()
-                        .HasForeignKey("ClientsTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClientsTypeId");
 
                     b.HasOne("BhdBankClone.Core.Domain.ClientStatus", "ClientStatus")
                         .WithMany()

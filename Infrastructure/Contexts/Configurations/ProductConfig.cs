@@ -8,25 +8,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
   {
     public void Configure(EntityTypeBuilder<Product> entity)
     {
-      entity.HasKey(e => e.Id);
-
       entity.ToTable("products");
 
-      entity.Property(e => e.Id)
-              .ValueGeneratedNever()
-              .HasColumnName("id");
-
-      entity.Property(e => e.AccountId).HasColumnName("account_id");
-      entity.Property(e => e.ClientId).HasColumnName("client_id");
-      entity.Property(e => e.CreditCardId).HasColumnName("credit_card_id");
-      entity.Property(e => e.DebitCardId).HasColumnName("debit_card_id");
-      entity.Property(e => e.LoanId).HasColumnName("loan_id");
-      entity.Property(e => e.ProductTypeId).HasColumnName("product_type_id");
-
-      entity.Property(e => e.IsAccount).HasColumnName("isAccount");
-      entity.Property(e => e.IsCreditCard).HasColumnName("isCreditCard");
-      entity.Property(e => e.IsDebitCard).HasColumnName("isDebitCard");
-      entity.Property(e => e.IsLoan).HasColumnName("isLoan");
+      entity.HasKey(e => e.Id);
 
       entity.HasOne<Account>()
         .WithOne(acc => acc.Product)
