@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34018.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BhdBankCloneApi", "BhdBankCloneApi.csproj", "{C46A4CE8-5764-42A8-8B2B-5BC4F64083BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BhdBankClone.Infrastructure.Persistence", "..\Infrastructure\BhdBankClone.Infrastructure.Persistence.csproj", "{B6CC63FC-C2DC-42B5-9382-F43581A203E1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{740B9862-6705-41F6-80E5-307523353F08}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{F0F07467-3FF8-4808-BA7A-62CFFAC4A120}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{BAE8AEDD-D10B-4C91-8AB9-2304B30540EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{227DA474-2CB5-41CF-9F7F-21BA7DA60E32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BhdBankClone.Core.Domain", "..\Core.Domain\BhdBankClone.Core.Domain.csproj", "{1EC38B30-FCDD-4253-ADF0-0770375FD680}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BhdBankClone.Core.Application", "..\BhdBankClone.Core.Application\BhdBankClone.Core.Application.csproj", "{D14B26B9-0850-4D1C-84E8-46C5324AFCFC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C46A4CE8-5764-42A8-8B2B-5BC4F64083BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C46A4CE8-5764-42A8-8B2B-5BC4F64083BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C46A4CE8-5764-42A8-8B2B-5BC4F64083BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C46A4CE8-5764-42A8-8B2B-5BC4F64083BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6CC63FC-C2DC-42B5-9382-F43581A203E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6CC63FC-C2DC-42B5-9382-F43581A203E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6CC63FC-C2DC-42B5-9382-F43581A203E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6CC63FC-C2DC-42B5-9382-F43581A203E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EC38B30-FCDD-4253-ADF0-0770375FD680}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EC38B30-FCDD-4253-ADF0-0770375FD680}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EC38B30-FCDD-4253-ADF0-0770375FD680}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EC38B30-FCDD-4253-ADF0-0770375FD680}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D14B26B9-0850-4D1C-84E8-46C5324AFCFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D14B26B9-0850-4D1C-84E8-46C5324AFCFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D14B26B9-0850-4D1C-84E8-46C5324AFCFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D14B26B9-0850-4D1C-84E8-46C5324AFCFC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C46A4CE8-5764-42A8-8B2B-5BC4F64083BD} = {227DA474-2CB5-41CF-9F7F-21BA7DA60E32}
+		{B6CC63FC-C2DC-42B5-9382-F43581A203E1} = {BAE8AEDD-D10B-4C91-8AB9-2304B30540EB}
+		{F0F07467-3FF8-4808-BA7A-62CFFAC4A120} = {740B9862-6705-41F6-80E5-307523353F08}
+		{BAE8AEDD-D10B-4C91-8AB9-2304B30540EB} = {740B9862-6705-41F6-80E5-307523353F08}
+		{227DA474-2CB5-41CF-9F7F-21BA7DA60E32} = {740B9862-6705-41F6-80E5-307523353F08}
+		{1EC38B30-FCDD-4253-ADF0-0770375FD680} = {F0F07467-3FF8-4808-BA7A-62CFFAC4A120}
+		{D14B26B9-0850-4D1C-84E8-46C5324AFCFC} = {F0F07467-3FF8-4808-BA7A-62CFFAC4A120}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9B6D54CF-508A-459D-9935-B38C27BA75DF}
+	EndGlobalSection
+EndGlobal
