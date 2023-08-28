@@ -16,9 +16,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
 
       entity.HasIndex(e => e.IsPrimary, "accounts_index_3");
 
-      entity.Property(e => e.Id)
+      entity.Property(e => e.DebitCardId)
           .ValueGeneratedNever()
-          .HasColumnName("id");
+          .HasColumnName("DebitCardId");
 
       entity.Property(e => e.AccountNumber)
           .HasMaxLength(9)

@@ -35,6 +35,9 @@ public class BhdContext : DbContext
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
+    base.OnModelCreating(modelBuilder);
+    //modelBuilder.ApplyConfiguration(new AccountConfig());
+    //modelBuilder.ApplyConfiguration(new TransactionConfig());
     modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
   }
 }

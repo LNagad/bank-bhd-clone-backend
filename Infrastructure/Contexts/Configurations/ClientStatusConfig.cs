@@ -25,7 +25,8 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
       entity.Property(e => e.Description)
                 .HasMaxLength(100)
                 .IsUnicode(false)
-                .HasColumnName("description");
+                .HasColumnName("description")
+                .IsRequired();
 
       entity.HasMany<Client>()
         .WithOne(client => client.ClientStatus)

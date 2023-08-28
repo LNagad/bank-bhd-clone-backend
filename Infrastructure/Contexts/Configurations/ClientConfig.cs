@@ -16,12 +16,15 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
             .ValueGeneratedNever()
             .HasColumnName("id");
 
-      entity.Property(e => e.ClientsTypeId).HasColumnName("clients_type_id");
+      entity.Property(e => e.ClientsTypeId)
+        .HasColumnName("clients_type_id")
+        .IsRequired();
 
       entity.Property(e => e.IdentityCard)
             .HasMaxLength(1)
             .IsUnicode(false)
-            .HasColumnName("identity_card");
+            .HasColumnName("identity_card")
+            .IsRequired();
 
       entity.Property(e => e.IsActive)
             .HasColumnName("isActive")

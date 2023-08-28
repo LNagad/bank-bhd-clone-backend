@@ -20,7 +20,8 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
       entity.Property(e => e.Description)
               .HasMaxLength(1)
               .IsUnicode(false)
-              .HasColumnName("description");
+              .HasColumnName("description")
+              .IsRequired();
 
       entity.HasIndex(e => e.Description, "UQ__clients___489B0D974E8DBA8C").IsUnique();
 

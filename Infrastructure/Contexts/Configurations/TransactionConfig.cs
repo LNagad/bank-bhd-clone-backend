@@ -48,6 +48,10 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
       entity.HasIndex(e => e.DestinationCreditCardId, "transactions_index_19");
 
       entity.HasIndex(e => e.DestinationLoanId, "transactions_index_20");
+
+
+
+      
     }
   }
 }

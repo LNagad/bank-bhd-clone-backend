@@ -29,8 +29,6 @@ public class Account: AuditableBaseEntity
 
   public DebitCard? DebitCard { get; set; }
 
-  public virtual ICollection<Transaction>? DestinationTransactions { get; set; }
-
-  public virtual ICollection<Transaction>? SourceTransactions { get; set; }
+  public virtual ICollection<Transaction>? Transactions { get; set; }
 
 }
