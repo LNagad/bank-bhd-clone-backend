@@ -6,6 +6,7 @@ namespace BhdBankCloneApi.Controllers
   [ApiController]
   public class SecurityController : ControllerBase
   {
+    [HttpGet]
     public IActionResult Get()
     {
       return Ok(new

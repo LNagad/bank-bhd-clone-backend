@@ -1,5 +1,6 @@
 using BhdBankClone.Infrastructure.Persistence;
 using BhdBankClone.Infrastructure.Identity;
+using BhdBankClone.Core.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddPersistenceInfrastructure(builder.Configuration);
 builder.Services.AddIdentityInfrastructureForApi(builder.Configuration);
-
+builder.Services.AddApplicationLayer(builder.Configuration);
 
 var app = builder.Build();
 
@@ -23,6 +24,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+//app.UseHsts();
 
 app.UseAuthorization();
 

@@ -1,4 +1,6 @@
-﻿using Infrastructure.Persistence;
+﻿using BhdBankClone.Core.Application.Interfaces.Repositories;
+using BhdBankClone.Infrastructure.Persistence.Repositories;
+using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,9 +11,7 @@ namespace BhdBankClone.Infrastructure.Persistence
   {
     public static IServiceCollection AddPersistenceInfrastructure(this IServiceCollection services, IConfiguration config)
     {
-
-      //services.AddTransient<IUnitOfWork, UnitOfWork>();
-      //services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+      AddRepositories(services);
 
       services.AddDbContext<BhdContext>(opt =>
       {
@@ -21,5 +21,15 @@ namespace BhdBankClone.Infrastructure.Persistence
 
       return services;
     }
+
+    #region Private Methods
+    private static void AddRepositories(this IServiceCollection services)
+    {
+      //services.AddTransient<IUnitOfWork, UnitOfWork>();
+      services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+      services.AddTransient<IClientRepository, ClientRepository>();
+      services.AddTransient<IClientStatusRepository, ClientstatusRepository>();
+    }
+    #endregion
   }
 }
