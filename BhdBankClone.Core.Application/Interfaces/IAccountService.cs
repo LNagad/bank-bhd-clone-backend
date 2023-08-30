@@ -1,6 +1,6 @@
 ﻿using BhdBankClone.Core.Application.DTOs.Account;
 
-namespace BhdBankClone.Infrastructure.Identity.Interfaces
+namespace BhdBankClone.Core.Application.Interfaces
 {
   public interface IAccountService
   {

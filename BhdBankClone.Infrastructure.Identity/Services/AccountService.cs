@@ -1,8 +1,8 @@
 ﻿using BhdBankClone.Core.Application.DTOs.Account;
 using BhdBankClone.Core.Application.Enums;
+using BhdBankClone.Core.Application.Interfaces;
 using BhdBankClone.Core.Domain.settings;
 using BhdBankClone.Infrastructure.Identity.Entities;
-using BhdBankClone.Infrastructure.Identity.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
@@ -15,7 +15,7 @@ using System.Text;
 
 namespace BhdBankClone.Infrastructure.Identity.Services
 {
-    public class AccountService : IAccountService
+  public class AccountService : IAccountService
   {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;

@@ -1,12 +1,20 @@
 using BhdBankClone.Infrastructure.Persistence;
 using BhdBankClone.Infrastructure.Identity;
 using BhdBankClone.Core.Application;
+using BhdBankCloneApi.Middlewares;
+using Microsoft.AspNetCore.Identity;
+using BhdBankClone.Infrastructure.Identity.Entities;
+using BhdBankClone.Infrastructure.Identity.Seeds;
+using BhdBankCloneApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
+{
+  options.SuppressMapClientErrors = true;
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -16,12 +24,17 @@ builder.Services.AddApplicationLayer(builder.Configuration);
 
 var app = builder.Build();
 
+// Configure identity seed
+await app.Services.AddIdentitySeed();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
   app.UseSwagger();
   app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ErrorHandleMiddleware>();
 
 app.UseHttpsRedirection();
 

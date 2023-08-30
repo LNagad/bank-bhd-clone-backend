@@ -1,8 +1,8 @@
-﻿using BhdBankClone.Core.Application.Wrappers;
+﻿using BhdBankClone.Core.Application.Interfaces;
+using BhdBankClone.Core.Application.Wrappers;
 using BhdBankClone.Core.Domain.settings;
 using BhdBankClone.Infrastructure.Identity.Contexts;
 using BhdBankClone.Infrastructure.Identity.Entities;
-using BhdBankClone.Infrastructure.Identity.Interfaces;
 using BhdBankClone.Infrastructure.Identity.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
