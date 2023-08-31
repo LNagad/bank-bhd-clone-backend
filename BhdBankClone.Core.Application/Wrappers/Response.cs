@@ -4,7 +4,7 @@
   {
     public bool Succeeded { get; set; }
     public string? Message { get; set; }
-    public List<string>? Errors { get; set; }
+    public List<string>? Errors { get; set; } = new List<string>(); // Inicializa la lista aquí
     public T Data { get; set; }
 
     public Response() { }

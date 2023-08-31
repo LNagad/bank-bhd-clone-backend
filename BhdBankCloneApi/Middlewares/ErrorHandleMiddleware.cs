@@ -26,7 +26,24 @@ namespace BhdBankCloneApi.Middlewares
         var response = httpContext.Response;
         response.ContentType = "application/json";
 
+        //if error.InnerException
+
         var responseModel = new Response<string>() { Succeeded = false, Message = error?.Message };
+
+        if (error is ApiException apiException)
+        {
+          if (apiException.ValidationErrors != null)
+          {
+            foreach (var valError in apiException.ValidationErrors)
+            {
+              Console.WriteLine(valError.ToString());
+              responseModel.Errors.Add(valError.ToString());
+            }
+          } else
+          {
+            responseModel.Errors = null;
+          }
+        }
 
         switch (error)
         {

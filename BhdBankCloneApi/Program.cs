@@ -1,11 +1,8 @@
-using BhdBankClone.Infrastructure.Persistence;
-using BhdBankClone.Infrastructure.Identity;
 using BhdBankClone.Core.Application;
-using BhdBankCloneApi.Middlewares;
-using Microsoft.AspNetCore.Identity;
-using BhdBankClone.Infrastructure.Identity.Entities;
-using BhdBankClone.Infrastructure.Identity.Seeds;
+using BhdBankClone.Infrastructure.Identity;
+using BhdBankClone.Infrastructure.Persistence;
 using BhdBankCloneApi.Extensions;
+using BhdBankCloneApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +36,8 @@ app.UseMiddleware<ErrorHandleMiddleware>();
 app.UseHttpsRedirection();
 
 //app.UseHsts();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
