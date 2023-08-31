@@ -8,7 +8,7 @@ using System.Net;
 
 namespace BhdBankCloneApi.Controllers
 {
-  [Route("api/[controller]")]
+  //[Route("api/[controller]")]
   //[Authorize(Roles = nameof(Roles.Moderator)+","+nameof(Roles.Admin))]
   public class AccountController : BaseApiController
   {

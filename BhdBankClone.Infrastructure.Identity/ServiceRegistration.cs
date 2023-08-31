@@ -1,4 +1,5 @@
-﻿using BhdBankClone.Core.Application.Interfaces;
+﻿using BhdBankClone.Core.Application.Exceptions;
+using BhdBankClone.Core.Application.Interfaces;
 using BhdBankClone.Core.Application.Wrappers;
 using BhdBankClone.Core.Domain.settings;
 using BhdBankClone.Infrastructure.Identity.Contexts;
@@ -66,7 +67,7 @@ namespace BhdBankClone.Infrastructure.Identity
           },
           OnChallenge = c => // cuando no esta autenticado / token invalido
           {
-            c.HandleResponse();
+            c.HandleResponse(); //TODO: Handle error that happens when token is expired
             c.Response.StatusCode = 401;
             c.Response.ContentType = "application/json";
             var result = JsonConvert.SerializeObject(new Response<string>("You are not Authorized"));
@@ -115,6 +116,7 @@ namespace BhdBankClone.Infrastructure.Identity
     private static void AddServicesConfiguration(this IServiceCollection services)
     {
       services.AddTransient<IAccountService, AccountService>();
+      services.AddTransient<IBasicUserExtraAccountService, BasicUserExtraAccountService>();
     }
 
     #endregion

@@ -19,6 +19,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Repositories
     public virtual async Task<Entity> AddAsync(Entity entity)
     {
       await _context.AddAsync(entity);
+      await _context.SaveChangesAsync();
       return entity;
     }
 
@@ -81,14 +82,16 @@ namespace BhdBankClone.Infrastructure.Persistence.Repositories
       return await _context.Set<Entity>().CountAsync();
     }
 
-    public virtual Entity Update(Entity entity)
+    public virtual async Task<Entity> Update(Entity entity)
     {
       _context.Set<Entity>().Update(entity);
+      await _context.SaveChangesAsync();
       return entity;
     }
 
-    public virtual void Remove(Entity entity)
+    public virtual async Task Remove(Entity entity)
     {
+      await _context.SaveChangesAsync();
       _context.Set<Entity>().Remove(entity);
     }
 

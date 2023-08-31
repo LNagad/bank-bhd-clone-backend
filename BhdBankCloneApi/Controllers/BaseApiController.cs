@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace BhdBankCloneApi.Controllers
 {
   [Produces("application/json")]
-  [Route("api/v{version:apiVersion}/[controller]")]
+  //[Route("api/v{version:apiVersion}/[controller]")]
+  [Route("api/[controller]")]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   [ProducesResponseType(StatusCodes.Status401Unauthorized)]
   [ProducesResponseType(StatusCodes.Status403Forbidden)]

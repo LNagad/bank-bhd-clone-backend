@@ -17,6 +17,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
             .IsUnicode(false)
             .IsRequired();
 
+      entity.Property(e => e.UserId)
+        .HasColumnType("nvarchar(100)");
+
       entity.Property(e => e.IsActive)
             .HasDefaultValue(true);
 

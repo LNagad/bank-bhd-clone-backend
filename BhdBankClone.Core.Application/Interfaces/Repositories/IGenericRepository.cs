@@ -13,8 +13,8 @@ namespace BhdBankClone.Core.Application.Interfaces.Repositories
     Task<Entity?> GetByIdAsync(int id);
     Task<Entity?> GetByIdWithIncludeAsync(int id, List<string> properties);
     IQueryable<Entity> GetQueryable();
-    void Remove(Entity entity);
+    Task Remove(Entity entity);
     Task<int> SaveChangesAsync();
-    Entity Update(Entity entity);
+    Task<Entity> Update(Entity entity);
   }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BhdBankClone.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class initialmigration3 : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -102,7 +102,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     ClientsTypeId = table.Column<int>(type: "int", nullable: true),
                     IdentityCard = table.Column<string>(type: "varchar(11)", unicode: false, maxLength: 11, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: true, defaultValue: true),

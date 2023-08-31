@@ -10,9 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 {
+  options.SuppressInferBindingSourcesForParameters = true;
   options.SuppressMapClientErrors = true;
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddPersistenceInfrastructure(builder.Configuration);
@@ -32,14 +35,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<ErrorHandleMiddleware>();
-
 app.UseHttpsRedirection();
-
-//app.UseHsts();
+app.UseHsts();
 
 app.UseAuthentication();
-
 app.UseAuthorization();
+
+
 
 app.MapControllers();
 

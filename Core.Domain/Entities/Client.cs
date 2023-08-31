@@ -4,7 +4,7 @@ namespace BhdBankClone.Core.Domain;
 
 public class Client : AuditableBaseEntity
 {
-  public int? UserId { get; set; }
+  public string? UserId { get; set; }
 
   public int? ClientsTypeId { get; set; }
 

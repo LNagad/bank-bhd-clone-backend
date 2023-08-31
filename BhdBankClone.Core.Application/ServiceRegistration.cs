@@ -10,6 +10,7 @@ namespace BhdBankClone.Core.Application
   {
     public static IServiceCollection AddApplicationLayer(this IServiceCollection services, IConfiguration config)
     {
+      services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
       services.AddMediatR(c => c.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
       services.AddValidatorsFromAssemblyContaining<AuthenticateValidator>();
 
