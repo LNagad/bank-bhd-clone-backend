@@ -6,5 +6,6 @@ namespace BhdBankClone.Core.Application.Interfaces
   {
     Task<List<BasicUserDTO>?> GetAllBasicUserAsync();
     Task<bool> UserExist(string Id);
+    Task<BasicUserDTO> GetBasicUserByIdAsync(string Id);
   }
 }

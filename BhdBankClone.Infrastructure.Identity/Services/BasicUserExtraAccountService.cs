@@ -28,6 +28,22 @@ namespace BhdBankClone.Infrastructure.Identity.Services
       return await _userManager.FindByIdAsync(Id) != null ? true : false;
     }
 
+    public async Task<BasicUserDTO> GetBasicUserByIdAsync(string Id)
+    {
+      var user = await _userManager.FindByIdAsync(Id);
+      return new BasicUserDTO
+      {
+        FirstName = user.FirstName,
+        LastName = user.LastName,
+        Email = user.Email,
+        PhoneNumber = user.PhoneNumber,
+        UserName = user.UserName,
+        Id = user.Id,
+        IsActive = user.IsActive,
+        ClientId = user.ClientId
+      };
+    }
+
     public async Task<List<BasicUserDTO>?> GetAllBasicUserAsync()
     {
 
@@ -54,7 +70,6 @@ namespace BhdBankClone.Infrastructure.Identity.Services
           PhoneNumber = user.PhoneNumber,
           UserName = user.UserName,
           Id = user.Id,
-          Role = Roles.Basic.ToString(),
           IsActive = user.IsActive,
           ClientId = user.ClientId
         });
