@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace BhdBankClone.Core.Application.DTOs.Account
+namespace BhdBankClone.Core.Application.DTOs.Accounts
 {
   public class AuthenticationResponse
   {

@@ -20,6 +20,8 @@ public class DebitCard : AuditableBaseEntity
 
     public int? ClientId { get; set; }
 
+    public int? AccountId { get; set; }
+
     public virtual Client? Client { get; set; }
 
     public virtual Product? Product { get; set; }

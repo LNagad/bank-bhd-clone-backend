@@ -1,4 +1,4 @@
-﻿namespace BhdBankClone.Core.Application.DTOs.Account
+﻿namespace BhdBankClone.Core.Application.DTOs.Accounts
 {
   public class AuthenticationRequest
   {

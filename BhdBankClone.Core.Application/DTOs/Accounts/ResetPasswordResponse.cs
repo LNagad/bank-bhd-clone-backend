@@ -1,6 +1,6 @@
-﻿namespace BhdBankClone.Core.Application.DTOs.Account
+﻿namespace BhdBankClone.Core.Application.DTOs.Accounts
 {
-  public class ForgotPasswordResponese
+  public class ResetPasswordResponse
   {
     public bool HasError { get; set; }
     public string Error { get; set; }

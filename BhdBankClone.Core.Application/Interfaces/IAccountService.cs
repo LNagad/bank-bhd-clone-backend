@@ -1,4 +1,4 @@
-﻿using BhdBankClone.Core.Application.DTOs.Account;
+﻿using BhdBankClone.Core.Application.DTOs.Accounts;
 
 namespace BhdBankClone.Core.Application.Interfaces
 {

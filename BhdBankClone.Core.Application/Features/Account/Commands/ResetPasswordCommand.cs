@@ -1,4 +1,4 @@
-﻿using BhdBankClone.Core.Application.DTOs.Account;
+﻿using BhdBankClone.Core.Application.DTOs.Accounts;
 using BhdBankClone.Core.Application.Exceptions;
 using BhdBankClone.Core.Application.Interfaces;
 using BhdBankClone.Core.Application.Wrappers;

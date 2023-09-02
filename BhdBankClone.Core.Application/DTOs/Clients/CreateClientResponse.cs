@@ -1,4 +1,4 @@
-﻿namespace BhdBankClone.Core.Application.DTOs.Client
+﻿namespace BhdBankClone.Core.Application.DTOs.Clients
 {
   public class CreateClientResponse
   {
