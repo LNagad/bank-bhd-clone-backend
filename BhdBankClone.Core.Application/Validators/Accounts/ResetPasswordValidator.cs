@@ -1,4 +1,4 @@
-﻿using BhdBankClone.Core.Application.Features.Account.Commands;
+﻿using BhdBankClone.Core.Application.Features.IdentityAccount.Commands;
 using FluentValidation;
 
 namespace BhdBankClone.Core.Application.Validators.Accounts

@@ -1,9 +1,9 @@
-﻿using BhdBankClone.Core.Application.Features.ProductTypes.Commands;
+﻿using BhdBankClone.Core.Application.Features.Products.Commands;
 using FluentValidation;
 
 namespace BhdBankClone.Core.Application.Validators.Products
 {
-  internal class CreateProductValidator : AbstractValidator<CreateProductCommand>
+  public class CreateProductValidator : AbstractValidator<CreateProductCommand>
   {
     public CreateProductValidator()
     {

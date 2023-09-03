@@ -12,7 +12,7 @@ namespace BhdBankClone.Core.Application
     {
       services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
       services.AddMediatR(c => c.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-      services.AddValidatorsFromAssemblyContaining<AuthenticateValidator>();
+      services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
       return services;
     }

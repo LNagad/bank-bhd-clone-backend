@@ -1,5 +1,5 @@
 ﻿using BhdBankClone.Core.Application.Enums;
-using BhdBankClone.Core.Application.Features.Account.Queries;
+using BhdBankClone.Core.Application.Features.Accounts.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

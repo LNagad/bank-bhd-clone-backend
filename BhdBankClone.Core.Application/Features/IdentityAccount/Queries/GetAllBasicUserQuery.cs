@@ -3,7 +3,7 @@ using BhdBankClone.Core.Application.Interfaces;
 using BhdBankClone.Core.Application.Wrappers;
 using MediatR;
 
-namespace BhdBankClone.Core.Application.Features.Account.Queries
+namespace BhdBankClone.Core.Application.Features.Accounts.Queries
 {
   public class GetAllBasicUserQuery: IRequest<Response<List<BasicUserDTO>>>
   {

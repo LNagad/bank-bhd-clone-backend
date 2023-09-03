@@ -5,7 +5,7 @@ using BhdBankClone.Core.Application.Wrappers;
 using BhdBankClone.Core.Domain;
 using MediatR;
 
-namespace BhdBankClone.Core.Application.Features.Clients.Queries
+namespace BhdBankClone.Core.Application.Features.ProductTypes.Queries
 {
   public class GetAllProductTypesQuery : IRequest<Response<List<ProductTypeDTO>>>
   {

@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace BhdBankClone.Core.Application.Validators.Loans
 {
-  internal class CreateLoanValidator : AbstractValidator<CreateLoanCommand>
+  public class CreateLoanValidator : AbstractValidator<CreateLoanCommand>
   {
     public CreateLoanValidator()
     {

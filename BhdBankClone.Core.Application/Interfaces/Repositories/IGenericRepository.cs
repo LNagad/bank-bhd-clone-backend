@@ -7,6 +7,7 @@ namespace BhdBankClone.Core.Application.Interfaces.Repositories
     Task<Entity> AddAsync(Entity entity);
     Task<int> CountAsync();
     IAsyncEnumerable<Entity> GetAllAsyncEnumerable();
+    IEnumerable<Entity> GetAllEnumerable();
     Task<List<Entity>> GetAllAsyncList();
     Task<List<Entity>> GetAllAsyncPaginatedList(int pageSize, int pageNumber);
     Task<List<Entity>> GetAllWithIncludeAsync(List<string> parameters);

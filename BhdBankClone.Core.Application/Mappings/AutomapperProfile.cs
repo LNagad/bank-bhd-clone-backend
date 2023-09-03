@@ -1,14 +1,17 @@
 ﻿using AutoMapper;
+using BhdBankClone.Core.Application.DTOs.BankAccounts;
 using BhdBankClone.Core.Application.DTOs.Clients;
 using BhdBankClone.Core.Application.DTOs.CreditCards;
 using BhdBankClone.Core.Application.DTOs.DebitCards;
 using BhdBankClone.Core.Application.DTOs.Loans;
 using BhdBankClone.Core.Application.DTOs.Products;
 using BhdBankClone.Core.Application.DTOs.ProductTypes;
+using BhdBankClone.Core.Application.Features.BankAccounts.Commands;
 using BhdBankClone.Core.Application.Features.Clients.Commands;
 using BhdBankClone.Core.Application.Features.CreditCards.Commands;
 using BhdBankClone.Core.Application.Features.DebitCards.Commands;
 using BhdBankClone.Core.Application.Features.Loans.Commands;
+using BhdBankClone.Core.Application.Features.Products.Commands;
 using BhdBankClone.Core.Application.Features.ProductTypes.Commands;
 using BhdBankClone.Core.Domain;
 
@@ -108,6 +111,24 @@ namespace BhdBankClone.Core.Application.Mappings
 
       CreateMap<CreditCardDTO, CreditCard>()
         .ForMember(dest => dest.Client, opt => opt.Ignore())
+        .ForMember(dest => dest.Product, opt => opt.Ignore())
+        .ForMember(dest => dest.Transactions, opt => opt.Ignore())
+        .ReverseMap();
+      #endregion
+
+      #region BankAccounts
+      CreateMap<CreateBankAccountCommand, Account>()
+        .ForMember(dest => dest.Client, opt => opt.Ignore())
+        .ForMember(dest => dest.AccountType, opt => opt.Ignore())
+        .ForMember(dest => dest.DebitCard, opt => opt.Ignore())
+        .ForMember(dest => dest.Product, opt => opt.Ignore())
+        .ForMember(dest => dest.Transactions, opt => opt.Ignore())
+      .ReverseMap();
+
+      CreateMap<BankAccountDTO, Account>()
+        .ForMember(dest => dest.Client, opt => opt.Ignore())
+        .ForMember(dest => dest.AccountType, opt => opt.Ignore())
+        .ForMember(dest => dest.DebitCard, opt => opt.Ignore())
         .ForMember(dest => dest.Product, opt => opt.Ignore())
         .ForMember(dest => dest.Transactions, opt => opt.Ignore())
         .ReverseMap();

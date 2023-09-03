@@ -7,7 +7,7 @@ using BhdBankClone.Core.Domain;
 using FluentValidation;
 using MediatR;
 
-namespace BhdBankClone.Core.Application.Features.ProductTypes.Commands
+namespace BhdBankClone.Core.Application.Features.Products.Commands
 {
   public class CreateProductCommand : IRequest<Response<ProductDTO>>
   {

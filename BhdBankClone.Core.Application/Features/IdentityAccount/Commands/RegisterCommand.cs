@@ -7,7 +7,7 @@ using FluentValidation;
 using MediatR;
 using System.Net;
 
-namespace BhdBankClone.Core.Application.Features.Account.Commands
+namespace BhdBankClone.Core.Application.Features.IdentityAccount.Commands
 {
   public class RegisterCommand : IRequest<Response<RegisterResponse>>
   {
