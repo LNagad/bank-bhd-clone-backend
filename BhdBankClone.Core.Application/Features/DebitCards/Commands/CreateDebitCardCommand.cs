@@ -18,16 +18,20 @@ namespace BhdBankClone.Core.Application.Features.DebitCards.Commands
   public class CreateDebitCardCommandHandler : IRequestHandler<CreateDebitCardCommand, Response<DebitCardDTO>>
   {
     private readonly IGenericRepository<DebitCard> _DebitCardRepository;
+    private readonly IGenericRepository<Product> _productRepository;
+    private readonly IGenericRepository<Account> _accountRepository;
     private readonly IClientRepository _clientRepository;
     private readonly IMapper _mapper;
     private readonly IValidator<CreateDebitCardCommand> _validator;
 
-    public CreateDebitCardCommandHandler(IGenericRepository<DebitCard> DebitCardRepository, IMapper mapper, IValidator<CreateDebitCardCommand> validator, IClientRepository clientRepository)
+    public CreateDebitCardCommandHandler(IGenericRepository<DebitCard> DebitCardRepository, IMapper mapper, IValidator<CreateDebitCardCommand> validator, IClientRepository clientRepository, IGenericRepository<Product> productRepository, IGenericRepository<Account> accountRepository)
     {
       _DebitCardRepository = DebitCardRepository;
       _mapper = mapper;
       _validator = validator;
       _clientRepository = clientRepository;
+      _productRepository = productRepository;
+      _accountRepository = accountRepository;
     }
 
     public async Task<Response<DebitCardDTO>> Handle(CreateDebitCardCommand request, CancellationToken cancellationToken)
@@ -49,7 +53,13 @@ namespace BhdBankClone.Core.Application.Features.DebitCards.Commands
 
       if (clientExist == null) throw new ApiException($"Client with id: {req.ClientId} does not exist.");
 
-      //TODO: Check if client has an account with the account id provided
+      var accountExist = await _accountRepository.GetByIdAsync(req.AccountId);
+
+      if (accountExist == null) throw new ApiException($"Account with id: {req.AccountId} does not exist.");
+
+      var hasAnyDebitCard =  _DebitCardRepository.GetQueryable()
+        .Where(x => x.ClientId == req.ClientId && x.AccountId == req.AccountId)
+        .FirstOrDefault();
 
       DebitCard debitCard = new()
       {
@@ -59,12 +69,26 @@ namespace BhdBankClone.Core.Application.Features.DebitCards.Commands
         ClientId = req.ClientId,
         AccountId = req.AccountId,
         IsActive = true,
-        IsPrimary = true, //TODO: Check if client already has a debit card to set it as primary to true or false
+        IsPrimary = hasAnyDebitCard != null ? false : true, //Check if client already has a debit card to set it as primary to true or false
       };
 
-      var DebitCard = await _DebitCardRepository.AddAsync(debitCard);
+      await _DebitCardRepository.AddAsync(debitCard);
+      
+      Product product = new()
+      {
+        ClientId = req.ClientId,
+        AccountId = req.AccountId,
+        DebitCardId = debitCard.Id,
+        IsDebitCard = true,
+      };
 
-      return _mapper.Map<DebitCardDTO>(DebitCard);
+      await _productRepository.AddAsync(product);
+
+      debitCard.ProductId = product.Id;
+
+      await _DebitCardRepository.Update(debitCard);
+
+      return _mapper.Map<DebitCardDTO>(debitCard);
     }
   }
 }

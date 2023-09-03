@@ -18,7 +18,7 @@ public class Client : AuditableBaseEntity
   public ClientStatus? ClientStatus { get; set; }
   public ICollection<Account>? Accounts { get; set; }
   public ICollection<CreditCard>? CreditCards { get; set; }
-  public ICollection<DebitCard>? DebitCards { get; set; }
+  public virtual ICollection<DebitCard>? DebitCards { get; set; }
   public ICollection<Loan>? Loans { get; set; }
   public ICollection<Product>? Products { get; set; }
 }

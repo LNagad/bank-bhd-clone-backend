@@ -12,20 +12,28 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
 
       entity.HasKey(e => e.Id);
 
-      entity.Property(e => e.CardCvv)
-              .HasMaxLength(3)
-              .IsUnicode(false)
-              .HasColumnName("card_cvv");
+      entity.Property(e => e.CardNumber)
+            .HasMaxLength(16)
+            .IsUnicode(false);
 
       entity.Property(e => e.CardExpiryDate)
-              .HasColumnType("date");
+          .HasColumnType("date");
 
-      entity.Property(e => e.CardNumber)
-              .HasMaxLength(16)
-              .IsUnicode(false);
+      entity.Property(e => e.CardCvv)
+          .HasMaxLength(3)
+          .IsUnicode(false);
 
       entity.Property(e => e.IsActive)
-              .HasDefaultValue(true);
+          .HasDefaultValue(true);
+
+      entity.Property(e => e.IsPrimary)
+          .HasDefaultValue(false);
+
+      //entity.Property(e => e.ClientId)
+      //    .HasColumnName("client_id");
+
+      //entity.Property(e => e.AccountId)
+      //    .HasColumnName("account_id");
 
       entity.HasOne<Account>()
         .WithOne(account => account.DebitCard)

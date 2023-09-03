@@ -29,29 +29,54 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
 
       entity.HasIndex(e => e.IsActive, "clients_index_1");
 
-      entity.HasMany<Account>()
-            .WithOne(account => account.Client)
-            .HasForeignKey(account => account.ClientId);
+      //entity.HasMany<Account>()
+      //      .WithOne(account => account.Client)
+      //      .HasForeignKey(account => account.ClientId);
 
-      entity.HasMany<CreditCard>()
-            .WithOne(creditCard => creditCard.Client)
-            .HasForeignKey(creditCard => creditCard.ClientId);
+      //entity.HasMany<CreditCard>()
+      //      .WithOne(creditCard => creditCard.Client)
+      //      .HasForeignKey(creditCard => creditCard.ClientId);
 
-      entity.HasMany<DebitCard>()
-            .WithOne(debit => debit.Client)
-            .HasForeignKey(debit => debit.ClientId);
+      //entity.HasMany<DebitCard>()
+      //      .WithOne(debit => debit.Client)
+      //      .HasForeignKey(debit => debit.ClientId);
 
-      entity.HasMany<Loan>()
-            .WithOne(loan => loan.Client)
-            .HasForeignKey(loan => loan.ClientId);
+      //entity.HasMany<Loan>()
+      //      .WithOne(loan => loan.Client)
+      //      .HasForeignKey(loan => loan.ClientId);
 
-      entity.HasMany<Product>()
-            .WithOne(product => product.Client)
-            .HasForeignKey(product => product.ClientId);
+      //entity.HasMany<Product>()
+      //      .WithOne(product => product.Client)
+      //      .HasForeignKey(product => product.ClientId);
 
-      entity.HasMany<Transaction>()
-            .WithOne(tran => tran.Client)
-            .HasForeignKey(tran => tran.ClientId);
+      //entity.HasMany<Transaction>()
+      //      .WithOne(tran => tran.Client)
+      //      .HasForeignKey(tran => tran.ClientId);
+
+      entity.HasMany(client => client.Accounts)
+       .WithOne(cr => cr.Client)
+       .HasForeignKey(cr => cr.ClientId)
+       .OnDelete(DeleteBehavior.ClientSetNull);
+
+      entity.HasMany(client => client.DebitCards)
+        .WithOne(cr => cr.Client)
+        .HasForeignKey(cr => cr.ClientId)
+        .OnDelete(DeleteBehavior.ClientSetNull);
+
+      entity.HasMany(client => client.CreditCards)
+        .WithOne(dr => dr.Client)
+        .HasForeignKey(dr => dr.ClientId)
+        .OnDelete(DeleteBehavior.ClientSetNull);
+
+       entity.HasMany(client => client.Loans)
+        .WithOne(dr => dr.Client)
+        .HasForeignKey(dr => dr.ClientId)
+        .OnDelete(DeleteBehavior.ClientSetNull);
+
+      entity.HasMany(client => client.Products)
+        .WithOne(dr => dr.Client)
+        .HasForeignKey(dr => dr.ClientId)
+        .OnDelete(DeleteBehavior.ClientSetNull);
     }
   }
 }

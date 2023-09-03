@@ -18,6 +18,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
       entity.HasIndex(e => e.IsPrimary, "accounts_index_3");
 
       entity.Property( e => e.ClientId ).HasColumnName( "ClientId" );
+
       entity.Property(e => e.AccountNumber)
           .HasMaxLength(16)
           .IsUnicode(false);
@@ -28,6 +29,10 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
 
       entity.Property(e => e.IsActive)
           .HasDefaultValue(true);
+
+      entity.HasOne<DebitCard>()
+         .WithOne(account => account.Account)
+         .HasForeignKey<DebitCard>(account => account.AccountId);
 
       entity.HasMany<Transaction>()
           .WithOne(transaction => transaction.DestinationAccount)

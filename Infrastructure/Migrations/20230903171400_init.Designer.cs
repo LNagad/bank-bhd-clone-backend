@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BhdBankClone.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(BhdContext))]
-    [Migration("20230831225720_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230903171400_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,15 +41,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     b.Property<int?>("AccountTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("AccountTypeId1")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ClientId")
                         .HasColumnType("int")
                         .HasColumnName("ClientId");
-
-                    b.Property<int?>("ClientId1")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -62,9 +56,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .HasColumnName("current_balance");
 
                     b.Property<int?>("DebitCardId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DebitCardId1")
                         .HasColumnType("int");
 
                     b.Property<bool?>("IsActive")
@@ -88,19 +79,11 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("AccountTypeId");
 
-                    b.HasIndex("AccountTypeId1");
-
                     b.HasIndex("ClientId");
-
-                    b.HasIndex("ClientId1");
 
                     b.HasIndex("DebitCardId")
                         .IsUnique()
                         .HasFilter("[DebitCardId] IS NOT NULL");
-
-                    b.HasIndex("DebitCardId1")
-                        .IsUnique()
-                        .HasFilter("[DebitCardId1] IS NOT NULL");
 
                     b.HasIndex("ProductId")
                         .IsUnique()
@@ -128,9 +111,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(100)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -140,13 +121,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Description" }, "UQ__account___489B0D977287E385")
-                        .IsUnique()
-                        .HasFilter("[Description] IS NOT NULL");
-
-                    b.HasIndex(new[] { "Description" }, "account_types_index_12");
-
-                    b.ToTable("account_types", (string)null);
+                    b.ToTable("AccountTypes");
                 });
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.Client", b =>
@@ -195,8 +170,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClientTypeId");
-
-                    b.HasIndex("ClientsTypeId");
 
                     b.HasIndex("StatusId");
 
@@ -260,10 +233,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -273,12 +243,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Description" }, "UQ__clients___489B0D974E8DBA8C")
-                        .IsUnique();
-
-                    b.HasIndex(new[] { "Description" }, "clients_types_index_13");
-
-                    b.ToTable("clients_types", (string)null);
+                    b.ToTable("ClientsTypes");
                 });
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.CreditCard", b =>
@@ -303,9 +268,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .HasColumnType("varchar(16)");
 
                     b.Property<int?>("ClientId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ClientId1")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -344,8 +306,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("ClientId1");
-
                     b.HasIndex("ProductId")
                         .IsUnique()
                         .HasFilter("[ProductId] IS NOT NULL");
@@ -367,11 +327,13 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AccountId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CardCvv")
                         .HasMaxLength(3)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(3)")
-                        .HasColumnName("card_cvv");
+                        .HasColumnType("varchar(3)");
 
                     b.Property<DateTime?>("CardExpiryDate")
                         .HasColumnType("date");
@@ -382,9 +344,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .HasColumnType("varchar(16)");
 
                     b.Property<int?>("ClientId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ClientId1")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -399,7 +358,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .HasDefaultValue(true);
 
                     b.Property<bool?>("IsPrimary")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
@@ -412,9 +373,11 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("AccountId")
+                        .IsUnique()
+                        .HasFilter("[AccountId] IS NOT NULL");
 
-                    b.HasIndex("ClientId1");
+                    b.HasIndex("ClientId");
 
                     b.HasIndex("ProductId")
                         .IsUnique()
@@ -438,9 +401,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ClientId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ClientId1")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -470,8 +430,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("ClientId1");
-
                     b.HasIndex("ProductId")
                         .IsUnique()
                         .HasFilter("[ProductId] IS NOT NULL");
@@ -492,13 +450,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     b.Property<int?>("AccountId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("AccountId1")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ClientId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ClientId1")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -510,13 +462,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     b.Property<int?>("CreditCardId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CreditCardId1")
-                        .HasColumnType("int");
-
                     b.Property<int?>("DebitCardId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DebitCardId1")
                         .HasColumnType("int");
 
                     b.Property<bool?>("IsAccount")
@@ -534,9 +480,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     b.Property<int?>("LoanId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("LoanId1")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ProductTypeId")
                         .HasColumnType("int");
 
@@ -548,17 +491,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountId1");
-
                     b.HasIndex("ClientId");
-
-                    b.HasIndex("ClientId1");
-
-                    b.HasIndex("CreditCardId1");
-
-                    b.HasIndex("DebitCardId1");
-
-                    b.HasIndex("LoanId1");
 
                     b.HasIndex("ProductTypeId");
 
@@ -728,31 +661,19 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("BhdBankClone.Core.Domain.Account", b =>
                 {
                     b.HasOne("BhdBankClone.Core.Domain.AccountType", "AccountType")
-                        .WithMany()
+                        .WithMany("Accounts")
                         .HasForeignKey("AccountTypeId");
 
-                    b.HasOne("BhdBankClone.Core.Domain.AccountType", null)
-                        .WithMany("Accounts")
-                        .HasForeignKey("AccountTypeId1");
-
                     b.HasOne("BhdBankClone.Core.Domain.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId");
-
-                    b.HasOne("BhdBankClone.Core.Domain.Client", null)
                         .WithMany("Accounts")
-                        .HasForeignKey("ClientId1");
+                        .HasForeignKey("ClientId");
 
                     b.HasOne("BhdBankClone.Core.Domain.DebitCard", "DebitCard")
                         .WithOne()
                         .HasForeignKey("BhdBankClone.Core.Domain.Account", "DebitCardId");
 
-                    b.HasOne("BhdBankClone.Core.Domain.DebitCard", null)
-                        .WithOne("Account")
-                        .HasForeignKey("BhdBankClone.Core.Domain.Account", "DebitCardId1");
-
                     b.HasOne("BhdBankClone.Core.Domain.Product", "Product")
-                        .WithOne()
+                        .WithOne("Account")
                         .HasForeignKey("BhdBankClone.Core.Domain.Account", "ProductId");
 
                     b.Navigation("AccountType");
@@ -766,13 +687,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.Client", b =>
                 {
-                    b.HasOne("BhdBankClone.Core.Domain.ClientType", null)
+                    b.HasOne("BhdBankClone.Core.Domain.ClientType", "ClientType")
                         .WithMany("Clients")
                         .HasForeignKey("ClientTypeId");
-
-                    b.HasOne("BhdBankClone.Core.Domain.ClientType", "ClientType")
-                        .WithMany()
-                        .HasForeignKey("ClientsTypeId");
 
                     b.HasOne("BhdBankClone.Core.Domain.ClientStatus", "ClientStatus")
                         .WithMany()
@@ -786,15 +703,11 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("BhdBankClone.Core.Domain.CreditCard", b =>
                 {
                     b.HasOne("BhdBankClone.Core.Domain.Client", "Client")
-                        .WithMany()
+                        .WithMany("CreditCards")
                         .HasForeignKey("ClientId");
 
-                    b.HasOne("BhdBankClone.Core.Domain.Client", null)
-                        .WithMany("CreditCards")
-                        .HasForeignKey("ClientId1");
-
                     b.HasOne("BhdBankClone.Core.Domain.Product", "Product")
-                        .WithOne()
+                        .WithOne("CreditCard")
                         .HasForeignKey("BhdBankClone.Core.Domain.CreditCard", "ProductId");
 
                     b.Navigation("Client");
@@ -804,17 +717,19 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.DebitCard", b =>
                 {
+                    b.HasOne("BhdBankClone.Core.Domain.Account", "Account")
+                        .WithOne()
+                        .HasForeignKey("BhdBankClone.Core.Domain.DebitCard", "AccountId");
+
                     b.HasOne("BhdBankClone.Core.Domain.Client", "Client")
-                        .WithMany()
+                        .WithMany("DebitCards")
                         .HasForeignKey("ClientId");
 
-                    b.HasOne("BhdBankClone.Core.Domain.Client", null)
-                        .WithMany("DebitCards")
-                        .HasForeignKey("ClientId1");
-
                     b.HasOne("BhdBankClone.Core.Domain.Product", "Product")
-                        .WithOne()
+                        .WithOne("DebitCard")
                         .HasForeignKey("BhdBankClone.Core.Domain.DebitCard", "ProductId");
+
+                    b.Navigation("Account");
 
                     b.Navigation("Client");
 
@@ -824,15 +739,11 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("BhdBankClone.Core.Domain.Loan", b =>
                 {
                     b.HasOne("BhdBankClone.Core.Domain.Client", "Client")
-                        .WithMany()
+                        .WithMany("Loans")
                         .HasForeignKey("ClientId");
 
-                    b.HasOne("BhdBankClone.Core.Domain.Client", null)
-                        .WithMany("Loans")
-                        .HasForeignKey("ClientId1");
-
                     b.HasOne("BhdBankClone.Core.Domain.Product", "Product")
-                        .WithOne()
+                        .WithOne("Loan")
                         .HasForeignKey("BhdBankClone.Core.Domain.Loan", "ProductId");
 
                     b.Navigation("Client");
@@ -842,43 +753,15 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.Product", b =>
                 {
-                    b.HasOne("BhdBankClone.Core.Domain.Account", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId1");
-
                     b.HasOne("BhdBankClone.Core.Domain.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId");
-
-                    b.HasOne("BhdBankClone.Core.Domain.Client", null)
                         .WithMany("Products")
-                        .HasForeignKey("ClientId1");
-
-                    b.HasOne("BhdBankClone.Core.Domain.CreditCard", "CreditCard")
-                        .WithMany()
-                        .HasForeignKey("CreditCardId1");
-
-                    b.HasOne("BhdBankClone.Core.Domain.DebitCard", "DebitCard")
-                        .WithMany()
-                        .HasForeignKey("DebitCardId1");
-
-                    b.HasOne("BhdBankClone.Core.Domain.Loan", "Loan")
-                        .WithMany()
-                        .HasForeignKey("LoanId1");
+                        .HasForeignKey("ClientId");
 
                     b.HasOne("BhdBankClone.Core.Domain.ProductType", "ProductType")
                         .WithMany()
                         .HasForeignKey("ProductTypeId");
 
-                    b.Navigation("Account");
-
                     b.Navigation("Client");
-
-                    b.Navigation("CreditCard");
-
-                    b.Navigation("DebitCard");
-
-                    b.Navigation("Loan");
 
                     b.Navigation("ProductType");
                 });
@@ -989,14 +872,23 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.DebitCard", b =>
                 {
-                    b.Navigation("Account");
-
                     b.Navigation("TransactionSourceDebitCard");
                 });
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.Loan", b =>
                 {
                     b.Navigation("TransactionSourceDebitCard");
+                });
+
+            modelBuilder.Entity("BhdBankClone.Core.Domain.Product", b =>
+                {
+                    b.Navigation("Account");
+
+                    b.Navigation("CreditCard");
+
+                    b.Navigation("DebitCard");
+
+                    b.Navigation("Loan");
                 });
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.TransactionType", b =>
