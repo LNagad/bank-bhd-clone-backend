@@ -74,7 +74,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
       //entity.Ignore(client => client.CreditCards);
       //entity.Ignore(client => client.DebitCards);
       //entity.Ignore(client => client.Loans);
-      //entity.Ignore(client => client.Products);
+      //entity.Ignore(client => client.EProducts);
     }
   }
 }

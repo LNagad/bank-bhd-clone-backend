@@ -27,8 +27,8 @@ namespace BhdBankClone.Infrastructure.Persistence.Repositories
 
     public virtual IEnumerable<Product> GetAllProductByClientId(int clientId, List<string> properties)
     {
-      //var products = _dbContext.Database.SqlQueryRaw<Product>("select * from Products where ClientId = {0}", clientId);
-      //var products = _dbContext.Products.FromSqlInterpolated($"select * from Products where ClientId = {clientId}");
+      //var products = _dbContext.Database.SqlQueryRaw<Product>("select * from EProducts where ClientId = {0}", clientId);
+      //var products = _dbContext.EProducts.FromSqlInterpolated($"select * from EProducts where ClientId = {clientId}");
       var products = _dbContext.Products.FromSqlRaw("select * from Products where ClientId = {0}", clientId);
 
       return products;

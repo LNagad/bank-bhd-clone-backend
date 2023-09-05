@@ -25,28 +25,28 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
       entity.HasData(
         new ProductType() 
         { 
-          Id = (int)Products.CUENTA_AHORROS, 
-          Description = Products.CUENTA_AHORROS.ToString() 
+          Id = (int)EProducts.CUENTA_AHORROS, 
+          Description = EProducts.CUENTA_AHORROS.ToString() 
         },
         new ProductType() 
         { 
-          Id = (int)Products.CUENTA_AHORROS_EMPRESARIAL, 
-          Description = Products.CUENTA_AHORROS_EMPRESARIAL.ToString()
+          Id = (int)EProducts.CUENTA_AHORROS_EMPRESARIAL, 
+          Description = EProducts.CUENTA_AHORROS_EMPRESARIAL.ToString()
         }, 
         new ProductType() 
         { 
-          Id = (int)Products.TARJETA_DEBITO, 
-          Description = Products.TARJETA_DEBITO.ToString()
+          Id = (int)EProducts.TARJETA_DEBITO, 
+          Description = EProducts.TARJETA_DEBITO.ToString()
         },
         new ProductType()
         {
-          Id = (int)Products.TARJETA_CREDITO,
-          Description = Products.TARJETA_CREDITO.ToString()
+          Id = (int)EProducts.TARJETA_CREDITO,
+          Description = EProducts.TARJETA_CREDITO.ToString()
         },
         new ProductType()
         {
-          Id = (int)Products.PRESTAMO,
-          Description = Products.PRESTAMO.ToString()
+          Id = (int)EProducts.PRESTAMO,
+          Description = EProducts.PRESTAMO.ToString()
         }
       );
     }

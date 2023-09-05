@@ -1,7 +1,7 @@
 ﻿
 namespace BhdBankClone.Core.Application.Enums.BankSeeds
 {
-  public enum Products
+  public enum EProducts
   {
     CUENTA_AHORROS = 1,
     CUENTA_AHORROS_EMPRESARIAL = 2,

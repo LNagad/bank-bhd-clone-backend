@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BhdBankClone.Core.Application.DTOs.Products;
+using BhdBankClone.Core.Application.Enums.BankSeeds;
 using BhdBankClone.Core.Application.Exceptions;
 using BhdBankClone.Core.Application.Interfaces.Repositories;
 using BhdBankClone.Core.Application.Wrappers;
@@ -11,9 +12,9 @@ namespace BhdBankClone.Core.Application.Features.Products.Commands
 {
   public class CreateProductCommand : IRequest<Response<ProductDTO>>
   {
-    public int? ProductTypeId { get; set; }
+    public int ProductTypeId { get; set; }
 
-    public int? ClientId { get; set; }
+    public int ClientId { get; set; }
 
     public bool? IsAccount { get; set; }
 
@@ -34,14 +35,16 @@ namespace BhdBankClone.Core.Application.Features.Products.Commands
   public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Response<ProductDTO>>
   {
     private readonly IGenericRepository<Product> _productRepository;
+    private readonly IGenericRepository<ProductType> _productTypeRepository;
     private readonly IMapper _mapper;
     private readonly IValidator<CreateProductCommand> _validator;
 
-    public CreateProductCommandHandler(IGenericRepository<Product> productRepository, IMapper mapper, IValidator<CreateProductCommand> validator)
+    public CreateProductCommandHandler(IGenericRepository<Product> productRepository, IMapper mapper, IValidator<CreateProductCommand> validator, IGenericRepository<ProductType> productTypeRepository)
     {
       _productRepository = productRepository;
       _mapper = mapper;
       _validator = validator;
+      _productTypeRepository = productTypeRepository;
     }
 
     public async Task<Response<ProductDTO>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
@@ -59,16 +62,29 @@ namespace BhdBankClone.Core.Application.Features.Products.Commands
 
     private async Task<ProductDTO> CreateProductAsync(CreateProductCommand req)
     {
-      //if (req.IsAccount     == true && req.AccountId    == null)throw new ApiException("Account Id is required");
-      //if (req.IsLoan        == true && req.LoanId       == null)throw new ApiException("Loan Id is required");
-      //if (req.IsCreditCard  == true && req.CreditCardId == null)throw new ApiException("Credit Card Id is required");
-      //if (req.IsDebitCard   == true && req.DebitCardId  == null)throw new ApiException("Debit Card Id is required");
+      var product = _mapper.Map<Product>(req);
 
-      //TODO: Check if any of the Ids are valid by checking if exists in the database
+      switch (req.ProductTypeId)
+      {
+        case (int)EProducts.CUENTA_AHORROS:
+        case (int)EProducts.CUENTA_AHORROS_EMPRESARIAL:
+        case (int)EProducts.TARJETA_DEBITO:
+        case (int)EProducts.TARJETA_CREDITO:
+        case (int)EProducts.PRESTAMO:
+          var pType = _productTypeRepository.GetQueryable().FirstOrDefault(pt => pt.Description == ( (EProducts)req.ProductTypeId).ToString() );
 
-      var product = await _productRepository.AddAsync(_mapper.Map<Product>(req));
+          if (pType == null) throw new ApiException("Product type not found", 404);
 
-      return _mapper.Map<ProductDTO>(product);
+          product.ProductTypeId = pType.Id;
+
+          break;
+        default:
+          throw new ApiException("Invalid product type", 400);
+      }
+
+      var resp = await _productRepository.AddAsync(product);
+
+      return _mapper.Map<ProductDTO>(resp);
     }
   }
 }

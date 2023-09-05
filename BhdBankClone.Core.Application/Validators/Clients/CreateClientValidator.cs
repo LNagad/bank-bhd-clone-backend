@@ -14,10 +14,14 @@ namespace BhdBankClone.Core.Application.Validators.Clients
         .Matches(@"^(402|001)\d{8}$").WithMessage("{PropertyName} must start with '402' or '001' and be followed by 8 digits.");
 
       RuleFor(x => x.UserId)
+        .NotNull()
+        .WithMessage("{PropertyName} is required.")
         .NotEmpty().WithMessage("{PropertyName} is required.");
 
+
       RuleFor(x => x.ClientTypeId)
-        .NotEmpty().WithMessage("{PropertyName} is required.");
+        .NotEmpty().WithMessage("{PropertyName} is required.")
+        .GreaterThan(0);
 
     }
   }

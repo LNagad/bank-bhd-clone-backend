@@ -9,11 +9,14 @@ namespace BhdBankClone.Core.Application.Validators.Products
     {
       RuleFor(p => p.ClientId)
         .NotNull().WithMessage("Client Id is required")
-        .NotEmpty().WithMessage("Client Id is required");
+        .NotEmpty().WithMessage("Client Id is required")
+        .GreaterThan(0).WithMessage("Client Id is required");
 
       RuleFor(p => p.ProductTypeId)
         .NotNull().WithMessage("Product type Id is required")
-        .NotEmpty().WithMessage("Product type Id is required");
+        .NotEmpty().WithMessage("Product type Id is required")
+        .GreaterThan(0).WithMessage("Product type Id is required");
+
 
       RuleFor(req => req)
         .Custom((req, context) => {

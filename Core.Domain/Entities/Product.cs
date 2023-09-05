@@ -5,9 +5,9 @@ namespace BhdBankClone.Core.Domain;
 public class Product : AuditableBaseEntity
 {
 
-  public int? ProductTypeId { get; set; }
+  public int ProductTypeId { get; set; }
 
-  public int? ClientId { get; set; }
+  public int ClientId { get; set; }
 
   public bool? IsAccount { get; set; }
 
