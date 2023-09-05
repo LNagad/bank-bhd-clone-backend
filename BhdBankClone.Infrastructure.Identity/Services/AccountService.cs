@@ -1,6 +1,7 @@
 ﻿using BhdBankClone.Core.Application.DTOs.Accounts;
 using BhdBankClone.Core.Application.Enums;
 using BhdBankClone.Core.Application.Interfaces;
+using BhdBankClone.Core.Application.Interfaces.Repositories;
 using BhdBankClone.Core.Domain.settings;
 using BhdBankClone.Infrastructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -17,6 +18,7 @@ namespace BhdBankClone.Infrastructure.Identity.Services
 {
   public class AccountService : IAccountService
   {
+    private readonly IClientRepository _clientRepository;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly JWTSettings _jwtSettings;
@@ -24,12 +26,13 @@ namespace BhdBankClone.Infrastructure.Identity.Services
     public AccountService(
       UserManager<ApplicationUser> userManager,
       SignInManager<ApplicationUser> signInManager,
-      IOptions<JWTSettings> jwtSettings
-      )
+      IOptions<JWTSettings> jwtSettings,
+      IClientRepository clientRepository)
     {
       _userManager = userManager;
       _signInManager = signInManager;
       _jwtSettings = jwtSettings.Value;
+      _clientRepository = clientRepository;
     }
 
     public async Task<AuthenticationResponse> SignInWithEmailAndPasswordAsync(AuthenticationRequest req)
@@ -64,9 +67,12 @@ namespace BhdBankClone.Infrastructure.Identity.Services
 
       JwtSecurityToken jwtSecurityToken = await GenerateJWToken(user);
 
+      var client = await _clientRepository.GetClientByIdentityUserIdAsync(user.Id);
+
       response.Id = user.Id;
       response.Email = user.Email;
       response.UserName = user.UserName;
+      response.ClientId = client?.Id;
 
       //wait until get roles
       var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
