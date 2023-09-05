@@ -26,8 +26,8 @@ public class CreditCard : AuditableBaseEntity
 
     public int? ClientId { get; set; }
 
-    public virtual Client? Client { get; set; } 
-    public virtual Product? Product { get; set; }
+    public  Client? Client { get; set; } 
+    public  Product? Product { get; set; }
 
-    public virtual ICollection<Transaction>? Transactions { get; set; } 
+    public  ICollection<Transaction>? Transactions { get; set; } 
 }

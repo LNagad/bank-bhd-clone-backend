@@ -26,11 +26,12 @@ namespace BhdBankClone.Core.Application.Features.BankAccounts.Commands
     private readonly IGenericRepository<Account> _repository;
     private readonly IGenericRepository<DebitCard> _debitCardRepository;
     private readonly IGenericRepository<AccountType> _accountTypeRepository;
+    private readonly IGenericRepository<Product> _productRepository;
     private readonly IClientRepository _clientRepository;
     private readonly IMapper _mapper;
     private readonly IValidator<CreateBankAccountCommand> _validator;
 
-    public CreateBankAccountCommandHandler(IGenericRepository<Account> repository, IMapper mapper, IValidator<CreateBankAccountCommand> validator, IClientRepository clientRepository, IGenericRepository<DebitCard> debitCardRepository, IGenericRepository<AccountType> accountTypeRepository)
+    public CreateBankAccountCommandHandler(IGenericRepository<Account> repository, IMapper mapper, IValidator<CreateBankAccountCommand> validator, IClientRepository clientRepository, IGenericRepository<DebitCard> debitCardRepository, IGenericRepository<AccountType> accountTypeRepository, IGenericRepository<Product> productRepository)
     {
       _repository = repository;
       _mapper = mapper;
@@ -38,6 +39,7 @@ namespace BhdBankClone.Core.Application.Features.BankAccounts.Commands
       _clientRepository = clientRepository;
       _debitCardRepository = debitCardRepository;
       _accountTypeRepository = accountTypeRepository;
+      _productRepository = productRepository;
     }
 
     public async Task<Response<BankAccountDTO>> Handle(CreateBankAccountCommand request, CancellationToken cancellationToken)
@@ -70,10 +72,12 @@ namespace BhdBankClone.Core.Application.Features.BankAccounts.Commands
 
       if (accountTypeIsValid == null) throw new ApiException($"Account type with id: {req.AccountTypeId} does not exist.");
 
+      var hasAnyBankAccount = _repository.GetQueryable().Any(account => account.ClientId == req.ClientId);
+
       Account bankAccount = new()
       {
         IsActive = true,
-        IsPrimary = true, //TODO: Check if client already has a bank account to set it as primary to true or false
+        IsPrimary = !hasAnyBankAccount, // Check if client already has a bank account to set it as primary to true or false
         AccountNumber = GenerateRandom.GenerateRandomNumber(11),
         AccountTypeId = req.AccountTypeId,
         ClientId = req.ClientId,
@@ -81,9 +85,22 @@ namespace BhdBankClone.Core.Application.Features.BankAccounts.Commands
         CurrentBalance = req.CurrentBalance
       };
 
-      var createdBankAccount = await _repository.AddAsync(bankAccount);
-      
-      return _mapper.Map<BankAccountDTO>(createdBankAccount);
+       await _repository.AddAsync(bankAccount);
+
+      Product product = new()
+      {
+        ClientId = req.ClientId,
+        AccountId = bankAccount.Id,
+        IsAccount = true
+      };
+
+      await _productRepository.AddAsync(product);
+
+      bankAccount.ProductId = product.Id;
+
+      await _repository.Update(bankAccount);
+
+      return _mapper.Map<BankAccountDTO>(bankAccount);
     }
   }
 }

@@ -13,7 +13,7 @@ namespace BhdBankClone.Core.Application.Features.ProductTypes.Commands
   {
     public required string Description { get; set; }
   }
-  public class CreateProductTypeCommandHandler : IRequestHandler<CreateProductTypeCommand, Response<ProductTypeDTO>>
+  internal class CreateProductTypeCommandHandler : IRequestHandler<CreateProductTypeCommand, Response<ProductTypeDTO>>
   {
     private readonly IGenericRepository<ProductType> _productTypeRepository;
     private readonly IMapper _mapper;
@@ -41,6 +41,7 @@ namespace BhdBankClone.Core.Application.Features.ProductTypes.Commands
 
     private async Task<ProductTypeDTO> CreateProductTypeAsync(CreateProductTypeCommand req)
     {
+      // TODO: Add validation for product type description so that it is unique
       var productType = await _productTypeRepository.AddAsync(_mapper.Map<ProductType>(req));
 
       return _mapper.Map<ProductTypeDTO>(productType);

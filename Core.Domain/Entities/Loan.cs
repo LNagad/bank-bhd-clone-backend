@@ -13,10 +13,10 @@ public class Loan : AuditableBaseEntity
 
   public int? ClientId { get; set; }
 
-  public Client? Client { get; set; }
+  public  Client? Client { get; set; }
 
-  public Product? Product { get; set; }
+  public  Product? Product { get; set; }
 
-  public virtual ICollection<Transaction>? TransactionSourceDebitCard { get; set; }
+  public ICollection<Transaction>? TransactionSourceDebitCard { get; set; }
 
 }

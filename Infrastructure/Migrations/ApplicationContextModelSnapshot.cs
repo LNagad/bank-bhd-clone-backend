@@ -4,19 +4,16 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace BhdBankClone.Infrastructure.Persistence.Migrations
 {
-    [DbContext(typeof(BhdContext))]
-    [Migration("20230903171400_init")]
-    partial class init
+    [DbContext(typeof(ApplicationContext))]
+    partial class ApplicationContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,10 +82,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .IsUnique()
                         .HasFilter("[DebitCardId] IS NOT NULL");
 
-                    b.HasIndex("ProductId")
-                        .IsUnique()
-                        .HasFilter("[ProductId] IS NOT NULL");
-
                     b.HasIndex(new[] { "AccountNumber" }, "accounts_index_2");
 
                     b.HasIndex(new[] { "IsPrimary" }, "accounts_index_3");
@@ -111,7 +104,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -121,7 +116,27 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AccountTypes");
+                    b.HasIndex(new[] { "Description" }, "UQ__account___489B0D977287E385")
+                        .IsUnique()
+                        .HasFilter("[Description] IS NOT NULL");
+
+                    b.HasIndex(new[] { "Description" }, "account_types_index_12");
+
+                    b.ToTable("account_types", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "CUENTA_AHORROS"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "CUENTA_AHORROS_EMPRESARIAL"
+                        });
                 });
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.Client", b =>
@@ -133,9 +148,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ClientTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ClientsTypeId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -233,7 +245,10 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -243,7 +258,26 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ClientsTypes");
+                    b.HasIndex(new[] { "Description" }, "UQ__clients___489B0D974E8DBA8C")
+                        .IsUnique();
+
+                    b.HasIndex(new[] { "Description" }, "clients_types_index_13");
+
+                    b.ToTable("clients_types", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "CLIENTE_TIPO_PERSONAL"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "CLIENTE_TIPO_EMPRESARIAL"
+                        });
                 });
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.CreditCard", b =>
@@ -305,10 +339,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
-
-                    b.HasIndex("ProductId")
-                        .IsUnique()
-                        .HasFilter("[ProductId] IS NOT NULL");
 
                     b.HasIndex(new[] { "CardNumber" }, "credit_cards_index_4");
 
@@ -379,10 +409,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("ProductId")
-                        .IsUnique()
-                        .HasFilter("[ProductId] IS NOT NULL");
-
                     b.HasIndex(new[] { "CardNumber" }, "debit_cards_index_7");
 
                     b.HasIndex(new[] { "IsPrimary" }, "debit_cards_index_8");
@@ -429,10 +455,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
-
-                    b.HasIndex("ProductId")
-                        .IsUnique()
-                        .HasFilter("[ProductId] IS NOT NULL");
 
                     b.HasIndex(new[] { "IsActive" }, "loans_index_10");
 
@@ -491,7 +513,23 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccountId")
+                        .IsUnique()
+                        .HasFilter("[AccountId] IS NOT NULL");
+
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("CreditCardId")
+                        .IsUnique()
+                        .HasFilter("[CreditCardId] IS NOT NULL");
+
+                    b.HasIndex("DebitCardId")
+                        .IsUnique()
+                        .HasFilter("[DebitCardId] IS NOT NULL");
+
+                    b.HasIndex("LoanId")
+                        .IsUnique()
+                        .HasFilter("[LoanId] IS NOT NULL");
 
                     b.HasIndex("ProductTypeId");
 
@@ -526,6 +564,38 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("product_types", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "CUENTA_AHORROS"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "CUENTA_AHORROS_EMPRESARIAL"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "TARJETA_DEBITO"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "TARJETA_CREDITO"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "PRESTAMO"
+                        });
                 });
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.Transaction", b =>
@@ -584,9 +654,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     b.Property<int?>("TransactionTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TransactionTypeId1")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -606,8 +673,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     b.HasIndex("LoanId");
 
                     b.HasIndex("TransactionTypeId");
-
-                    b.HasIndex("TransactionTypeId1");
 
                     b.HasIndex(new[] { "TransactionTime" }, "transactions_index_14");
 
@@ -656,6 +721,38 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     b.HasIndex(new[] { "Description" }, "transaction_types_index_21");
 
                     b.ToTable("transaction_types", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "TRANSFERENCIA"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "RETIRO"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "DEPOSITO"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "PAGO_TARJETA_CREDITO"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "PAGO_PRESTAMO"
+                        });
                 });
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.Account", b =>
@@ -672,17 +769,11 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .WithOne()
                         .HasForeignKey("BhdBankClone.Core.Domain.Account", "DebitCardId");
 
-                    b.HasOne("BhdBankClone.Core.Domain.Product", "Product")
-                        .WithOne("Account")
-                        .HasForeignKey("BhdBankClone.Core.Domain.Account", "ProductId");
-
                     b.Navigation("AccountType");
 
                     b.Navigation("Client");
 
                     b.Navigation("DebitCard");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.Client", b =>
@@ -706,13 +797,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .WithMany("CreditCards")
                         .HasForeignKey("ClientId");
 
-                    b.HasOne("BhdBankClone.Core.Domain.Product", "Product")
-                        .WithOne("CreditCard")
-                        .HasForeignKey("BhdBankClone.Core.Domain.CreditCard", "ProductId");
-
                     b.Navigation("Client");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.DebitCard", b =>
@@ -725,15 +810,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .WithMany("DebitCards")
                         .HasForeignKey("ClientId");
 
-                    b.HasOne("BhdBankClone.Core.Domain.Product", "Product")
-                        .WithOne("DebitCard")
-                        .HasForeignKey("BhdBankClone.Core.Domain.DebitCard", "ProductId");
-
                     b.Navigation("Account");
 
                     b.Navigation("Client");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.Loan", b =>
@@ -742,26 +821,44 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         .WithMany("Loans")
                         .HasForeignKey("ClientId");
 
-                    b.HasOne("BhdBankClone.Core.Domain.Product", "Product")
-                        .WithOne("Loan")
-                        .HasForeignKey("BhdBankClone.Core.Domain.Loan", "ProductId");
-
                     b.Navigation("Client");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.Product", b =>
                 {
+                    b.HasOne("BhdBankClone.Core.Domain.Account", "Account")
+                        .WithOne("Product")
+                        .HasForeignKey("BhdBankClone.Core.Domain.Product", "AccountId");
+
                     b.HasOne("BhdBankClone.Core.Domain.Client", "Client")
                         .WithMany("Products")
                         .HasForeignKey("ClientId");
+
+                    b.HasOne("BhdBankClone.Core.Domain.CreditCard", "CreditCard")
+                        .WithOne("Product")
+                        .HasForeignKey("BhdBankClone.Core.Domain.Product", "CreditCardId");
+
+                    b.HasOne("BhdBankClone.Core.Domain.DebitCard", "DebitCard")
+                        .WithOne("Product")
+                        .HasForeignKey("BhdBankClone.Core.Domain.Product", "DebitCardId");
+
+                    b.HasOne("BhdBankClone.Core.Domain.Loan", "Loan")
+                        .WithOne("Product")
+                        .HasForeignKey("BhdBankClone.Core.Domain.Product", "LoanId");
 
                     b.HasOne("BhdBankClone.Core.Domain.ProductType", "ProductType")
                         .WithMany()
                         .HasForeignKey("ProductTypeId");
 
+                    b.Navigation("Account");
+
                     b.Navigation("Client");
+
+                    b.Navigation("CreditCard");
+
+                    b.Navigation("DebitCard");
+
+                    b.Navigation("Loan");
 
                     b.Navigation("ProductType");
                 });
@@ -774,7 +871,8 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasOne("BhdBankClone.Core.Domain.Client", "Client")
                         .WithMany()
-                        .HasForeignKey("ClientId");
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("BhdBankClone.Core.Domain.CreditCard", null)
                         .WithMany("Transactions")
@@ -790,11 +888,13 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasOne("BhdBankClone.Core.Domain.CreditCard", "DestinationCreditCard")
                         .WithMany()
-                        .HasForeignKey("DestinationCreditCardId");
+                        .HasForeignKey("DestinationCreditCardId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("BhdBankClone.Core.Domain.Loan", "DestinationLoan")
                         .WithMany()
-                        .HasForeignKey("DestinationLoanId");
+                        .HasForeignKey("DestinationLoanId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("BhdBankClone.Core.Domain.Loan", null)
                         .WithMany("TransactionSourceDebitCard")
@@ -802,23 +902,23 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasOne("BhdBankClone.Core.Domain.Account", "SourceAccount")
                         .WithMany()
-                        .HasForeignKey("SourceAccountId");
+                        .HasForeignKey("SourceAccountId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("BhdBankClone.Core.Domain.CreditCard", "SourceCreditCard")
                         .WithMany()
-                        .HasForeignKey("SourceCreditCardId");
+                        .HasForeignKey("SourceCreditCardId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("BhdBankClone.Core.Domain.DebitCard", "SourceDebitCard")
                         .WithMany()
-                        .HasForeignKey("SourceDebitCardId");
+                        .HasForeignKey("SourceDebitCardId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("BhdBankClone.Core.Domain.TransactionType", "TransactionType")
-                        .WithMany()
-                        .HasForeignKey("TransactionTypeId");
-
-                    b.HasOne("BhdBankClone.Core.Domain.TransactionType", null)
                         .WithMany("Transactions")
-                        .HasForeignKey("TransactionTypeId1");
+                        .HasForeignKey("TransactionTypeId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Client");
 
@@ -839,6 +939,8 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.Account", b =>
                 {
+                    b.Navigation("Product");
+
                     b.Navigation("Transactions");
                 });
 
@@ -867,28 +969,23 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.CreditCard", b =>
                 {
+                    b.Navigation("Product");
+
                     b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.DebitCard", b =>
                 {
+                    b.Navigation("Product");
+
                     b.Navigation("TransactionSourceDebitCard");
                 });
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.Loan", b =>
                 {
+                    b.Navigation("Product");
+
                     b.Navigation("TransactionSourceDebitCard");
-                });
-
-            modelBuilder.Entity("BhdBankClone.Core.Domain.Product", b =>
-                {
-                    b.Navigation("Account");
-
-                    b.Navigation("CreditCard");
-
-                    b.Navigation("DebitCard");
-
-                    b.Navigation("Loan");
                 });
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.TransactionType", b =>

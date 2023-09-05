@@ -1,15 +1,17 @@
 ﻿using BhdBankClone.Core.Domain;
 using BhdBankClone.Infrastructure.Persistence.Contexts.Configurations;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Reflection;
 
 namespace Infrastructure.Persistence;
 
-public class BhdContext : DbContext
+public class ApplicationContext : DbContext
 {
 
-  public BhdContext(DbContextOptions<BhdContext> options) : base(options) { }
+  public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
+  {
+  
+  }
 
   public DbSet<Account> Accounts { get; set; }
 
@@ -37,17 +39,18 @@ public class BhdContext : DbContext
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
-    modelBuilder.ApplyConfiguration(new TransactionConfig());
-    modelBuilder.ApplyConfiguration(new AccountConfig());
-    modelBuilder.ApplyConfiguration(new DebitCardConfig());
-    modelBuilder.ApplyConfiguration(new CreditCardConfig());
-    modelBuilder.ApplyConfiguration(new ClientConfig());
-    modelBuilder.ApplyConfiguration(new ClientStatusConfig());
-    modelBuilder.ApplyConfiguration(new ProductConfig());
-    modelBuilder.ApplyConfiguration(new ProductTypeConfig());
-    modelBuilder.ApplyConfiguration(new LoanConfig());
-    modelBuilder.ApplyConfiguration(new TransactionTypeConfig());
-    
-    //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    //modelBuilder.ApplyConfiguration(new TransactionConfig());
+    //modelBuilder.ApplyConfiguration(new AccountConfig());
+    //modelBuilder.ApplyConfiguration(new DebitCardConfig());
+    //modelBuilder.ApplyConfiguration(new CreditCardConfig());
+    //modelBuilder.ApplyConfiguration(new ClientConfig());
+    //modelBuilder.ApplyConfiguration(new ClientStatusConfig());
+    //modelBuilder.ApplyConfiguration(new ProductConfig());
+    //modelBuilder.ApplyConfiguration(new ProductTypeConfig());
+    //modelBuilder.ApplyConfiguration(new LoanConfig());
+    //modelBuilder.ApplyConfiguration(new TransactionTypeConfig());
+
+
+    modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
   }
 }

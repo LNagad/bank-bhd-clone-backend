@@ -49,6 +49,11 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
       entity.HasIndex(e => e.IsPrimary, "credit_cards_index_5");
 
       entity.HasIndex(e => e.IsActive, "credit_cards_index_6");
+
+      // Disabling auto include for navigation properties
+      entity.Navigation(creditCard => creditCard.Client).AutoInclude(false);
+      entity.Navigation(creditCard => creditCard.Product).AutoInclude(false);
+      entity.Navigation(creditCard => creditCard.Transactions).AutoInclude(false);
     }
   }
 }

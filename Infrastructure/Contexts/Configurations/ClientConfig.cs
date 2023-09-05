@@ -29,29 +29,10 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
 
       entity.HasIndex(e => e.IsActive, "clients_index_1");
 
-      //entity.HasMany<Account>()
-      //      .WithOne(account => account.Client)
-      //      .HasForeignKey(account => account.ClientId);
-
-      //entity.HasMany<CreditCard>()
-      //      .WithOne(creditCard => creditCard.Client)
-      //      .HasForeignKey(creditCard => creditCard.ClientId);
-
-      //entity.HasMany<DebitCard>()
-      //      .WithOne(debit => debit.Client)
-      //      .HasForeignKey(debit => debit.ClientId);
-
-      //entity.HasMany<Loan>()
-      //      .WithOne(loan => loan.Client)
-      //      .HasForeignKey(loan => loan.ClientId);
-
-      //entity.HasMany<Product>()
-      //      .WithOne(product => product.Client)
-      //      .HasForeignKey(product => product.ClientId);
-
-      //entity.HasMany<Transaction>()
-      //      .WithOne(tran => tran.Client)
-      //      .HasForeignKey(tran => tran.ClientId);
+      entity.HasOne(client => client.ClientType)
+        .WithMany(clientType => clientType.Clients)
+        .HasForeignKey(client => client.ClientTypeId)
+        .OnDelete(DeleteBehavior.ClientSetNull);
 
       entity.HasMany(client => client.Accounts)
        .WithOne(cr => cr.Client)
@@ -77,6 +58,23 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
         .WithOne(dr => dr.Client)
         .HasForeignKey(dr => dr.ClientId)
         .OnDelete(DeleteBehavior.ClientSetNull);
+
+      // Disabling auto include for navigation properties
+      entity.Navigation(client => client.ClientType).AutoInclude(false);
+      entity.Navigation(client => client.ClientStatus).AutoInclude(false);
+      entity.Navigation(client => client.Accounts).AutoInclude(false);
+      entity.Navigation(client => client.CreditCards).AutoInclude(false);
+      entity.Navigation(client => client.DebitCards).AutoInclude(false);
+      entity.Navigation(client => client.Loans).AutoInclude(false);
+      entity.Navigation(client => client.Products).AutoInclude(false);
+
+      //entity.Ignore(client => client.ClientType);
+      //entity.Ignore(client => client.ClientStatus);
+      //entity.Ignore(client => client.Accounts);
+      //entity.Ignore(client => client.CreditCards);
+      //entity.Ignore(client => client.DebitCards);
+      //entity.Ignore(client => client.Loans);
+      //entity.Ignore(client => client.Products);
     }
   }
 }

@@ -24,6 +24,11 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
 
       entity.HasIndex(e => e.IsActive, "loans_index_10");
 
+      // Disabling auto include for navigation properties
+      entity.Navigation(loan => loan.Client).AutoInclude(false);
+      entity.Navigation(loan => loan.Product).AutoInclude(false);
+      entity.Navigation(loan => loan.TransactionSourceDebitCard).AutoInclude(false);
+
     }
   }
 }

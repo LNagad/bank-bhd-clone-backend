@@ -1,4 +1,5 @@
-﻿using BhdBankClone.Core.Domain;
+﻿using BhdBankClone.Core.Application.Enums.BankSeeds;
+using BhdBankClone.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -22,10 +23,23 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
 
       entity.HasIndex(e => e.Description, "clients_types_index_13");
 
-      entity.HasMany<Client>()
-        .WithOne(client => client.ClientType)
-        .HasForeignKey(client => client.ClientsTypeId);
+      // Disabling auto include of related entities
 
+      entity.Navigation(clientType => clientType.Clients)
+        .AutoInclude(false);
+
+      // Adding data to the table
+      entity.HasData(
+        new ClientType() 
+        { 
+          Id = (int)Clients.CLIENTE_TIPO_PERSONAL, 
+          Description = Clients.CLIENTE_TIPO_PERSONAL.ToString()
+        },
+        new ClientType() { 
+          Id = (int)Clients.CLIENTE_TIPO_EMPRESARIAL,
+          Description = Clients.CLIENTE_TIPO_EMPRESARIAL.ToString()
+        }
+      );
     }
   }
 }

@@ -14,39 +14,50 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
 
       entity.HasOne(product => product.Account)
         .WithOne(account => account.Product)
-        .HasForeignKey<Account>(account => account.ProductId);
+        .HasForeignKey<Product>(account => account.AccountId);
 
       entity.HasOne(product => product.CreditCard)
         .WithOne(card => card.Product)
-        .HasForeignKey<CreditCard>(card => card.ProductId);
+        .HasForeignKey<Product>(card => card.CreditCardId);
 
       entity.HasOne(product => product.DebitCard)
         .WithOne(card => card.Product)
-        .HasForeignKey<DebitCard>(card => card.ProductId);
+        .HasForeignKey<Product>(card => card.DebitCardId);
 
       entity.HasOne(product => product.Loan)
         .WithOne(loan => loan.Product)
-        .HasForeignKey<Loan>(loan => loan.ProductId);
+        .HasForeignKey<Product>(loan => loan.LoanId);
+
+      entity.HasOne(product => product.Client)
+        .WithMany(client => client.Products)
+        .HasForeignKey(product => product.ClientId);
+;
+
+      //Ignoring EF Core from doing innecesary JOINS in SQL Query
+      //entity.Ignore(product => product.Account);
+      //entity.Ignore(product => product.Loan);
+      //entity.Ignore(product => product.CreditCard);
+      //entity.Ignore(product => product.DebitCard);
+      //entity.Ignore(product => product.Client);
+      //entity.Ignore(product => product.ProductType);
+
+      // Disable automatic loading of navigation properties
+      //entity.Metadata.FindNavigation(nameof(Product.Account)).SetPropertyAccessMode(PropertyAccessMode.Field);
+      //entity.Metadata.FindNavigation(nameof(Product.Loan)).SetPropertyAccessMode(PropertyAccessMode.Field);
+      //entity.Metadata.FindNavigation(nameof(Product.CreditCard)).SetPropertyAccessMode(PropertyAccessMode.Field);
+      //entity.Metadata.FindNavigation(nameof(Product.DebitCard)).SetPropertyAccessMode(PropertyAccessMode.Field);
+      //entity.Metadata.FindNavigation(nameof(Product.Client)).SetPropertyAccessMode(PropertyAccessMode.Field);
+      //entity.Metadata.FindNavigation(nameof(Product.ProductType)).SetPropertyAccessMode(PropertyAccessMode.Field);
 
 
-      // client many relationship implemented
-      //entity.HasOne<Account>()
-      //  .WithOne(acc => acc.Product)
-      //  .HasForeignKey<Account>(Account => Account.ProductId);
 
-      //entity.HasOne<CreditCard>()
-      //  .WithOne(card => card.Product)
-      //  .HasForeignKey<CreditCard>(card => card.ProductId);
-
-      //entity.HasOne<DebitCard>()
-      //  .WithOne(card => card.Product)
-      //  .HasForeignKey<DebitCard>(card => card.ProductId);
-
-      //entity.HasOne<Loan>()
-      //  .WithOne(loan => loan.Product)
-      //  .HasForeignKey<Loan>(loan => loan.ProductId);
-
-
+      // Disabling auto include for navigation properties
+      //entity.Navigation(product => product.Account).AutoInclude(false).UsePropertyAccessMode(PropertyAccessMode.Field);
+      //entity.Navigation(product => product.Loan).AutoInclude(false).UsePropertyAccessMode(PropertyAccessMode.Field);
+      //entity.Navigation(product => product.CreditCard).AutoInclude(false).UsePropertyAccessMode(PropertyAccessMode.Field);
+      //entity.Navigation(product => product.DebitCard).AutoInclude(false).UsePropertyAccessMode(PropertyAccessMode.Field);
+      //entity.Navigation(product => product.Client).AutoInclude(false).UsePropertyAccessMode(PropertyAccessMode.Field);
+      //entity.Navigation(product => product.ProductType).AutoInclude(false).UsePropertyAccessMode(PropertyAccessMode.Field);
     }
   }
 }

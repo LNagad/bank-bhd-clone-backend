@@ -48,6 +48,12 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
       entity.HasIndex(e => e.IsPrimary, "debit_cards_index_8");
 
       entity.HasIndex(e => e.IsActive, "debit_cards_index_9");
+
+      // Disabling auto include for navigation properties             
+      entity.Navigation(debitCard => debitCard.Client).AutoInclude(false);
+      entity.Navigation(debitCard => debitCard.Product).AutoInclude(false);
+      entity.Navigation(debitCard => debitCard.Account).AutoInclude(false);
+      entity.Navigation(debitCard => debitCard.TransactionSourceDebitCard).AutoInclude(false);
     }
   }
 }

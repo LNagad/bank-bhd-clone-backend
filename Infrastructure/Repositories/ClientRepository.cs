@@ -6,9 +6,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Repositories
 {
   public class ClientRepository : GenericRepository<Client>, IClientRepository
   {
-    private readonly BhdContext _context;
+    private readonly ApplicationContext _context;
 
-    public ClientRepository(BhdContext context) : base(context) 
+    public ClientRepository(ApplicationContext context) : base(context) 
     {
       _context = context;
     }

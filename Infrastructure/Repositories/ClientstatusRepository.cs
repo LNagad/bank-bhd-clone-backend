@@ -7,9 +7,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Repositories
 
   internal class ClientstatusRepository: GenericRepository<ClientStatus>, IClientStatusRepository
   {
-    private readonly BhdContext _context;
+    private readonly ApplicationContext _context;
 
-    public ClientstatusRepository(BhdContext context) : base(context)
+    public ClientstatusRepository(ApplicationContext context) : base(context)
     {
       _context = context;
     }

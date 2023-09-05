@@ -7,6 +7,7 @@ using BhdBankClone.Core.Application.DTOs.Loans;
 using BhdBankClone.Core.Application.DTOs.Products;
 using BhdBankClone.Core.Application.DTOs.ProductTypes;
 using BhdBankClone.Core.Application.Features.BankAccounts.Commands;
+using BhdBankClone.Core.Application.Features.BankAccountTypes.Command;
 using BhdBankClone.Core.Application.Features.Clients.Commands;
 using BhdBankClone.Core.Application.Features.CreditCards.Commands;
 using BhdBankClone.Core.Application.Features.DebitCards.Commands;
@@ -131,6 +132,16 @@ namespace BhdBankClone.Core.Application.Mappings
         .ForMember(dest => dest.DebitCard, opt => opt.Ignore())
         .ForMember(dest => dest.Product, opt => opt.Ignore())
         .ForMember(dest => dest.Transactions, opt => opt.Ignore())
+        .ReverseMap();
+      #endregion
+
+      #region BankAccountTypes
+      CreateMap<CreateBankAccountTypeCommand, AccountType>()
+        .ForMember(dest => dest.Accounts, opt => opt.Ignore())
+      .ReverseMap();
+
+      CreateMap<BankAccountTypeDTO, AccountType>()
+        .ForMember(dest => dest.Accounts, opt => opt.Ignore())
         .ReverseMap();
       #endregion
     }

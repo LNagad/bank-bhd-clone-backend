@@ -15,19 +15,21 @@ namespace BhdBankClone.Core.Application.Features.Loans.Commands
 
     public int ClientId { get; set; }
   }
-  public class CreateLoanCommandHandler : IRequestHandler<CreateLoanCommand, Response<LoanDTO>>
+  internal class CreateLoanCommandHandler : IRequestHandler<CreateLoanCommand, Response<LoanDTO>>
   {
     private readonly IGenericRepository<Loan> _loanRepository;
+    private readonly IProductRepository _productRepository;
     private readonly IClientRepository _clientRepository;
     private readonly IMapper _mapper;
     private readonly IValidator<CreateLoanCommand> _validator;
 
-    public CreateLoanCommandHandler(IGenericRepository<Loan> LoanRepository, IMapper mapper, IValidator<CreateLoanCommand> validator, IClientRepository clientRepository)
+    public CreateLoanCommandHandler(IGenericRepository<Loan> LoanRepository, IMapper mapper, IValidator<CreateLoanCommand> validator, IClientRepository clientRepository, IProductRepository productRepository)
     {
       _loanRepository = LoanRepository;
       _mapper = mapper;
       _validator = validator;
       _clientRepository = clientRepository;
+      _productRepository = productRepository;
     }
 
     public async Task<Response<LoanDTO>> Handle(CreateLoanCommand request, CancellationToken cancellationToken)
@@ -50,6 +52,18 @@ namespace BhdBankClone.Core.Application.Features.Loans.Commands
       if (clientExist == null) throw new ApiException($"Client with id: {req.ClientId} does not exist.");
 
       var Loan = await _loanRepository.AddAsync(_mapper.Map<Loan>(req));
+
+      var product = await _productRepository.AddAsync(new Product()
+      {
+        IsLoan = true,
+        ClientId = req.ClientId,
+        LoanId = Loan.Id,
+        ProductTypeId = 1 //TODO: ADD THIS TO ALL CRUD OPERATIONS, ALSO ADD EF CORE SEED SCOPE TO CREATE PRODUCT TYPES 
+      });
+
+      Loan.ProductId = product.Id;
+
+      await _loanRepository.Update(Loan);
 
       return _mapper.Map<LoanDTO>(Loan);
     }

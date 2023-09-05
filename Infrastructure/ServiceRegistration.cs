@@ -13,10 +13,10 @@ namespace BhdBankClone.Infrastructure.Persistence
     {
       AddRepositories(services);
 
-      services.AddDbContext<BhdContext>(opt =>
+      services.AddDbContext<ApplicationContext>(opt =>
       {
         opt.UseSqlServer(config.GetConnectionString("DefaultConnection"),
-        m => m.MigrationsAssembly(typeof(BhdContext).Assembly.FullName));
+        m => m.MigrationsAssembly(typeof(ApplicationContext).Assembly.FullName));
       });
 
       return services;
@@ -29,6 +29,7 @@ namespace BhdBankClone.Infrastructure.Persistence
       services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
       services.AddTransient<IClientRepository, ClientRepository>();
       services.AddTransient<IClientStatusRepository, ClientstatusRepository>();
+      services.AddTransient<IProductRepository, ProductRepository>();
     }
     #endregion
   }

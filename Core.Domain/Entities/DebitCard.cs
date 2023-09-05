@@ -22,11 +22,11 @@ public class DebitCard : AuditableBaseEntity
 
     public int? AccountId { get; set; }
 
-    public virtual Client? Client { get; set; }
+    public  Client? Client { get; set; }
 
-    public virtual Product? Product { get; set; }
+    public  Product? Product { get; set; }
 
-    public virtual Account? Account { get; set; }
+    public  Account? Account { get; set; }
 
-    public virtual ICollection<Transaction>? TransactionSourceDebitCard { get; set; }
+    public  ICollection<Transaction>? TransactionSourceDebitCard { get; set; }
 }

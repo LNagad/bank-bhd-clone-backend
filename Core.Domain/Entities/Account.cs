@@ -21,14 +21,14 @@ public class Account: AuditableBaseEntity
 
   public decimal? CurrentBalance { get; set; }
 
-  public AccountType? AccountType { get; set; }
+  public  AccountType? AccountType { get; set; }
 
-  public Client? Client { get; set; }
+  public  Client? Client { get; set; }
 
-  public Product? Product { get; set; }
+  public  Product? Product { get; set; }
 
-  public DebitCard? DebitCard { get; set; }
+  public  DebitCard? DebitCard { get; set; }
 
-  public virtual ICollection<Transaction>? Transactions { get; set; }
+  public  ICollection<Transaction>? Transactions { get; set; }
 
 }

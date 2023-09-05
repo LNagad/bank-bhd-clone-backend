@@ -8,10 +8,10 @@ namespace BhdBankClone.Infrastructure.Persistence.Repositories
 {
   public class GenericRepository<Entity> : IGenericRepository<Entity> where Entity : AuditableBaseEntity
   {
-    private readonly BhdContext _context;
+    private readonly ApplicationContext _context;
     protected readonly DbSet<Entity> _entities;
 
-    public GenericRepository(BhdContext context)
+    public GenericRepository(ApplicationContext context)
     {
       _context = context;
       _entities = context.Set<Entity>();

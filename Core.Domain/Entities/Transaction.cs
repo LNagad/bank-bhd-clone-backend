@@ -25,19 +25,19 @@ public class Transaction : AuditableBaseEntity
 
     public int? DestinationLoanId { get; set; }
 
-    public virtual Client? Client { get; set; }
+    public  Client? Client { get; set; }
 
-    public virtual Account? DestinationAccount { get; set; }
+    public  Account? DestinationAccount { get; set; }
 
-    public virtual CreditCard? DestinationCreditCard { get; set; }
+    public  CreditCard? DestinationCreditCard { get; set; }
 
-    public virtual Loan? DestinationLoan { get; set; }
+    public Loan? DestinationLoan { get; set; }
 
-    public virtual Account? SourceAccount { get; set; }
+    public  Account? SourceAccount { get; set; }
 
-    public virtual CreditCard? SourceCreditCard { get; set; }
+    public CreditCard? SourceCreditCard { get; set; }
 
-    public virtual DebitCard? SourceDebitCard { get; set; }
+    public  DebitCard? SourceDebitCard { get; set; }
 
-    public virtual TransactionType? TransactionType { get; set; }
+    public TransactionType? TransactionType { get; set; }
 }

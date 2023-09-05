@@ -25,10 +25,10 @@ public class Product : AuditableBaseEntity
 
   public int? DebitCardId { get; set; }
 
-  public Client? Client { get; set; }
-  public ProductType? ProductType { get; set; }
-  public Account? Account { get; set; }
-  public Loan? Loan { get; set; }
-  public CreditCard? CreditCard { get; set; }
-  public DebitCard? DebitCard { get; set; }
+  public virtual Client? Client { get; set; }
+  public virtual ProductType? ProductType { get; set; }
+  public virtual Account? Account { get; set; }
+  public virtual Loan? Loan { get; set; }
+  public virtual CreditCard? CreditCard { get; set; }
+  public virtual DebitCard? DebitCard { get; set; }
 }

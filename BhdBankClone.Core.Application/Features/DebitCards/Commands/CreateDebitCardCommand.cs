@@ -57,9 +57,8 @@ namespace BhdBankClone.Core.Application.Features.DebitCards.Commands
 
       if (accountExist == null) throw new ApiException($"Account with id: {req.AccountId} does not exist.");
 
-      var hasAnyDebitCard =  _DebitCardRepository.GetQueryable()
-        .Where(x => x.ClientId == req.ClientId && x.AccountId == req.AccountId)
-        .FirstOrDefault();
+      var hasAnyDebitCard = _DebitCardRepository.GetQueryable()
+        .Any(x => x.ClientId == req.ClientId && x.AccountId == req.AccountId);
 
       DebitCard debitCard = new()
       {
@@ -69,7 +68,7 @@ namespace BhdBankClone.Core.Application.Features.DebitCards.Commands
         ClientId = req.ClientId,
         AccountId = req.AccountId,
         IsActive = true,
-        IsPrimary = hasAnyDebitCard != null ? false : true, //Check if client already has a debit card to set it as primary to true or false
+        IsPrimary = !hasAnyDebitCard, //Check if client already has a debit card to set it as primary to true or false
       };
 
       await _DebitCardRepository.AddAsync(debitCard);

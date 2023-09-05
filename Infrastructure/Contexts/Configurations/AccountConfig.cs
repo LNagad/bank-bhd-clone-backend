@@ -42,6 +42,17 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
           .WithOne(transaction => transaction.SourceAccount)
           .HasForeignKey(transaction => transaction.SourceAccountId);
 
+      entity.HasOne(account => account.AccountType)
+          .WithMany(accountType => accountType.Accounts)
+          .HasForeignKey(account => account.AccountTypeId);
+
+      // Disabling auto include for navigation properties
+      entity.Navigation(account => account.AccountType).AutoInclude(false);
+      entity.Navigation(account => account.Client).AutoInclude(false);
+      entity.Navigation(account => account.Product).AutoInclude(false);
+      entity.Navigation(account => account.DebitCard).AutoInclude(false);
+      entity.Navigation(account => account.Transactions).AutoInclude(false);
+
     }
   }
 }

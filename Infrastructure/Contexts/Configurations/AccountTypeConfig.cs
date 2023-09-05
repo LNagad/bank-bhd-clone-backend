@@ -1,4 +1,5 @@
-﻿using BhdBankClone.Core.Domain;
+﻿using BhdBankClone.Core.Application.Enums.BankSeeds;
+using BhdBankClone.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -20,10 +21,24 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
           .HasMaxLength(100)
           .IsUnicode(false);
 
-      entity.HasMany<Account>()
+      entity.HasMany(account => account.Accounts)
         .WithOne(account => account.AccountType)
         .HasForeignKey(account => account.AccountTypeId)
         .OnDelete(DeleteBehavior.ClientSetNull);
+
+      // Adding data to the table
+      entity.HasData(
+        new AccountType() 
+        { 
+          Id = (int)Accounts.CUENTA_AHORROS, 
+          Description = Accounts.CUENTA_AHORROS.ToString() 
+        },
+        new AccountType() 
+        { 
+          Id = (int)Accounts.CUENTA_AHORROS_EMPRESARIAL, 
+          Description = Accounts.CUENTA_AHORROS_EMPRESARIAL.ToString() 
+        }
+      );
     }
   }
 }
