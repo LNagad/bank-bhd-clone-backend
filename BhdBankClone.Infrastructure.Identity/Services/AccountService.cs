@@ -123,7 +123,7 @@ namespace BhdBankClone.Infrastructure.Identity.Services
         LastName = req.LastName,
         UserName = req.UserName,
         PhoneNumber = req.PhoneNumber,
-        EmailConfirmed = true,
+        EmailConfirmed = true, //TODO: ADD EMAIL SERVICE AND SET TO FALSE
         IsActive = true
       };
 

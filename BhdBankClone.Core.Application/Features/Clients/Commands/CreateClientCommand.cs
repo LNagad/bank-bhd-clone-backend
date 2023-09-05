@@ -14,24 +14,26 @@ namespace BhdBankClone.Core.Application.Features.Clients.Commands
   public class CreateClientCommand : IRequest<Response<ClientDTO>>
   {
     public required string UserId { get; set; }
-    public int? ClientsTypeId { get; set; }
+    public required int ClientTypeId { get; set; }
     public required string IdentityCard { get; set; }
     public int? StatusId { get; set; }
   }
-  public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand, Response<ClientDTO>>
+  internal class CreateClientCommandHandler : IRequestHandler<CreateClientCommand, Response<ClientDTO>>
   {
     private readonly IClientRepository _clientRepository;
+    private readonly IGenericRepository<ClientType> _clientTypeRepository;
     private readonly IMapper _mapper;
     private readonly IValidator<CreateClientCommand> _validator;
     private readonly IBasicUserExtraAccountService _accountService;
 
-    public CreateClientCommandHandler(IClientRepository clientRepository, IMapper mapper, 
-      IValidator<CreateClientCommand> validator, IBasicUserExtraAccountService accountService)
+    public CreateClientCommandHandler(IClientRepository clientRepository, IMapper mapper,
+      IValidator<CreateClientCommand> validator, IBasicUserExtraAccountService accountService, IGenericRepository<ClientType> clientTypeRepository)
     {
       _clientRepository = clientRepository;
       _mapper = mapper;
       _validator = validator;
       _accountService = accountService;
+      _clientTypeRepository = clientTypeRepository;
     }
 
     public async Task<Response<ClientDTO>> Handle(CreateClientCommand request, CancellationToken cancellationToken)
@@ -50,8 +52,10 @@ namespace BhdBankClone.Core.Application.Features.Clients.Commands
     private async Task<ClientDTO> CreateClientAsync(CreateClientCommand req)
     {
       bool userIdExist = await _accountService.UserExist(req.UserId);
-
       if (!userIdExist) throw new ApiException("User does not exist", (int)HttpStatusCode.BadRequest);
+
+      var clientType = await _clientTypeRepository.GetByIdAsync(req.ClientTypeId);
+      if (clientType == null) throw new ApiException("Client type does not exist", (int)HttpStatusCode.BadRequest);
 
       var clientQuery = _clientRepository.GetQueryable();
 
@@ -63,7 +67,7 @@ namespace BhdBankClone.Core.Application.Features.Clients.Commands
         throw new ApiException("A Client already exist", (int)HttpStatusCode.BadRequest);
       }
 
-      // TODO: validate client type and status
+      // TODO: validate status
       var resp = await _clientRepository.AddAsync(_mapper.Map<Client>(req));
 
       if (resp == null) throw new ApiException("Could not create client", (int)HttpStatusCode.BadRequest);
