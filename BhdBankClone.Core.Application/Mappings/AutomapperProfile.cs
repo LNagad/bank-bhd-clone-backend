@@ -6,6 +6,7 @@ using BhdBankClone.Core.Application.DTOs.DebitCards;
 using BhdBankClone.Core.Application.DTOs.Loans;
 using BhdBankClone.Core.Application.DTOs.Products;
 using BhdBankClone.Core.Application.DTOs.ProductTypes;
+using BhdBankClone.Core.Application.DTOs.Transactions;
 using BhdBankClone.Core.Application.Features.BankAccounts.Commands;
 using BhdBankClone.Core.Application.Features.BankAccountTypes.Command;
 using BhdBankClone.Core.Application.Features.Clients.Commands;
@@ -143,6 +144,30 @@ namespace BhdBankClone.Core.Application.Mappings
       CreateMap<BankAccountTypeDTO, AccountType>()
         .ForMember(dest => dest.Accounts, opt => opt.Ignore())
         .ReverseMap();
+      #endregion
+
+      #region Transactions
+      CreateMap<CreateTransactionCommand, BankTransaction>()
+        .ForMember(dest => dest.Client, opt => opt.Ignore())
+        .ForMember(dest => dest.DestinationAccount, opt => opt.Ignore())
+        .ForMember(dest => dest.DestinationCreditCard, opt => opt.Ignore())
+        .ForMember(dest => dest.DestinationLoan, opt => opt.Ignore())
+        .ForMember(dest => dest.SourceAccount, opt => opt.Ignore())
+        .ForMember(dest => dest.SourceCreditCard, opt => opt.Ignore())
+        .ForMember(dest => dest.SourceDebitCard, opt => opt.Ignore())
+        .ForMember(dest => dest.TransactionType, opt => opt.Ignore())
+      .ReverseMap();
+
+      CreateMap<TransactionDTO, BankTransaction>()
+        .ForMember(dest => dest.Client, opt => opt.Ignore())
+        .ForMember(dest => dest.DestinationAccount, opt => opt.Ignore())
+        .ForMember(dest => dest.DestinationCreditCard, opt => opt.Ignore())
+        .ForMember(dest => dest.DestinationLoan, opt => opt.Ignore())
+        .ForMember(dest => dest.SourceAccount, opt => opt.Ignore())
+        .ForMember(dest => dest.SourceCreditCard, opt => opt.Ignore())
+        .ForMember(dest => dest.SourceDebitCard, opt => opt.Ignore())
+        .ForMember(dest => dest.TransactionType, opt => opt.Ignore())
+      .ReverseMap();
       #endregion
     }
   }

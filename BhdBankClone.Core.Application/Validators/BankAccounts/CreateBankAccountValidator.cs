@@ -8,10 +8,10 @@ namespace BhdBankClone.Core.Application.Validators.BankAccounts
 
     public CreateBankAccountValidator()
     {
-      RuleFor(p => p.AccountTypeId)
-        .NotEmpty().WithMessage("{PropertyName} is required.")
-        .NotNull()
-        .GreaterThan(0);
+      //RuleFor(p => p.AccountTypeId)
+      //  .NotEmpty().WithMessage("{PropertyName} is required.")
+      //  .NotNull()
+      //  .GreaterThan(0);
 
       RuleFor(p => p.ClientId)
         .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -23,13 +23,13 @@ namespace BhdBankClone.Core.Application.Validators.BankAccounts
         .NotNull()
         .GreaterThan(0);
 
-      RuleFor(req => req)
-       .Custom((req, context) => {
-         if (req.DebitCardId != null)
-         {
-           if (req.DebitCardId <= 0) context.AddFailure("Debit Card Id is required");
-         }
-       });
+      //RuleFor(req => req)
+      // .Custom((req, context) => {
+      //   if (req.DebitCardId != null)
+      //   {
+      //     if (req.DebitCardId <= 0) context.AddFailure("Debit Card Id is required");
+      //   }
+      // });
     }
   }
 }

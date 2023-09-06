@@ -33,7 +33,7 @@ public class ApplicationContext : DbContext
 
   public DbSet<ProductType> ProductTypes { get; set; }
 
-  public DbSet<Transaction> Transactions { get; set; }
+  public DbSet<BankTransaction> Transactions { get; set; }
 
   public DbSet<TransactionType> TransactionTypes { get; set; }
 

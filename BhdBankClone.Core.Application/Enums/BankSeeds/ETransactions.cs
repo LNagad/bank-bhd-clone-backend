@@ -2,7 +2,7 @@
 
 namespace BhdBankClone.Core.Application.Enums.BankSeeds
 {
-  public enum Transactions
+  public enum ETransactions
   {
     TRANSFERENCIA = 1,
     RETIRO = 2,

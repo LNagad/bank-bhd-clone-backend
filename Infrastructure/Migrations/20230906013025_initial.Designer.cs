@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BhdBankClone.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230905181534_init_with_data")]
-    partial class init_with_data
+    [Migration("20230906013025_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -140,6 +140,99 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "CUENTA_AHORROS_EMPRESARIAL"
                         });
+                });
+
+            modelBuilder.Entity("BhdBankClone.Core.Domain.BankTransaction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AccountId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("money");
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CreditCardId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DebitCardId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DestinationAccountId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DestinationCreditCardId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DestinationLoanId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LoanId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SourceAccountId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SourceCreditCardId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SourceDebitCardId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TransactionTime")
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("TransactionTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("CreditCardId");
+
+                    b.HasIndex("DebitCardId");
+
+                    b.HasIndex("LoanId");
+
+                    b.HasIndex("TransactionTypeId");
+
+                    b.HasIndex(new[] { "TransactionTime" }, "transactions_index_14");
+
+                    b.HasIndex(new[] { "SourceAccountId" }, "transactions_index_15");
+
+                    b.HasIndex(new[] { "SourceCreditCardId" }, "transactions_index_16");
+
+                    b.HasIndex(new[] { "SourceDebitCardId" }, "transactions_index_17");
+
+                    b.HasIndex(new[] { "DestinationAccountId" }, "transactions_index_18");
+
+                    b.HasIndex(new[] { "DestinationCreditCardId" }, "transactions_index_19");
+
+                    b.HasIndex(new[] { "DestinationLoanId" }, "transactions_index_20");
+
+                    b.ToTable("transactions", (string)null);
                 });
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.Client", b =>
@@ -446,6 +539,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     b.Property<decimal?>("LoanAmount")
                         .HasColumnType("money");
 
+                    b.Property<double?>("LoanBalance")
+                        .HasColumnType("float");
+
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
@@ -475,7 +571,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     b.Property<int?>("AccountId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ClientId")
+                    b.Property<int>("ClientId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -505,7 +601,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     b.Property<int?>("LoanId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProductTypeId")
+                    b.Property<int>("ProductTypeId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -601,99 +697,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BhdBankClone.Core.Domain.Transaction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal?>("Amount")
-                        .HasColumnType("money");
-
-                    b.Property<int?>("ClientId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CreditCardId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DebitCardId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DestinationAccountId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DestinationCreditCardId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DestinationLoanId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("LoanId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SourceAccountId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SourceCreditCardId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SourceDebitCardId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("TransactionTime")
-                        .HasColumnType("datetime");
-
-                    b.Property<int?>("TransactionTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("CreditCardId");
-
-                    b.HasIndex("DebitCardId");
-
-                    b.HasIndex("LoanId");
-
-                    b.HasIndex("TransactionTypeId");
-
-                    b.HasIndex(new[] { "TransactionTime" }, "transactions_index_14");
-
-                    b.HasIndex(new[] { "SourceAccountId" }, "transactions_index_15");
-
-                    b.HasIndex(new[] { "SourceCreditCardId" }, "transactions_index_16");
-
-                    b.HasIndex(new[] { "SourceDebitCardId" }, "transactions_index_17");
-
-                    b.HasIndex(new[] { "DestinationAccountId" }, "transactions_index_18");
-
-                    b.HasIndex(new[] { "DestinationCreditCardId" }, "transactions_index_19");
-
-                    b.HasIndex(new[] { "DestinationLoanId" }, "transactions_index_20");
-
-                    b.ToTable("transactions", (string)null);
-                });
-
             modelBuilder.Entity("BhdBankClone.Core.Domain.TransactionType", b =>
                 {
                     b.Property<int>("Id")
@@ -779,6 +782,82 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     b.Navigation("DebitCard");
                 });
 
+            modelBuilder.Entity("BhdBankClone.Core.Domain.BankTransaction", b =>
+                {
+                    b.HasOne("BhdBankClone.Core.Domain.Account", null)
+                        .WithMany("Transactions")
+                        .HasForeignKey("AccountId");
+
+                    b.HasOne("BhdBankClone.Core.Domain.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BhdBankClone.Core.Domain.CreditCard", null)
+                        .WithMany("Transactions")
+                        .HasForeignKey("CreditCardId");
+
+                    b.HasOne("BhdBankClone.Core.Domain.DebitCard", null)
+                        .WithMany("TransactionSourceDebitCard")
+                        .HasForeignKey("DebitCardId");
+
+                    b.HasOne("BhdBankClone.Core.Domain.Account", "DestinationAccount")
+                        .WithMany()
+                        .HasForeignKey("DestinationAccountId");
+
+                    b.HasOne("BhdBankClone.Core.Domain.CreditCard", "DestinationCreditCard")
+                        .WithMany()
+                        .HasForeignKey("DestinationCreditCardId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("BhdBankClone.Core.Domain.Loan", "DestinationLoan")
+                        .WithMany()
+                        .HasForeignKey("DestinationLoanId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("BhdBankClone.Core.Domain.Loan", null)
+                        .WithMany("TransactionSourceDebitCard")
+                        .HasForeignKey("LoanId");
+
+                    b.HasOne("BhdBankClone.Core.Domain.Account", "SourceAccount")
+                        .WithMany()
+                        .HasForeignKey("SourceAccountId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("BhdBankClone.Core.Domain.CreditCard", "SourceCreditCard")
+                        .WithMany()
+                        .HasForeignKey("SourceCreditCardId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("BhdBankClone.Core.Domain.DebitCard", "SourceDebitCard")
+                        .WithMany()
+                        .HasForeignKey("SourceDebitCardId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("BhdBankClone.Core.Domain.TransactionType", "TransactionType")
+                        .WithMany("Transactions")
+                        .HasForeignKey("TransactionTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("DestinationAccount");
+
+                    b.Navigation("DestinationCreditCard");
+
+                    b.Navigation("DestinationLoan");
+
+                    b.Navigation("SourceAccount");
+
+                    b.Navigation("SourceCreditCard");
+
+                    b.Navigation("SourceDebitCard");
+
+                    b.Navigation("TransactionType");
+                });
+
             modelBuilder.Entity("BhdBankClone.Core.Domain.Client", b =>
                 {
                     b.HasOne("BhdBankClone.Core.Domain.ClientType", "ClientType")
@@ -835,7 +914,8 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasOne("BhdBankClone.Core.Domain.Client", "Client")
                         .WithMany("Products")
-                        .HasForeignKey("ClientId");
+                        .HasForeignKey("ClientId")
+                        .IsRequired();
 
                     b.HasOne("BhdBankClone.Core.Domain.CreditCard", "CreditCard")
                         .WithOne("Product")
@@ -851,7 +931,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
 
                     b.HasOne("BhdBankClone.Core.Domain.ProductType", "ProductType")
                         .WithMany()
-                        .HasForeignKey("ProductTypeId");
+                        .HasForeignKey("ProductTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Account");
 
@@ -864,80 +946,6 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     b.Navigation("Loan");
 
                     b.Navigation("ProductType");
-                });
-
-            modelBuilder.Entity("BhdBankClone.Core.Domain.Transaction", b =>
-                {
-                    b.HasOne("BhdBankClone.Core.Domain.Account", null)
-                        .WithMany("Transactions")
-                        .HasForeignKey("AccountId");
-
-                    b.HasOne("BhdBankClone.Core.Domain.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("BhdBankClone.Core.Domain.CreditCard", null)
-                        .WithMany("Transactions")
-                        .HasForeignKey("CreditCardId");
-
-                    b.HasOne("BhdBankClone.Core.Domain.DebitCard", null)
-                        .WithMany("TransactionSourceDebitCard")
-                        .HasForeignKey("DebitCardId");
-
-                    b.HasOne("BhdBankClone.Core.Domain.Account", "DestinationAccount")
-                        .WithMany()
-                        .HasForeignKey("DestinationAccountId");
-
-                    b.HasOne("BhdBankClone.Core.Domain.CreditCard", "DestinationCreditCard")
-                        .WithMany()
-                        .HasForeignKey("DestinationCreditCardId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("BhdBankClone.Core.Domain.Loan", "DestinationLoan")
-                        .WithMany()
-                        .HasForeignKey("DestinationLoanId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("BhdBankClone.Core.Domain.Loan", null)
-                        .WithMany("TransactionSourceDebitCard")
-                        .HasForeignKey("LoanId");
-
-                    b.HasOne("BhdBankClone.Core.Domain.Account", "SourceAccount")
-                        .WithMany()
-                        .HasForeignKey("SourceAccountId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("BhdBankClone.Core.Domain.CreditCard", "SourceCreditCard")
-                        .WithMany()
-                        .HasForeignKey("SourceCreditCardId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("BhdBankClone.Core.Domain.DebitCard", "SourceDebitCard")
-                        .WithMany()
-                        .HasForeignKey("SourceDebitCardId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("BhdBankClone.Core.Domain.TransactionType", "TransactionType")
-                        .WithMany("Transactions")
-                        .HasForeignKey("TransactionTypeId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Client");
-
-                    b.Navigation("DestinationAccount");
-
-                    b.Navigation("DestinationCreditCard");
-
-                    b.Navigation("DestinationLoan");
-
-                    b.Navigation("SourceAccount");
-
-                    b.Navigation("SourceCreditCard");
-
-                    b.Navigation("SourceDebitCard");
-
-                    b.Navigation("TransactionType");
                 });
 
             modelBuilder.Entity("BhdBankClone.Core.Domain.Account", b =>

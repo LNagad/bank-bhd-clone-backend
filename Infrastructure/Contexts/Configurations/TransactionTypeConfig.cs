@@ -30,28 +30,28 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
       entity.HasData(
         new TransactionType() 
         { 
-          Id = (int)Transactions.TRANSFERENCIA, 
-          Description = Transactions.TRANSFERENCIA.ToString() 
+          Id = (int)ETransactions.TRANSFERENCIA, 
+          Description = ETransactions.TRANSFERENCIA.ToString() 
         },
         new TransactionType()
         { 
-          Id = (int)Transactions.RETIRO, 
-          Description = Transactions.RETIRO.ToString() 
+          Id = (int)ETransactions.RETIRO, 
+          Description = ETransactions.RETIRO.ToString() 
         },
         new TransactionType()
         { 
-          Id = (int)Transactions.DEPOSITO, 
-          Description = Transactions.DEPOSITO.ToString() 
+          Id = (int)ETransactions.DEPOSITO, 
+          Description = ETransactions.DEPOSITO.ToString() 
         },
         new TransactionType()
         { 
-          Id = (int)Transactions.PAGO_TARJETA_CREDITO, 
-          Description = Transactions.PAGO_TARJETA_CREDITO.ToString() 
+          Id = (int)ETransactions.PAGO_TARJETA_CREDITO, 
+          Description = ETransactions.PAGO_TARJETA_CREDITO.ToString() 
         },
         new TransactionType()
         { 
-          Id = (int)Transactions.PAGO_PRESTAMO, 
-          Description = Transactions.PAGO_PRESTAMO.ToString() 
+          Id = (int)ETransactions.PAGO_PRESTAMO, 
+          Description = ETransactions.PAGO_PRESTAMO.ToString() 
         }
       );
     }

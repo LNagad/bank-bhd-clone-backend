@@ -18,7 +18,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
       entity.Property(e => e.LoanAmount)
               .HasColumnType("money");
 
-      entity.HasMany<Transaction>()
+      entity.HasMany<BankTransaction>()
             .WithOne(transaction => transaction.DestinationLoan)
             .HasForeignKey(transaction => transaction.DestinationLoanId);
 

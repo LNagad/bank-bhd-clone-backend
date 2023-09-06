@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BhdBankClone.Core.Application.DTOs.BankAccounts;
+using BhdBankClone.Core.Application.Enums.BankSeeds;
 using BhdBankClone.Core.Application.Exceptions;
 using BhdBankClone.Core.Application.Helpers;
 using BhdBankClone.Core.Application.Interfaces.Repositories;
@@ -12,11 +13,9 @@ namespace BhdBankClone.Core.Application.Features.BankAccounts.Commands
 {
   public class CreateBankAccountCommand: IRequest<Response<BankAccountDTO>>
   {
-    public int AccountTypeId { get; set; }
+    //public int AccountTypeId { get; set; } // for now , we will only have one account type
 
     public required int ClientId { get; set; }
-
-    public int? DebitCardId { get; set; }
 
     public required decimal CurrentBalance { get; set; }
   }
@@ -61,16 +60,16 @@ namespace BhdBankClone.Core.Application.Features.BankAccounts.Commands
 
       if (clientExist == null) throw new ApiException($"Client with id: {req.ClientId} does not exist.");
 
-      if (req.DebitCardId != null)
-      {
-        var debitCardExist = await _debitCardRepository.GetByIdAsync(req.DebitCardId.Value);
+      //if (req.DebitCardId != null)
+      //{
+      //  var debitCardExist = await _debitCardRepository.GetByIdAsync(req.DebitCardId.Value);
 
-        if (debitCardExist == null) throw new ApiException($"Debit card with id: {req.DebitCardId} does not exist.");
-      }
+      //  if (debitCardExist == null) throw new ApiException($"Debit card with id: {req.DebitCardId} does not exist.");
+      //}
 
-      var accountTypeIsValid = await _accountTypeRepository.GetByIdAsync(req.AccountTypeId);
+      //var accountTypeIsValid = await _accountTypeRepository.GetByIdAsync(req.AccountTypeId);
 
-      if (accountTypeIsValid == null) throw new ApiException($"Account type with id: {req.AccountTypeId} does not exist.");
+      //if (accountTypeIsValid == null) throw new ApiException($"Account type with id: {req.AccountTypeId} does not exist.");
 
       var hasAnyBankAccount = _repository.GetQueryable().Any(account => account.ClientId == req.ClientId);
 
@@ -79,9 +78,9 @@ namespace BhdBankClone.Core.Application.Features.BankAccounts.Commands
         IsActive = true,
         IsPrimary = !hasAnyBankAccount, // Check if client already has a bank account to set it as primary to true or false
         AccountNumber = GenerateRandom.GenerateRandomNumber(11),
-        AccountTypeId = req.AccountTypeId,
+        AccountTypeId = (int)EAccounts.CUENTA_AHORROS,
         ClientId = req.ClientId,
-        DebitCardId = req.DebitCardId,
+        //DebitCardId = req.DebitCardId,
         CurrentBalance = req.CurrentBalance
       };
 
@@ -91,7 +90,8 @@ namespace BhdBankClone.Core.Application.Features.BankAccounts.Commands
       {
         ClientId = req.ClientId,
         AccountId = bankAccount.Id,
-        IsAccount = true
+        IsAccount = true,
+        ProductTypeId = (int)EProducts.CUENTA_AHORROS,
       };
 
       await _productRepository.AddAsync(product);

@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
 {
-  public class TransactionConfig : IEntityTypeConfiguration<Transaction>
+  public class TransactionConfig : IEntityTypeConfiguration<BankTransaction>
   {
-    public void Configure(EntityTypeBuilder<Transaction> entity)
+    public void Configure(EntityTypeBuilder<BankTransaction> entity)
     {
       entity.ToTable("transactions");
 

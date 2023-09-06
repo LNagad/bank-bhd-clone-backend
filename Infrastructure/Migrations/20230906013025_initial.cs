@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BhdBankClone.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class init_with_data : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -167,6 +167,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LoanAmount = table.Column<decimal>(type: "money", nullable: true),
+                    LoanBalance = table.Column<double>(type: "float", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true, defaultValue: true),
                     ProductId = table.Column<int>(type: "int", nullable: true),
                     ClientId = table.Column<int>(type: "int", nullable: true),
@@ -259,8 +260,8 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductTypeId = table.Column<int>(type: "int", nullable: true),
-                    ClientId = table.Column<int>(type: "int", nullable: true),
+                    ProductTypeId = table.Column<int>(type: "int", nullable: false),
+                    ClientId = table.Column<int>(type: "int", nullable: false),
                     IsAccount = table.Column<bool>(type: "bit", nullable: true),
                     IsLoan = table.Column<bool>(type: "bit", nullable: true),
                     IsCreditCard = table.Column<bool>(type: "bit", nullable: true),
@@ -306,7 +307,8 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                         name: "FK_products_product_types_ProductTypeId",
                         column: x => x.ProductTypeId,
                         principalTable: "product_types",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -315,10 +317,10 @@ namespace BhdBankClone.Infrastructure.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TransactionTypeId = table.Column<int>(type: "int", nullable: true),
-                    ClientId = table.Column<int>(type: "int", nullable: true),
-                    TransactionTime = table.Column<DateTime>(type: "datetime", nullable: true),
-                    Amount = table.Column<decimal>(type: "money", nullable: true),
+                    TransactionTypeId = table.Column<int>(type: "int", nullable: false),
+                    ClientId = table.Column<int>(type: "int", nullable: false),
+                    Amount = table.Column<decimal>(type: "money", nullable: false),
+                    TransactionTime = table.Column<DateTime>(type: "datetime", nullable: false),
                     SourceAccountId = table.Column<int>(type: "int", nullable: true),
                     SourceCreditCardId = table.Column<int>(type: "int", nullable: true),
                     SourceDebitCardId = table.Column<int>(type: "int", nullable: true),

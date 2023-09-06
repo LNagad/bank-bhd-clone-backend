@@ -29,5 +29,5 @@ public class CreditCard : AuditableBaseEntity
     public  Client? Client { get; set; } 
     public  Product? Product { get; set; }
 
-    public  ICollection<Transaction>? Transactions { get; set; } 
+    public  ICollection<BankTransaction>? Transactions { get; set; } 
 }

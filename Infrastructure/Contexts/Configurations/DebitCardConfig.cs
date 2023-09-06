@@ -39,7 +39,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
         .WithOne(account => account.DebitCard)
         .HasForeignKey<Account>(account => account.DebitCardId);
 
-      entity.HasMany<Transaction>()
+      entity.HasMany<BankTransaction>()
         .WithOne(transaction => transaction.SourceDebitCard)
         .HasForeignKey(transaction => transaction.SourceDebitCardId);
 

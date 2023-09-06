@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BhdBankCloneApi.Controllers.v1.Client
 {
-  [Authorize(Roles = nameof(Roles.Moderator) + "," + nameof(Roles.Admin))]
+  //[Authorize(Roles = nameof(Roles.Moderator) + "," + nameof(Roles.Admin))]
   public class ClientController : BaseApiController
   {
     [HttpGet]

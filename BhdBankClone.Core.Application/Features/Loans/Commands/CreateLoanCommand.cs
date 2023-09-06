@@ -51,7 +51,10 @@ namespace BhdBankClone.Core.Application.Features.Loans.Commands
 
       if (clientExist == null) throw new ApiException($"Client with id: {req.ClientId} does not exist.");
 
-      var Loan = await _loanRepository.AddAsync(_mapper.Map<Loan>(req));
+      var loanEntity = _mapper.Map<Loan>(req);
+      loanEntity.LoanBalance = req.LoanAmount;
+
+      var Loan = await _loanRepository.AddAsync(loanEntity);
 
       var product = await _productRepository.AddAsync(new Product()
       {

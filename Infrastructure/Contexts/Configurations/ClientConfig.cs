@@ -70,7 +70,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
 
       //entity.Ignore(client => client.ClientType);
       //entity.Ignore(client => client.ClientStatus);
-      //entity.Ignore(client => client.Accounts);
+      //entity.Ignore(client => client.EAccounts);
       //entity.Ignore(client => client.CreditCards);
       //entity.Ignore(client => client.DebitCards);
       //entity.Ignore(client => client.Loans);

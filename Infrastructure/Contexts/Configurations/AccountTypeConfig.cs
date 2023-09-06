@@ -30,13 +30,13 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
       entity.HasData(
         new AccountType() 
         { 
-          Id = (int)Accounts.CUENTA_AHORROS, 
-          Description = Accounts.CUENTA_AHORROS.ToString() 
+          Id = (int)EAccounts.CUENTA_AHORROS, 
+          Description = EAccounts.CUENTA_AHORROS.ToString() 
         },
         new AccountType() 
         { 
-          Id = (int)Accounts.CUENTA_AHORROS_EMPRESARIAL, 
-          Description = Accounts.CUENTA_AHORROS_EMPRESARIAL.ToString() 
+          Id = (int)EAccounts.CUENTA_AHORROS_EMPRESARIAL, 
+          Description = EAccounts.CUENTA_AHORROS_EMPRESARIAL.ToString() 
         }
       );
     }

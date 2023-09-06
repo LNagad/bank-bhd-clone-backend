@@ -7,6 +7,8 @@ public class Loan : AuditableBaseEntity
 
   public double? LoanAmount { get; set; }
 
+  public double? LoanBalance { get; set; }
+
   public bool? IsActive { get; set; }
 
   public int? ProductId { get; set; }
@@ -17,6 +19,6 @@ public class Loan : AuditableBaseEntity
 
   public  Product? Product { get; set; }
 
-  public ICollection<Transaction>? TransactionSourceDebitCard { get; set; }
+  public ICollection<BankTransaction>? TransactionSourceDebitCard { get; set; }
 
 }

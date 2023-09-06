@@ -29,6 +29,6 @@ public class Account: AuditableBaseEntity
 
   public  DebitCard? DebitCard { get; set; }
 
-  public  ICollection<Transaction>? Transactions { get; set; }
+  public  ICollection<BankTransaction>? Transactions { get; set; }
 
 }
