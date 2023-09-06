@@ -20,7 +20,7 @@ namespace BhdBankClone.Core.Application.Features.Products.Commands
 
     public int? SourceAccountId { get; set; }
     public int? SourceCreditCardId { get; set; }
-    public int? SourceDebitCardId { get; set; }
+
     public int? DestinationCreditCardId { get; set; }
     public int? DestinationAccountId { get; set; }
     public int? DestinationLoanId { get; set; }
@@ -80,8 +80,9 @@ namespace BhdBankClone.Core.Application.Features.Products.Commands
       var transaction = _mapper.Map<BankTransaction>(req);
 
       transaction.TransactionTypeId = ValidateTransactionType(req);
-      transaction.TransactionTime = DateTime.UtcNow;
-      //TODO : Validate destination and source transaction types are not same id's
+      transaction.TransactionTime = DateTime.UtcNow; //DateTimeOffset.UtcNow
+
+      //TODO: Test all transaction types
 
       await MangeTransactionDestination(req);
 
@@ -95,7 +96,6 @@ namespace BhdBankClone.Core.Application.Features.Products.Commands
     private async Task ValidateEntitiesExistenceAsync(CreateTransactionCommand req)
     {
       await ValidateEntityExistenceAsync(req.SourceCreditCardId, _creditCardRepository, "Credit card not found");
-      await ValidateEntityExistenceAsync(req.SourceDebitCardId, _debitCardRepository, "Debit card not found");
       await ValidateEntityExistenceAsync(req.SourceAccountId, _accountRepository, "Account not found");
       await ValidateEntityExistenceAsync(req.DestinationAccountId, _accountRepository, "Account not found");
       await ValidateEntityExistenceAsync(req.DestinationCreditCardId, _creditCardRepository, "Credit card not found");

@@ -1,8 +1,7 @@
 ﻿using BhdBankClone.Core.Application.Exceptions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using BhdBankClone.Core.Application.Wrappers;
 using System.Net;
 using System.Text.Json;
-using BhdBankClone.Core.Application.Wrappers;
 
 namespace BhdBankCloneApi.Middlewares
 {
