@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BhdBankClone.Core.Application.DTOs.CreditCards;
+using BhdBankClone.Core.Application.Enums.BankSeeds;
 using BhdBankClone.Core.Application.Exceptions;
 using BhdBankClone.Core.Application.Helpers;
 using BhdBankClone.Core.Application.Interfaces.Repositories;
@@ -19,16 +20,18 @@ namespace BhdBankClone.Core.Application.Features.CreditCards.Commands
   public class CreateCreditCardCommandHandler : IRequestHandler<CreateCreditCardCommand, Response<CreditCardDTO>>
   {
     private readonly IGenericRepository<CreditCard> _CreditCardRepository;
+    private readonly IProductRepository _productRepository;
     private readonly IClientRepository _clientRepository;
     private readonly IMapper _mapper;
     private readonly IValidator<CreateCreditCardCommand> _validator;
 
-    public CreateCreditCardCommandHandler(IGenericRepository<CreditCard> CreditCardRepository, IMapper mapper, IValidator<CreateCreditCardCommand> validator, IClientRepository clientRepository)
+    public CreateCreditCardCommandHandler(IGenericRepository<CreditCard> CreditCardRepository, IMapper mapper, IValidator<CreateCreditCardCommand> validator, IClientRepository clientRepository, IProductRepository productRepository)
     {
       _CreditCardRepository = CreditCardRepository;
       _mapper = mapper;
       _validator = validator;
       _clientRepository = clientRepository;
+      _productRepository = productRepository;
     }
 
     public async Task<Response<CreditCardDTO>> Handle(CreateCreditCardCommand request, CancellationToken cancellationToken)
@@ -50,6 +53,9 @@ namespace BhdBankClone.Core.Application.Features.CreditCards.Commands
 
       if (clientExist == null) throw new ApiException($"Client with id: {req.ClientId} does not exist.");
 
+      var hasAnyDebitCard = _CreditCardRepository.GetQueryable()
+      .Any(x => x.ClientId == req.ClientId);
+
       CreditCard creditCard = new()
       {
         CardNumber = GenerateRandom.GenerateRandomNumber(16),
@@ -60,10 +66,28 @@ namespace BhdBankClone.Core.Application.Features.CreditCards.Commands
         CurrentBalance = req.CreditLimit,
         CreditCardDebt = 0,
         IsActive = true,
-        IsPrimary = true, //TODO: Check if client already has a Credit card to set it as primary to true or false
+        IsPrimary = !hasAnyDebitCard,
       };
 
       await _CreditCardRepository.AddAsync(creditCard);
+
+
+      Product product = new()
+      {
+        IsCreditCard = true,
+        ClientId = req.ClientId,
+        CreditCardId = creditCard.Id,
+        ProductTypeId = (int)EProducts.TARJETA_CREDITO 
+      };
+
+      //WE CAN TRY TO FIND THE ID ON THE DATABASE JUST IN CASE THE ID ON DB AND ENUM ARE DIFFERENT
+      //HOWEVER, SINCE WE ARE USING SEEDS, WE KNOW THE ID IS THE SAME
+
+      await _productRepository.AddAsync(product);
+
+      creditCard.ProductId = product.Id;
+
+      await _CreditCardRepository.Update(creditCard);
 
       return _mapper.Map<CreditCardDTO>(creditCard);
     }

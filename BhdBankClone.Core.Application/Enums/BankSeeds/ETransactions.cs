@@ -8,6 +8,7 @@ namespace BhdBankClone.Core.Application.Enums.BankSeeds
     RETIRO = 2,
     DEPOSITO = 3,
     PAGO_TARJETA_CREDITO = 4,
-    PAGO_PRESTAMO = 5
+    PAGO_PRESTAMO = 5,
+    PRESTAMO = 6
   }
 }

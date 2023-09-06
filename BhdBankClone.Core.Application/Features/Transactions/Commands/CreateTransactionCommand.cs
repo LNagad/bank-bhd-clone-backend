@@ -84,7 +84,10 @@ namespace BhdBankClone.Core.Application.Features.Products.Commands
 
       //TODO: Test all transaction types
 
-      await MangeTransactionDestination(req);
+      var transactionAmount = await MangeTransactionDestination(req);
+
+      // had to change this to update the transaction amount in case the debts are less than the sent amount
+      transaction.Amount = transactionAmount.Item2; 
 
       var resp = await _transactionRepository.AddAsync(transaction);
 
@@ -134,7 +137,7 @@ namespace BhdBankClone.Core.Application.Features.Products.Commands
       }
     }
 
-    private async Task<bool> MangeTransactionDestination(CreateTransactionCommand transaction)
+    private async Task<(bool, decimal)> MangeTransactionDestination(CreateTransactionCommand transaction)
     {
       #region account to account
 
@@ -183,6 +186,8 @@ namespace BhdBankClone.Core.Application.Features.Products.Commands
           destinationCCard.CreditCardDebt = 0;
           destinationCCard.CurrentBalance = destinationCCard.CreditLimit;   
           sourceAccount.CurrentBalance -= CCDebt;
+
+          return (true, CCDebt.Value);
         }
         else
         {
@@ -219,6 +224,8 @@ namespace BhdBankClone.Core.Application.Features.Products.Commands
         {
           destinationLoan.LoanBalance = 0;
           sourceAccount.CurrentBalance -= (decimal)LoanDebt;
+
+          return (true, (decimal)LoanDebt.Value);
         }
         else
         {
@@ -248,6 +255,7 @@ namespace BhdBankClone.Core.Application.Features.Products.Commands
         destinationAccount!.CurrentBalance += transaction.Amount;
 
         sourceCCard.CurrentBalance -= transaction.Amount;
+        sourceCCard.CreditCardDebt += transaction.Amount;
 
         await _accountRepository.Update(destinationAccount);
         await _creditCardRepository.Update(sourceCCard);
@@ -277,7 +285,9 @@ namespace BhdBankClone.Core.Application.Features.Products.Commands
         {
           destinationCCard.CreditCardDebt = 0;
           destinationCCard.CurrentBalance = destinationCCard.CreditLimit;
-          sourceCCard.CurrentBalance -= CCDebt;
+          sourceCCard.CurrentBalance -= CCDebt.Value;
+
+          return (true, CCDebt.Value);
         }
         else
         {
@@ -314,6 +324,8 @@ namespace BhdBankClone.Core.Application.Features.Products.Commands
         {
           destinationLoan.LoanBalance = 0;
           sourceCCard.CurrentBalance -= (decimal)LoanDebt;
+
+          return (true, (decimal)LoanDebt.Value);
         }
         else
         {
@@ -327,7 +339,7 @@ namespace BhdBankClone.Core.Application.Features.Products.Commands
 
       #endregion
 
-      return true;
+      return (true, transaction.Amount);
     }
 
 

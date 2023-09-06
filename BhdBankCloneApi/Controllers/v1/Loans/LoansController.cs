@@ -17,7 +17,7 @@ namespace BhdBankCloneApi.Controllers.v1.Loans
     [HttpGet("{id}")]
     public string Get(int id)
     {
-      return "value";
+      return "not implemented yet";
     }
 
     // POST: api/Loans

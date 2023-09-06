@@ -25,10 +25,12 @@ public class Account: AuditableBaseEntity
 
   public  Client? Client { get; set; }
 
-  public  Product? Product { get; set; }
-
   public  DebitCard? DebitCard { get; set; }
 
-  public  ICollection<BankTransaction>? Transactions { get; set; }
+  public ICollection<Product>? Products { get; set; } // can have debit cards, can have loans
+
+  public ICollection<BankTransaction>? Transactions { get; set; }
+
+  public ICollection<Loan>? Loans { get; set; }
 
 }

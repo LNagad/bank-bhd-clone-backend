@@ -35,6 +35,13 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
 
 
       // Configure navigation properties
+
+      entity
+        .HasOne(transaction => transaction.SourceLoan)
+        .WithOne(loan => loan.SourceTransaction)
+        .HasForeignKey<BankTransaction>(transaction => transaction.SourceLoanId)
+        .OnDelete(DeleteBehavior.Restrict);
+
       entity
           .HasOne(transaction => transaction.Client)
           .WithMany()

@@ -53,7 +53,7 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
       entity.Navigation(debitCard => debitCard.Client).AutoInclude(false);
       entity.Navigation(debitCard => debitCard.Product).AutoInclude(false);
       entity.Navigation(debitCard => debitCard.Account).AutoInclude(false);
-      entity.Navigation(debitCard => debitCard.TransactionSourceDebitCard).AutoInclude(false);
+      entity.Navigation(debitCard => debitCard.Transactions).AutoInclude(false);
     }
   }
 }

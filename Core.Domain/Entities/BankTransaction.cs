@@ -8,7 +8,7 @@ namespace BhdBankClone.Core.Domain
   public class BankTransaction : AuditableBaseEntity
   {
     public int TransactionTypeId { get; set; }
-    public int ClientId { get; set; }
+    public required int ClientId { get; set; }
     public decimal Amount { get; set; }
     public DateTime TransactionTime { get; set; }
 
@@ -17,6 +17,7 @@ namespace BhdBankClone.Core.Domain
     public int? SourceCreditCardId { get; set; }
 
     public int? SourceDebitCardId { get; set; }
+    public int? SourceLoanId { get; set; }
 
     public int? DestinationCreditCardId { get; set; }
 
@@ -30,7 +31,6 @@ namespace BhdBankClone.Core.Domain
 
     public CreditCard? DestinationCreditCard { get; set; }
 
-    public Loan? DestinationLoan { get; set; }
 
     public Account? SourceAccount { get; set; }
 
@@ -39,5 +39,10 @@ namespace BhdBankClone.Core.Domain
     public DebitCard? SourceDebitCard { get; set; }
 
     public TransactionType? TransactionType { get; set; }
+
+    public Loan? DestinationLoan { get; set; }
+    public Loan? SourceLoan { get; set; }
+
+    //public ICollection<Loan>? DestinationSourceLoan { get; set; }
   }
 }

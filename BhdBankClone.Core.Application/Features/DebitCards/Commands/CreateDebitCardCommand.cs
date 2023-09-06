@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BhdBankClone.Core.Application.DTOs.DebitCards;
+using BhdBankClone.Core.Application.Enums.BankSeeds;
 using BhdBankClone.Core.Application.Exceptions;
 using BhdBankClone.Core.Application.Helpers;
 using BhdBankClone.Core.Application.Interfaces.Repositories;
@@ -79,6 +80,7 @@ namespace BhdBankClone.Core.Application.Features.DebitCards.Commands
         AccountId = req.AccountId,
         DebitCardId = debitCard.Id,
         IsDebitCard = true,
+        ProductTypeId = (int)EProducts.TARJETA_DEBITO
       };
 
       await _productRepository.AddAsync(product);

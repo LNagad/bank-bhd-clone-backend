@@ -13,8 +13,8 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
       entity.HasKey(e => e.Id);
 
       entity.HasOne(product => product.Account)
-        .WithOne(account => account.Product)
-        .HasForeignKey<Product>(account => account.AccountId);
+        .WithMany(account => account.Products)
+        .HasForeignKey(product => product.AccountId);
 
       entity.HasOne(product => product.CreditCard)
         .WithOne(card => card.Product)

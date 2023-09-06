@@ -78,13 +78,15 @@ namespace BhdBankClone.Core.Application.Mappings
       CreateMap<CreateLoanCommand, Loan>()
         .ForMember(dest => dest.Client, opt => opt.Ignore())
         .ForMember(dest => dest.Product, opt => opt.Ignore())
-        .ForMember(dest => dest.TransactionSourceDebitCard, opt => opt.Ignore())
+        .ForMember(dest => dest.SourceTransaction, opt => opt.Ignore())
+        .ForMember(dest => dest.DestinationTransactions, opt => opt.Ignore())
       .ReverseMap();
 
       CreateMap<LoanDTO, Loan>()
         .ForMember(dest => dest.Client, opt => opt.Ignore())
         .ForMember(dest => dest.Product, opt => opt.Ignore())
-        .ForMember(dest => dest.TransactionSourceDebitCard, opt => opt.Ignore())
+        .ForMember(dest => dest.SourceTransaction, opt => opt.Ignore())
+        .ForMember(dest => dest.DestinationTransactions, opt => opt.Ignore())
       .ReverseMap();
       #endregion
 
@@ -93,14 +95,14 @@ namespace BhdBankClone.Core.Application.Mappings
         .ForMember(dest => dest.Client, opt => opt.Ignore())
         .ForMember(dest => dest.Account, opt => opt.Ignore())
         .ForMember(dest => dest.Product, opt => opt.Ignore())
-        .ForMember(dest => dest.TransactionSourceDebitCard, opt => opt.Ignore())
+        .ForMember(dest => dest.Transactions, opt => opt.Ignore())
       .ReverseMap();
 
       CreateMap<DebitCardDTO, DebitCard>()
         .ForMember(dest => dest.Client, opt => opt.Ignore())
         .ForMember(dest => dest.Account, opt => opt.Ignore())
         .ForMember(dest => dest.Product, opt => opt.Ignore())
-        .ForMember(dest => dest.TransactionSourceDebitCard, opt => opt.Ignore())
+        .ForMember(dest => dest.Transactions, opt => opt.Ignore())
       .ReverseMap();
       #endregion
 
@@ -123,7 +125,7 @@ namespace BhdBankClone.Core.Application.Mappings
         .ForMember(dest => dest.Client, opt => opt.Ignore())
         .ForMember(dest => dest.AccountType, opt => opt.Ignore())
         .ForMember(dest => dest.DebitCard, opt => opt.Ignore())
-        .ForMember(dest => dest.Product, opt => opt.Ignore())
+        .ForMember(dest => dest.Products, opt => opt.Ignore())
         .ForMember(dest => dest.Transactions, opt => opt.Ignore())
       .ReverseMap();
 
@@ -131,7 +133,7 @@ namespace BhdBankClone.Core.Application.Mappings
         .ForMember(dest => dest.Client, opt => opt.Ignore())
         .ForMember(dest => dest.AccountType, opt => opt.Ignore())
         .ForMember(dest => dest.DebitCard, opt => opt.Ignore())
-        .ForMember(dest => dest.Product, opt => opt.Ignore())
+        .ForMember(dest => dest.Products, opt => opt.Ignore())
         .ForMember(dest => dest.Transactions, opt => opt.Ignore())
         .ReverseMap();
       #endregion
@@ -145,7 +147,7 @@ namespace BhdBankClone.Core.Application.Mappings
         .ForMember(dest => dest.Accounts, opt => opt.Ignore())
         .ReverseMap();
       #endregion
-
+      
       #region Transactions
       CreateMap<CreateTransactionCommand, BankTransaction>()
         .ForMember(dest => dest.Client, opt => opt.Ignore())
@@ -156,7 +158,12 @@ namespace BhdBankClone.Core.Application.Mappings
         .ForMember(dest => dest.SourceCreditCard, opt => opt.Ignore())
         .ForMember(dest => dest.SourceDebitCard, opt => opt.Ignore())
         .ForMember(dest => dest.TransactionType, opt => opt.Ignore())
-      .ReverseMap();
+      .ReverseMap()
+        .ForMember(dest => dest.SourceAccountId, opt => opt.MapFrom(src => src.SourceAccountId == 0 ? (int?)null : src.SourceAccountId))
+        .ForMember(dest => dest.SourceCreditCardId, opt => opt.MapFrom(src => src.SourceCreditCardId == 0 ? (int?)null : src.SourceCreditCardId))
+        .ForMember(dest => dest.DestinationCreditCardId, opt => opt.MapFrom(src => src.DestinationCreditCardId == 0 ? (int?)null : src.DestinationCreditCardId))
+        .ForMember(dest => dest.DestinationAccountId, opt => opt.MapFrom(src => src.DestinationAccountId == 0 ? (int?)null : src.DestinationAccountId))
+        .ForMember(dest => dest.DestinationLoanId, opt => opt.MapFrom(src => src.DestinationLoanId == 0 ? (int?)null : src.DestinationLoanId));
 
       CreateMap<TransactionDTO, BankTransaction>()
         .ForMember(dest => dest.Client, opt => opt.Ignore())

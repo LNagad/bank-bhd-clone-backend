@@ -52,6 +52,11 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
         { 
           Id = (int)ETransactions.PAGO_PRESTAMO, 
           Description = ETransactions.PAGO_PRESTAMO.ToString() 
+        },
+        new TransactionType()
+        {
+          Id = (int)ETransactions.PRESTAMO,
+          Description = ETransactions.PRESTAMO.ToString()
         }
       );
     }
