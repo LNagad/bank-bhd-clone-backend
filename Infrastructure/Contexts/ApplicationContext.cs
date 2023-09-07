@@ -37,6 +37,8 @@ public class ApplicationContext : DbContext
 
   public DbSet<TransactionType> TransactionTypes { get; set; }
 
+  public DbSet<FavoriteTransaction> FavoriteTransactions { get; set; }
+
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     //modelBuilder.ApplyConfiguration(new TransactionConfig());

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BhdBankCloneApi.Controllers.v1.Transactions
 {
-  public class TransactionController : BaseApiController
+  public class FavoriteTransactionController : BaseApiController
   {
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -16,7 +16,7 @@ namespace BhdBankCloneApi.Controllers.v1.Transactions
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Post([FromBody] CreateTransactionCommand request)
+    public async Task<IActionResult> Post([FromBody] CreateFavoriteTransactionCommand request)
     {
       return Ok( await Mediator.Send(request) );
     }

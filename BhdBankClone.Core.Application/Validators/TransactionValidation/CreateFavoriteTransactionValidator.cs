@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace BhdBankClone.Core.Application.Validators.TransactionValidation
 {
-  public class CreateTransactionValidator : AbstractValidator<CreateTransactionCommand>
+  public class CreateFavoriteTransactionValidator : AbstractValidator<CreateFavoriteTransactionCommand>
   {
-    public CreateTransactionValidator()
+    public CreateFavoriteTransactionValidator()
     {
      RuleFor( x => x.Amount )
        .NotEmpty().WithMessage( "{PropertyName} is required." )

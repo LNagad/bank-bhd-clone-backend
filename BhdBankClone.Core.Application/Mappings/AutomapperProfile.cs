@@ -176,6 +176,35 @@ namespace BhdBankClone.Core.Application.Mappings
         .ForMember(dest => dest.TransactionType, opt => opt.Ignore())
       .ReverseMap();
       #endregion
+
+      #region FavoriteTransaction
+      CreateMap<CreateFavoriteTransactionCommand, FavoriteTransaction>()
+        .ForMember(dest => dest.Client, opt => opt.Ignore())
+        .ForMember(dest => dest.DestinationAccount, opt => opt.Ignore())
+        .ForMember(dest => dest.DestinationCreditCard, opt => opt.Ignore())
+        .ForMember(dest => dest.DestinationLoan, opt => opt.Ignore())
+        .ForMember(dest => dest.SourceAccount, opt => opt.Ignore())
+        .ForMember(dest => dest.SourceCreditCard, opt => opt.Ignore())
+        .ForMember(dest => dest.SourceDebitCard, opt => opt.Ignore())
+        .ForMember(dest => dest.TransactionType, opt => opt.Ignore())
+      .ReverseMap()
+        .ForMember(dest => dest.SourceAccountId, opt => opt.MapFrom(src => src.SourceAccountId == 0 ? (int?)null : src.SourceAccountId))
+        .ForMember(dest => dest.SourceCreditCardId, opt => opt.MapFrom(src => src.SourceCreditCardId == 0 ? (int?)null : src.SourceCreditCardId))
+        .ForMember(dest => dest.DestinationCreditCardId, opt => opt.MapFrom(src => src.DestinationCreditCardId == 0 ? (int?)null : src.DestinationCreditCardId))
+        .ForMember(dest => dest.DestinationAccountId, opt => opt.MapFrom(src => src.DestinationAccountId == 0 ? (int?)null : src.DestinationAccountId))
+        .ForMember(dest => dest.DestinationLoanId, opt => opt.MapFrom(src => src.DestinationLoanId == 0 ? (int?)null : src.DestinationLoanId));
+
+      CreateMap<FavoriteTransactionDTO, FavoriteTransaction>()
+        .ForMember(dest => dest.Client, opt => opt.Ignore())
+        .ForMember(dest => dest.DestinationAccount, opt => opt.Ignore())
+        .ForMember(dest => dest.DestinationCreditCard, opt => opt.Ignore())
+        .ForMember(dest => dest.DestinationLoan, opt => opt.Ignore())
+        .ForMember(dest => dest.SourceAccount, opt => opt.Ignore())
+        .ForMember(dest => dest.SourceCreditCard, opt => opt.Ignore())
+        .ForMember(dest => dest.SourceDebitCard, opt => opt.Ignore())
+        .ForMember(dest => dest.TransactionType, opt => opt.Ignore())
+      .ReverseMap();
+      #endregion
     }
   }
 }
