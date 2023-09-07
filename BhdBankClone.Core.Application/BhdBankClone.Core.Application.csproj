@@ -21,8 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Features\ClientStatus\" />
-    <Folder Include="Features\CreditCards\Queries\" />
-    <Folder Include="Features\DebitCards\Queries\" />
   </ItemGroup>
 
 </Project>

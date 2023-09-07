@@ -30,6 +30,12 @@ namespace BhdBankClone.Infrastructure.Persistence
       services.AddTransient<IClientRepository, ClientRepository>();
       services.AddTransient<IClientStatusRepository, ClientstatusRepository>();
       services.AddTransient<IProductRepository, ProductRepository>();
+      services.AddTransient<IAccountRepository, AccountRepository>();
+      services.AddTransient<ICreditCardRepository, CreditCardRepository>();
+      services.AddTransient<IDebitCardRepository, DebitCardRepository>();
+      services.AddTransient<ITransactionRepository, TransactionRepository>();
+      services.AddTransient<ILoanRepository, LoanRepository>();
+      services.AddTransient<IFavoriteTransactionRepository, FavoriteTransactionRepository>();
     }
     #endregion
   }

@@ -15,7 +15,7 @@ namespace BhdBankCloneApi.Controllers.v1.Products
       return Ok(await Mediator.Send(new GetAllProductsQuery()));
     }
 
-    [HttpGet("byClientId")]
+    [HttpGet("ClientId")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
