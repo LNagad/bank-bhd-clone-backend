@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using BhdBankClone.Core.Application.DTOs.Clients;
+using BhdBankClone.Core.Application.DTOs.DebitCards;
+using BhdBankClone.Core.Application.DTOs.Products;
 using BhdBankClone.Core.Application.DTOs.Transactions;
 using BhdBankClone.Core.Application.Interfaces;
 using BhdBankClone.Core.Application.Interfaces.Repositories;
 using BhdBankClone.Core.Application.Wrappers;
-using BhdBankClone.Core.Domain;
 using MediatR;
 
 namespace BhdBankClone.Core.Application.Features.BankAccounts.Queries
@@ -17,15 +17,19 @@ namespace BhdBankClone.Core.Application.Features.BankAccounts.Queries
   {
     private readonly IAccountRepository _repository;
     private readonly ITransactionRepository _transactionRepository;
+    private readonly IProductRepository _productRepository;
+    private readonly IDebitCardRepository _debitCardRepository;
     private readonly IBasicUserExtraAccountService _basicUserExtraAccountService;
     private readonly IMapper _mapper;
 
-    public GetAllBankAccountsQueryHandler(IAccountRepository repository, IMapper mapper, IBasicUserExtraAccountService basicUserExtraAccountService, ITransactionRepository transactionRepository)
+    public GetAllBankAccountsQueryHandler(IAccountRepository repository, IMapper mapper, IBasicUserExtraAccountService basicUserExtraAccountService, ITransactionRepository transactionRepository, IProductRepository productRepository, IDebitCardRepository debitCardRepository)
     {
       _repository = repository;
       _mapper = mapper;
       _basicUserExtraAccountService = basicUserExtraAccountService;
       _transactionRepository = transactionRepository;
+      _productRepository = productRepository;
+      _debitCardRepository = debitCardRepository;
     }
 
     public async Task<Response<List<BankAccountQueryResponse>>> Handle(GetAllBankAccountsQuery request, CancellationToken cancellationToken)
@@ -35,7 +39,7 @@ namespace BhdBankClone.Core.Application.Features.BankAccounts.Queries
         "Products",
         "AccountType",
         "Client",
-        "DebitCard",
+        //"DebitCard",
         //"Transactions",
         "Loans",
         "Client.ClientType"
@@ -43,12 +47,10 @@ namespace BhdBankClone.Core.Application.Features.BankAccounts.Queries
 
       var accounts = await _repository.GetAllWithIncludeAsync(parameters);
 
-      var mappedClients = _mapper.Map<List<BankAccountQueryResponse>>(accounts);
+      var mappedAccounts = _mapper.Map<List<BankAccountQueryResponse>>(accounts);
 
-      foreach (var account in mappedClients)
+      foreach (var account in mappedAccounts)
       {
-        //var userFound = await _basicUserExtraAccountService.GetBasicUserByIdAsync(account.Client.UserId);
-        //var transactions = _transactionRepository.GetQueryable();
 
         var getUserTask = _basicUserExtraAccountService.GetBasicUserByIdAsync(account.Client.UserId);
         var getTransactionsTask = Task.Run(() => _transactionRepository.GetQueryable());
@@ -58,18 +60,25 @@ namespace BhdBankClone.Core.Application.Features.BankAccounts.Queries
         var userFound = await getUserTask;
         var transactions = getTransactionsTask.Result;
 
+        account.Client.LastName = userFound.LastName;
+        account.Client.FirstName = userFound.FirstName;
 
         account.TransactionsAsSource = _mapper.
           Map<List<TransactionDTO>>(transactions.Where(t => t.SourceAccountId == account.Id).ToList());
-        
+
         account.TransactionsAsDestination = _mapper.
           Map<List<TransactionDTO>>(transactions.Where(t => t.DestinationAccountId == account.Id).ToList());
 
-        account.Client.FirstName = userFound.FirstName;
-        account.Client.LastName = userFound.LastName;
+        account.Products = _mapper
+          .Map<List<ProductDTO>>(_productRepository
+          .GetAllProductByClientId(account.ClientId.Value, new List<string> { "" }));
+
+        account.DebitCards = _mapper
+          .Map<List<DebitCardDTO>>(_debitCardRepository
+          .GetDebitCardsByClientIdEnumerable(account.ClientId.Value));
       }
 
-      return new Response<List<BankAccountQueryResponse>>(mappedClients);
+      return new Response<List<BankAccountQueryResponse>>(mappedAccounts);
     }
   }
 }

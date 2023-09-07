@@ -35,13 +35,14 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
       //entity.Property(e => e.AccountId)
       //    .HasColumnName("account_id");
 
-      entity.HasOne<Account>()
+      entity.HasOne(account => account.Account)
         .WithOne(account => account.DebitCard)
         .HasForeignKey<Account>(account => account.DebitCardId);
 
       entity.HasMany<BankTransaction>()
         .WithOne(transaction => transaction.SourceDebitCard)
         .HasForeignKey(transaction => transaction.SourceDebitCardId);
+
 
       entity.HasIndex(e => e.CardNumber, "debit_cards_index_7");
 

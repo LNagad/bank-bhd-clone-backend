@@ -82,12 +82,14 @@ namespace BhdBankClone.Core.Application.Features.DebitCards.Commands
         IsDebitCard = true,
         ProductTypeId = (int)EProducts.TARJETA_DEBITO
       };
-
       await _productRepository.AddAsync(product);
 
+      //Update debit card with product id
       debitCard.ProductId = product.Id;
-
       await _DebitCardRepository.Update(debitCard);
+
+      accountExist.DebitCardId = debitCard.Id;
+      await _accountRepository.Update(accountExist);
 
       return _mapper.Map<DebitCardDTO>(debitCard);
     }

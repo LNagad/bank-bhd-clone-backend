@@ -27,5 +27,14 @@ namespace BhdBankClone.Infrastructure.Persistence.Repositories
 
       return query.AsEnumerable();
     }
+
+    public IEnumerable<DebitCard> GetDebitCardsByClientIdEnumerable(int clientId)
+    {
+      var query = _entities.AsQueryable();
+
+      query = query.Where(c => c.ClientId == clientId);
+
+      return query.AsEnumerable();
+    }
   }
 }

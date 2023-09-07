@@ -30,9 +30,9 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
       entity.Property(e => e.IsActive)
           .HasDefaultValue(true);
 
-      entity.HasOne<DebitCard>()
+      entity.HasOne(account => account.DebitCard)
          .WithOne(account => account.Account)
-         .HasForeignKey<DebitCard>(account => account.AccountId);
+         .HasForeignKey<Account>(account => account.DebitCardId);
 
       //entity.HasMany(p => p.Transactions)
       //    .WithOne(transaction => transaction.DestinationAccount)

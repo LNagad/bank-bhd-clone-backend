@@ -31,7 +31,7 @@ namespace BhdBankClone.Core.Application.Features.BankAccounts.Queries
 
     public ClientDTO? Client { get; set; }
 
-    public DebitCardDTO? DebitCard { get; set; }
+    public ICollection<DebitCardDTO>? DebitCards { get; set; }
 
     public ICollection<ProductDTO>? Products { get; set; } // can have debit cards, can have loans
 
