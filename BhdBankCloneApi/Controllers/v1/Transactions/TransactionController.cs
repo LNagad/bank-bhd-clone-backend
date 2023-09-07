@@ -1,4 +1,5 @@
 ﻿using BhdBankClone.Core.Application.Features.Products.Commands;
+using BhdBankClone.Core.Application.Features.Transactions.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BhdBankCloneApi.Controllers.v1.Transactions
@@ -7,11 +8,20 @@ namespace BhdBankCloneApi.Controllers.v1.Transactions
   {
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public IActionResult Get()
+    public async Task<IActionResult> Get()
     {
-      return Ok();
+      return Ok(await Mediator.Send(new GetAllTransactionsQuery()));
     }
+
+    [HttpGet("ClientId")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetByClientId([FromQuery] GetAllTransactionsByClientIdQuery query)
+    {
+      return Ok(await Mediator.Send(query));
+    }
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -1,4 +1,5 @@
-﻿using BhdBankClone.Core.Application.Features.Loans.Commands;
+﻿using BhdBankClone.Core.Application.Features.DebitCards.Queries;
+using BhdBankClone.Core.Application.Features.Loans.Commands;
 using BhdBankClone.Core.Application.Features.Loans.Queries;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace BhdBankCloneApi.Controllers.v1.Loans
   {
     // GET: api/Loans
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> Get()
     {
       return Ok(await Mediator.Send(new GetAllLoansQuery()));
@@ -18,6 +20,16 @@ namespace BhdBankCloneApi.Controllers.v1.Loans
     public string Get(int id)
     {
       return "not implemented yet";
+    }
+
+    // GET: api/Loans/ClientId
+    [HttpGet("ClientId")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetByClientId([FromQuery] GetAllLoansByClientIdQuery query)
+    {
+      return Ok(await Mediator.Send(query));
     }
 
     // POST: api/Loans

@@ -15,8 +15,8 @@ namespace BhdBankClone.Core.Application.Features.Clients.Queries
   public class GetAllClientsQueryHandler : IRequestHandler<GetAllClientsQuery, Response<List<ClientDTO>>>
   {
     private readonly IClientRepository _clientRepository;
-    private readonly IMapper _mapper;
     private readonly IBasicUserExtraAccountService _basicUserExtraAccountService;
+    private readonly IMapper _mapper;
     public GetAllClientsQueryHandler(IClientRepository clientRepository, IMapper mapper, IBasicUserExtraAccountService basicUserExtraAccountService)
     {
       _clientRepository = clientRepository;

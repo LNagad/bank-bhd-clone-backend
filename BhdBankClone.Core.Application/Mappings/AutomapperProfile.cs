@@ -8,6 +8,7 @@ using BhdBankClone.Core.Application.DTOs.Products;
 using BhdBankClone.Core.Application.DTOs.ProductTypes;
 using BhdBankClone.Core.Application.DTOs.Transactions;
 using BhdBankClone.Core.Application.Features.BankAccounts.Commands;
+using BhdBankClone.Core.Application.Features.BankAccounts.Queries;
 using BhdBankClone.Core.Application.Features.BankAccountTypes.Command;
 using BhdBankClone.Core.Application.Features.Clients.Commands;
 using BhdBankClone.Core.Application.Features.CreditCards.Commands;
@@ -43,7 +44,8 @@ namespace BhdBankClone.Core.Application.Mappings
        .ForMember(dest => dest.DebitCards, opt => opt.Ignore())
        .ForMember(dest => dest.ClientType, opt => opt.Ignore())
        .ForMember(dest => dest.Loans, opt => opt.Ignore())
-       .ReverseMap();
+       .ReverseMap()
+       .ForMember(dest => dest.ClientType, opt => opt.MapFrom( p => p.ClientType.Description));
       #endregion
 
       #region ProductTypes
@@ -126,7 +128,7 @@ namespace BhdBankClone.Core.Application.Mappings
         .ForMember(dest => dest.AccountType, opt => opt.Ignore())
         .ForMember(dest => dest.DebitCard, opt => opt.Ignore())
         .ForMember(dest => dest.Products, opt => opt.Ignore())
-        .ForMember(dest => dest.Transactions, opt => opt.Ignore())
+        //.ForMember(dest => dest.Transactions, opt => opt.Ignore())
       .ReverseMap();
 
       CreateMap<BankAccountDTO, Account>()
@@ -134,8 +136,14 @@ namespace BhdBankClone.Core.Application.Mappings
         .ForMember(dest => dest.AccountType, opt => opt.Ignore())
         .ForMember(dest => dest.DebitCard, opt => opt.Ignore())
         .ForMember(dest => dest.Products, opt => opt.Ignore())
-        .ForMember(dest => dest.Transactions, opt => opt.Ignore())
+        //.ForMember(dest => dest.Transactions, opt => opt.Ignore())
         .ReverseMap();
+
+      CreateMap<Account, BankAccountQueryResponse>()
+        .ForMember(dest => dest.AccountType, opt => opt.MapFrom(p => p.AccountType.Description))
+        //.ForMember(dest => dest.ClientType, opt => opt.MapFrom(p => p.Client.ClientType.Description))
+        .ReverseMap();
+
       #endregion
 
       #region BankAccountTypes

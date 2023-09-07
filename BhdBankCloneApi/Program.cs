@@ -1,15 +1,8 @@
 using BhdBankClone.Core.Application;
-using BhdBankClone.Core.Domain;
 using BhdBankClone.Infrastructure.Identity;
-using BhdBankClone.Infrastructure.Identity.Entities;
-using BhdBankClone.Infrastructure.Identity.Seeds;
 using BhdBankClone.Infrastructure.Persistence;
 using BhdBankCloneApi.Extensions;
 using BhdBankCloneApi.Middlewares;
-using Infrastructure.Persistence;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +17,14 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 {
   options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
   //options.JsonSerializerOptions.MaxDepth = 1; // Establece el máximo nivel de profundidad permitido
-});
+})
+//.AddNewtonsoftJson(opt =>
+//{
+//  opt.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+//  opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+//});
+.AddNewtonsoftJson(opt => opt.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore);
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 builder.Services.AddHttpContextAccessor();

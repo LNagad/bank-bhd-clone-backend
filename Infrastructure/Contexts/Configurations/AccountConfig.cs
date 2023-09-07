@@ -34,11 +34,21 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
          .WithOne(account => account.Account)
          .HasForeignKey<DebitCard>(account => account.AccountId);
 
-      entity.HasMany<BankTransaction>()
+      //entity.HasMany(p => p.Transactions)
+      //    .WithOne(transaction => transaction.DestinationAccount)
+      //    .HasForeignKey(transaction => transaction.DestinationAccountId);
+
+      //entity.HasMany(p => p.Transactions)
+      //    .WithOne(transaction => transaction.SourceAccount)
+      //    .HasForeignKey(transaction => transaction.SourceAccountId);
+
+      entity
+          .HasMany(account => account.TransactionsAsDestination) // asumiendo que tienes una propiedad Navigation llamada TransactionsAsDestination
           .WithOne(transaction => transaction.DestinationAccount)
           .HasForeignKey(transaction => transaction.DestinationAccountId);
 
-      entity.HasMany<BankTransaction>()
+      entity
+          .HasMany(account => account.TransactionsAsSource) // asumiendo que tienes una propiedad Navigation llamada TransactionsAsSource
           .WithOne(transaction => transaction.SourceAccount)
           .HasForeignKey(transaction => transaction.SourceAccountId);
 
@@ -51,11 +61,11 @@ namespace BhdBankClone.Infrastructure.Persistence.Contexts.Configurations
           .HasForeignKey(account => account.AccountTypeId);
 
       // Disabling auto include for navigation properties
-      entity.Navigation(account => account.AccountType).AutoInclude(false);
-      entity.Navigation(account => account.Client).AutoInclude(false);
-      entity.Navigation(account => account.Products).AutoInclude(false);
-      entity.Navigation(account => account.DebitCard).AutoInclude(false);
-      entity.Navigation(account => account.Transactions).AutoInclude(false);
+      //entity.Navigation(account => account.AccountType).AutoInclude(false);
+      //entity.Navigation(account => account.Client).AutoInclude(false);
+      //entity.Navigation(account => account.Products).AutoInclude(false);
+      //entity.Navigation(account => account.DebitCard).AutoInclude(false);
+      //entity.Navigation(account => account.Transactions).AutoInclude(false);
 
     }
   }

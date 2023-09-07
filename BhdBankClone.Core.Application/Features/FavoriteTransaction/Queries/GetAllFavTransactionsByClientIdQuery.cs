@@ -31,7 +31,7 @@ namespace BhdBankClone.Core.Application.Features.CreditCards.Queries
           "SourceDebitCard",
           "TransactionType",
           "DestinationLoan",
-          "SourceLoan"
+          //"SourceLoan"
       };
 
       var accounts = _repository.GetFavTransactionsWithIncludeByClientIdEnumerable(request.ClientId, parameters);
