@@ -1,12 +1,10 @@
-﻿
-using BhdBankClone.Core.Application.DTOs.Clients;
+﻿using BhdBankClone.Core.Application.DTOs.Clients;
 using BhdBankClone.Core.Application.DTOs.Products;
 using BhdBankClone.Core.Application.DTOs.Transactions;
-using BhdBankClone.Core.Domain;
 
-namespace BhdBankClone.Core.Application.DTOs.CreditCards
+namespace BhdBankClone.Core.Application.Features.CreditCards.Queries
 {
-  public class CreditCardDTO
+  public class CreditCardResponseQuery
   {
     public int Id { get; set; }
     public decimal? CreditLimit { get; set; }
@@ -34,6 +32,7 @@ namespace BhdBankClone.Core.Application.DTOs.CreditCards
     public ClientDTO? Client { get; set; }
     public ProductDTO? Product { get; set; }
 
-    public ICollection<TransactionDTO>? Transactions { get; set; }
+    public ICollection<TransactionDTO>? TransactionsAsDestination { get; set; }
+    public ICollection<TransactionDTO>? TransactionsAsSource { get; set; }
   }
 }

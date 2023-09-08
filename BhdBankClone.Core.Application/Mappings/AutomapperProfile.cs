@@ -12,6 +12,7 @@ using BhdBankClone.Core.Application.Features.BankAccounts.Queries;
 using BhdBankClone.Core.Application.Features.BankAccountTypes.Command;
 using BhdBankClone.Core.Application.Features.Clients.Commands;
 using BhdBankClone.Core.Application.Features.CreditCards.Commands;
+using BhdBankClone.Core.Application.Features.CreditCards.Queries;
 using BhdBankClone.Core.Application.Features.DebitCards.Commands;
 using BhdBankClone.Core.Application.Features.Loans.Commands;
 using BhdBankClone.Core.Application.Features.Products.Commands;
@@ -106,6 +107,13 @@ namespace BhdBankClone.Core.Application.Mappings
         .ForMember(dest => dest.Product, opt => opt.Ignore())
         .ForMember(dest => dest.Transactions, opt => opt.Ignore())
       .ReverseMap();
+
+      CreateMap<DebitCardResponseQuery, DebitCard>()
+        .ForMember(dest => dest.Client, opt => opt.Ignore())
+        .ForMember(dest => dest.Account, opt => opt.Ignore())
+        .ForMember(dest => dest.Product, opt => opt.Ignore())
+        .ForMember(dest => dest.Transactions, opt => opt.Ignore())
+      .ReverseMap();
       #endregion
 
       #region CreditCards
@@ -120,6 +128,19 @@ namespace BhdBankClone.Core.Application.Mappings
         .ForMember(dest => dest.Product, opt => opt.Ignore())
         .ForMember(dest => dest.Transactions, opt => opt.Ignore())
         .ReverseMap();
+
+      CreateMap<CreditCardResponseQuery, CreditCard>()
+        .ForMember(dest => dest.Client, opt => opt.Ignore())
+        .ForMember(dest => dest.Product, opt => opt.Ignore())
+        .ForMember(dest => dest.Transactions, opt => opt.Ignore())
+        .ReverseMap()
+        .AfterMap((src, dest) =>
+        {
+          if (src.Product != null)
+          {
+            dest.Product.CreditCard = null;
+          }
+        });
       #endregion
 
       #region BankAccounts
