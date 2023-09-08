@@ -1,5 +1,12 @@
 ﻿
 
+using BhdBankClone.Core.Application.DTOs.BankAccounts;
+using BhdBankClone.Core.Application.DTOs.Clients;
+using BhdBankClone.Core.Application.DTOs.CreditCards;
+using BhdBankClone.Core.Application.DTOs.DebitCards;
+using BhdBankClone.Core.Application.DTOs.Loans;
+using BhdBankClone.Core.Domain;
+
 namespace BhdBankClone.Core.Application.DTOs.Transactions
 {
   public class TransactionDTO
@@ -21,6 +28,24 @@ namespace BhdBankClone.Core.Application.DTOs.Transactions
     public int? DestinationAccountId { get; set; }
 
     public int? DestinationLoanId { get; set; }
+
+    public ClientDTO? Client { get; set; }
+
+    public BankAccountDTO? DestinationAccount { get; set; }
+
+    public CreditCardDTO? DestinationCreditCard { get; set; }
+
+
+    public BankAccountDTO? SourceAccount { get; set; }
+
+    public CreditCardDTO? SourceCreditCard { get; set; }
+
+    public DebitCardDTO? SourceDebitCard { get; set; }
+
+    public string? TransactionType { get; set; }
+
+    public LoanDTO? DestinationLoan { get; set; }
+    public LoanDTO? SourceLoan { get; set; }
 
   }
 }

@@ -1,24 +1,29 @@
-﻿using BhdBankClone.Core.Application.Interfaces.Repositories;
+﻿using AutoMapper;
+using BhdBankClone.Core.Application.DTOs.Transactions;
+using BhdBankClone.Core.Application.Interfaces.Repositories;
 using BhdBankClone.Core.Application.Wrappers;
 using BhdBankClone.Core.Domain;
 using MediatR;
 
 namespace BhdBankClone.Core.Application.Features.Transactions.Queries
 {
-  public class GetAllTransactionsQuery : IRequest<Response<List<BankTransaction>>>
+  public class GetAllTransactionsQuery : IRequest<Response<IEnumerable<TransactionDTO>>>
   {
   }
 
-  internal class GetAllTransactionsQueryHandler : IRequestHandler<GetAllTransactionsQuery, Response<List<BankTransaction>>>
+  internal class GetAllTransactionsQueryHandler : IRequestHandler<GetAllTransactionsQuery, Response<IEnumerable<TransactionDTO>>>
   {
     private readonly IGenericRepository<BankTransaction> _repository;
+    private readonly IMapper _mapper;
 
-    public GetAllTransactionsQueryHandler(IGenericRepository<BankTransaction> repository)
+
+    public GetAllTransactionsQueryHandler(IGenericRepository<BankTransaction> repository, IMapper mapper)
     {
       _repository = repository;
+      _mapper = mapper;
     }
 
-    public async Task<Response<List<BankTransaction>>> Handle(GetAllTransactionsQuery request, CancellationToken cancellationToken)
+    public async Task<Response<IEnumerable<TransactionDTO>>> Handle(GetAllTransactionsQuery request, CancellationToken cancellationToken)
     {
       var parameters = new List<string>
       {
@@ -29,13 +34,14 @@ namespace BhdBankClone.Core.Application.Features.Transactions.Queries
           "SourceCreditCard",
           "SourceDebitCard",
           "TransactionType",
-          "DestinationLoan",
-          "SourceLoan"
+          "DestinationLoan"
+          //"SourceLoan"
       };
 
-      var accounts = await _repository.GetAllWithIncludeAsync(parameters);
+      var transactions = await _repository.GetAllWithIncludeAsync(parameters);
+      var transactionsMapped = _mapper.Map<IEnumerable<TransactionDTO>>(transactions);
 
-      return new Response<List<BankTransaction>>(accounts);
+      return new Response<IEnumerable<TransactionDTO>>(transactionsMapped);
     }
   }
 }

@@ -2,7 +2,6 @@
 using BhdBankClone.Core.Application.Features.CreditCards.Queries;
 using BhdBankClone.Core.Application.Interfaces.Repositories;
 using BhdBankClone.Core.Application.Wrappers;
-using BhdBankClone.Core.Domain;
 using MediatR;
 
 namespace BhdBankClone.Core.Application.Features.DebitCards.Queries

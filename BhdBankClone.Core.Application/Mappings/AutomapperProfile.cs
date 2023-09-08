@@ -195,15 +195,17 @@ namespace BhdBankClone.Core.Application.Mappings
         .ForMember(dest => dest.DestinationLoanId, opt => opt.MapFrom(src => src.DestinationLoanId == 0 ? (int?)null : src.DestinationLoanId));
 
       CreateMap<TransactionDTO, BankTransaction>()
-        .ForMember(dest => dest.Client, opt => opt.Ignore())
-        .ForMember(dest => dest.DestinationAccount, opt => opt.Ignore())
-        .ForMember(dest => dest.DestinationCreditCard, opt => opt.Ignore())
-        .ForMember(dest => dest.DestinationLoan, opt => opt.Ignore())
-        .ForMember(dest => dest.SourceAccount, opt => opt.Ignore())
-        .ForMember(dest => dest.SourceCreditCard, opt => opt.Ignore())
-        .ForMember(dest => dest.SourceDebitCard, opt => opt.Ignore())
-        .ForMember(dest => dest.TransactionType, opt => opt.Ignore())
-      .ReverseMap();
+      //.ForMember(dest => dest.Client, opt => opt.Ignore())
+      //.ForMember(dest => dest.DestinationAccount, opt => opt.Ignore())
+      //.ForMember(dest => dest.DestinationCreditCard, opt => opt.Ignore())
+      //.ForMember(dest => dest.DestinationLoan, opt => opt.Ignore())
+      //.ForMember(dest => dest.SourceAccount, opt => opt.Ignore())
+      //.ForMember(dest => dest.SourceCreditCard, opt => opt.Ignore())
+      //.ForMember(dest => dest.SourceDebitCard, opt => opt.Ignore())
+      //.ForMember(dest => dest.TransactionType, opt => opt.Ignore())
+      .ReverseMap()
+      .ForMember(dest => dest.TransactionType, opt => opt.MapFrom(p => p.TransactionType.Description))
+       .ForMember(dest => dest.SourceLoan, opt => opt.Ignore());
       #endregion
 
       #region FavoriteTransaction
