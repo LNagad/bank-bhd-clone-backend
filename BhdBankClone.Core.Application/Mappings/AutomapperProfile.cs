@@ -91,6 +91,7 @@ namespace BhdBankClone.Core.Application.Mappings
         .ForMember(dest => dest.SourceTransaction, opt => opt.Ignore())
         .ForMember(dest => dest.DestinationTransactions, opt => opt.Ignore())
       .ReverseMap();
+       
       #endregion
 
       #region DebitCards
